@@ -25,5 +25,7 @@
         "no-magic-numbers": "off"
       }
     }
-  ]
+  ],
+
+  "ignorePatterns": ["commonjs/"]
 }
