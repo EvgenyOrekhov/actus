@@ -6,7 +6,8 @@
   "author": "Evgeny Orekhov",
   "files": [
     "index.js",
-    "src/init.js"
+    "src/init.js",
+    "commonjs/"
   ],
   "sideEffects": false,
   "type": "module",
@@ -16,7 +17,10 @@
     "lint": "run-p --aggregate-output lint:**",
     "lint:js": "eslint . --ext .js,.json",
     "lint:prettier": "prettier --check *.{js,css,json,md,html,yml,yaml}",
-    "test": "jest"
+    "test": "jest",
+    "build": "babel index.js --out-dir commonjs/ && babel src/ --out-dir commonjs/src/ --ignore 'src/**/*.test.js'",
+    "preversion": "npm run build && git add commonjs/",
+        "postversion": "git push && git push --tags && npm publish"
   },
   "husky": {
     "hooks": {
@@ -38,6 +42,7 @@
     "collectCoverage": true
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.0",
     "@babel/core": "^7.8.0",
     "@babel/preset-env": "^7.8.0",
     "babel-jest": "^24.9.0",
