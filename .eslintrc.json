@@ -1,0 +1,29 @@
+{
+  "extends": ["hardcore", "hardcore/fp", "prettier", "prettier/unicorn"],
+
+  "parserOptions": {
+    "sourceType": "module"
+  },
+
+  "rules": {
+    "import/extensions": ["error", "always"],
+
+    "no-inline-comments": "off",
+    "line-comment-position": "off"
+  },
+
+  "overrides": [
+    {
+      "files": ["*.test.*"],
+
+      "env": {
+        "jest": true,
+        "node": true
+      },
+
+      "rules": {
+        "no-magic-numbers": "off"
+      }
+    }
+  ]
+}

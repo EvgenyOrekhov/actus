@@ -1,0 +1,1 @@
+{ "language": "node_js", "node_js": ["13.2.0", "node"], "script": "npm run ci" }
