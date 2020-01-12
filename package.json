@@ -1,6 +1,6 @@
 {
   "name": "actus",
-  "version": "0.0.0-alpha.1",
+  "version": "0.0.0-alpha.2",
   "description": "",
   "license": "MIT",
   "author": "Evgeny Orekhov",
@@ -20,7 +20,7 @@
     "test": "jest",
     "build": "babel index.js --out-dir commonjs/ && babel src/ --out-dir commonjs/src/ --ignore 'src/**/*.test.js'",
     "preversion": "npm run build && git add commonjs/",
-        "postversion": "git push && git push --tags && npm publish"
+    "postversion": "git push && git push --tags && npm publish"
   },
   "husky": {
     "hooks": {
