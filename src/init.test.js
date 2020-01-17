@@ -63,15 +63,15 @@ it("passes value to actions", () => {
 it("allows to pass undefined to actions", () => {
   const subscriber = jest.fn();
 
-  const { test } = init({
+  const { testAction } = init({
     state: 0,
     actions: {
-      test: (value, state) => [value, state]
+      testAction: (value, state) => [value, state]
     },
     subscribers: [subscriber]
   });
 
-  test(undefined);
+  testAction(undefined);
 
   expect(subscriber.mock.calls[1][0].state).toEqual([undefined, 0]);
 });
