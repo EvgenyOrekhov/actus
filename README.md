@@ -10,6 +10,38 @@ Minimalist state container
 - **Functional** - immutable data-last actions
 - **Framework-agnostic**
 
+## Examples
+
+### React Counter App
+
+```js
+import { init } from "actus";
+import React from "react";
+import ReactDOM from "react-dom";
+
+init({
+  state: 0,
+  actions: {
+    inc: state => state + 1,
+    dec: state => state - 1
+  },
+  subscribers: [
+    ({ state, actions }) => {
+      ReactDOM.render(
+        <>
+          <h1>{state}</h1>
+          <button onClick={actions.inc}>+</button>
+          <button onClick={actions.dec}>-</button>
+        </>,
+        document.querySelector("#root")
+      );
+    }
+  ]
+});
+```
+
+[Try it on CodeSandbox](https://codesandbox.io/s/actusreact-counter-app-example-y4p8e)
+
 ## Acknowledgements
 
 Sources of inspiration:
