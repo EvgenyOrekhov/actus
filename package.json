@@ -1,7 +1,16 @@
 {
   "name": "actus",
   "version": "0.0.0-alpha.3",
-  "description": "",
+  "description": "Minimalist state container",
+  "keywords": [
+    "state",
+    "state container",
+    "state manager",
+    "state management",
+    "redux",
+    "functional",
+    "immutable"
+  ],
   "license": "MIT",
   "author": "Evgeny Orekhov",
   "files": [
