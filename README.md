@@ -1,4 +1,4 @@
-# Actus
+# actus
 
 Minimalist state container
 
