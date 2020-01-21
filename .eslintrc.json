@@ -1,5 +1,11 @@
 {
-  "extends": ["hardcore", "hardcore/fp", "prettier", "prettier/unicorn"],
+  "extends": [
+    "hardcore",
+    "hardcore/fp",
+    "hardcore/node",
+    "prettier",
+    "prettier/unicorn"
+  ],
 
   "parserOptions": {
     "sourceType": "module"
