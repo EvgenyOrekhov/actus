@@ -4,8 +4,10 @@
       "@babel/preset-env",
       {
         "targets": {
-          "node": "current"
-        }
+          "node": "10.17.0"
+        },
+        "useBuiltIns": "usage",
+        "corejs": { "version": 3 }
       }
     ]
   ]
