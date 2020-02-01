@@ -11,6 +11,10 @@
     "functional",
     "immutable"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EvgenyOrekhov/actus.git"
+  },
   "license": "MIT",
   "author": "Evgeny Orekhov",
   "files": [
