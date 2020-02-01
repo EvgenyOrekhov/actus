@@ -1,6 +1,6 @@
 {
   "name": "actus-logger",
-  "version": "0.0.0-alpha.5",
+  "version": "0.0.0-alpha.6",
   "description": "Logger for actus",
   "keywords": [
     "actus"
@@ -20,6 +20,9 @@
   "type": "module",
   "main": "index.js",
   "module": "index.js",
+  "scripts": {
+    "postversion": "npm publish"
+  },
   "dependencies": {
     "deep-object-diff": "^1.1.0"
   },
