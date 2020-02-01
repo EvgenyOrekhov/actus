@@ -4,7 +4,7 @@ Logger for actus
 
 [![npm version](https://img.shields.io/npm/v/actus-logger.svg?style=flat-square)](https://www.npmjs.com/package/actus-logger)
 
-![actus-logger](screenshot.png)
+![actus-logger](/packages/actus-logger/screenshot.png)
 
 ## Install
 
