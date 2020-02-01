@@ -2,12 +2,14 @@
   "name": "root",
   "private": true,
   "scripts": {
+    "build": "babel packages/actus/index.js --out-dir packages/actus/commonjs/ && babel packages/actus/src/ --out-dir packages/actus/commonjs/src/ --ignore **/*.test.js && babel packages/actus-logger/index.js --out-dir packages/actus-logger/commonjs/",
     "ci": "npm run lint && npm test",
     "lint": "run-p --aggregate-output lint:**",
     "lint:js": "eslint . --ext .js,.json",
     "lint:prettier": "prettier --check **/*.{js,css,json,md,html,yml,yaml}",
     "prepare": "lerna bootstrap",
-    "test": "jest"
+    "test": "jest",
+    "preversion": "npm run build && git add packages/actus/commonjs/ packages/actus-logger/commonjs/"
   },
   "husky": {
     "hooks": {
