@@ -1,6 +1,6 @@
 {
   "name": "actus",
-  "version": "0.0.0",
+  "version": "0.0.0-alpha.6",
   "description": "Minimalist state container",
   "keywords": [
     "state",
