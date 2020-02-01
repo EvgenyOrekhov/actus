@@ -1,0 +1,29 @@
+{
+  "name": "actus-logger",
+  "version": "0.0.0-alpha.5",
+  "description": "Logger for actus",
+  "keywords": [
+    "actus"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EvgenyOrekhov/actus.git",
+    "directory": "packages/actus-logger"
+  },
+  "license": "MIT",
+  "author": "Evgeny Orekhov",
+  "files": [
+    "index.js",
+    "commonjs/"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
+  "dependencies": {
+    "deep-object-diff": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=10.17.0"
+  }
+}
