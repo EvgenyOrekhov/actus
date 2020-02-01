@@ -12,6 +12,22 @@ Logger for actus
 npm install actus-logger
 ```
 
+## Usage
+
+```js
+import { init } from "actus";
+import makeLogger from "actus-logger";
+
+init({
+  state: {...},
+  actions: {...},
+  subscribers: [
+    makeLogger(),
+    ...
+  ]
+});
+```
+
 ## Acknowledgements
 
 Sources of inspiration:
