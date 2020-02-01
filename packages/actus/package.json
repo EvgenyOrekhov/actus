@@ -26,29 +26,6 @@
   "type": "module",
   "main": "index.js",
   "module": "index.js",
-  "scripts": {
-    "build": "babel index.js --out-dir commonjs/ && babel src/ --out-dir commonjs/src/ --ignore src/**/*.test.js && babel packages/actus-logger/index.js --out-dir packages/actus-logger/commonjs/",
-    "ci": "npm run lint && npm test",
-    "lint": "run-p --aggregate-output lint:**",
-    "lint:js": "eslint . --ext .js,.json",
-    "lint:prettier": "prettier --check **/*.{js,css,json,md,html,yml,yaml}",
-    "test": "jest",
-    "preversion": "npm run build && git add commonjs/",
-    "postversion": "git push && git push --tags && npm publish"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run ci"
-    }
-  },
-  "lint-staged": {
-    "*.{js,css,json,md,html,yml,yaml}": "prettier --write",
-    "*.{js,json}": "eslint --fix --ext .js,.json"
-  },
-  "jest": {
-    "collectCoverage": true
-  },
   "dependencies": {
     "core-js": "^3.6.4"
   },
