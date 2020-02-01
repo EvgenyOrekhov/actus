@@ -8,6 +8,7 @@
     "lint:js": "eslint . --ext .js,.json",
     "lint:prettier": "prettier --check **/*.{js,css,json,md,html,yml,yaml}",
     "prepare": "lerna bootstrap",
+    "release": "lerna publish",
     "test": "jest",
     "preversion": "npm run build && git add packages/actus/commonjs/ packages/actus-logger/commonjs/"
   },
