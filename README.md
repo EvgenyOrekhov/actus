@@ -100,4 +100,4 @@ Sources of inspiration:
 
 ## License
 
-[MIT](/LICENSE)
+[MIT](LICENSE)
