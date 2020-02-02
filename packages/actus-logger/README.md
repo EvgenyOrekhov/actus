@@ -33,3 +33,7 @@ init({
 Sources of inspiration:
 
 - https://github.com/LogRocket/redux-logger
+
+## License
+
+[MIT](/LICENSE)
