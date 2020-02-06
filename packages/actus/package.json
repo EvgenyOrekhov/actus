@@ -27,7 +27,8 @@
   "main": "index.js",
   "module": "index.js",
   "dependencies": {
-    "core-js": "^3.6.4"
+    "core-js": "^3.6.4",
+    "ramda": "^0.27.0"
   },
   "engines": {
     "node": ">=10.17.0"

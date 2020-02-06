@@ -13,6 +13,7 @@
 
   "rules": {
     "import/extensions": ["error", "always"],
+    "no-shadow": ["error", { "builtinGlobals": true }],
 
     "no-inline-comments": "off",
     "line-comment-position": "off",
