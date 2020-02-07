@@ -3,7 +3,11 @@ import assocPath from "ramda/src/assocPath.js";
 const ACTION_ARITY = 2;
 
 function getSlice(object, path) {
-  return path.reduce((acc, property) => acc[property], object);
+  return path.reduce(
+    (acc, property) =>
+      acc === undefined || acc === null ? undefined : acc[property],
+    object
+  );
 }
 
 function setSlice(object, path, slice) {
