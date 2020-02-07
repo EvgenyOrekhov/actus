@@ -73,7 +73,11 @@ export default function init({ state, actions, subscribers }) {
                 // eslint-disable-next-line fp/no-mutation
                 currentState = getNewState();
 
-                notifySubscribers({ actionName, value });
+                notifySubscribers({
+                  actionName:
+                    path.length === 0 ? actionName : [...path, actionName],
+                  value
+                });
               }
             ]
           : [actionName, bindActions(action, [...path, actionName])]

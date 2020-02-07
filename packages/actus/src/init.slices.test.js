@@ -122,3 +122,27 @@ it("doesn't fail with null", () => {
   expect(subscriber.mock.calls.length).toBe(2);
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({ slice: undefined });
 });
+
+it("passes current slice action name to subscribers", () => {
+  const subscriber = jest.fn();
+
+  const { slice } = init({
+    state: {},
+    actions: {
+      slice: {
+        subslice: {
+          testAction: state => state
+        }
+      }
+    },
+    subscribers: [subscriber]
+  });
+
+  slice.subslice.testAction();
+
+  expect(subscriber.mock.calls[1][0].actionName).toStrictEqual([
+    "slice",
+    "subslice",
+    "testAction"
+  ]);
+});
