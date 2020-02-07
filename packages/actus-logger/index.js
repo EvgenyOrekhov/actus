@@ -7,15 +7,19 @@ export default function makeLogger({ name } = {}) {
   let previousState;
 
   return ({ state, actionName, value }) => {
+    const prettyActionName = Array.isArray(actionName)
+      ? actionName.join(".")
+      : actionName;
+
     if (name === undefined) {
       console.groupCollapsed(
-        `%caction %c${actionName}`,
+        `%caction %c${prettyActionName}`,
         "color: gray; font-weight: lighter;",
         "font-weight: bold;"
       );
     } else {
       console.groupCollapsed(
-        `%c${name} %caction %c${actionName}`,
+        `%c${name} %caction %c${prettyActionName}`,
         "font-weight: bold;",
         "color: gray; font-weight: lighter;",
         "font-weight: bold;"
