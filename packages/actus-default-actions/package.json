@@ -1,0 +1,23 @@
+{
+  "name": "actus-default-actions",
+  "version": "0.0.0-alpha.0",
+  "description": "Default actions for actus",
+  "keywords": [
+    "actus"
+  ],
+  "repository": "https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-default-actions",
+  "license": "MIT",
+  "author": "Evgeny Orekhov",
+  "files": [
+    "index.js",
+    "commonjs/"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
+  "dependencies": {},
+  "engines": {
+    "node": ">=10.17.0"
+  }
+}
