@@ -73,7 +73,7 @@ it("allows to pass undefined to actions", () => {
 
   testAction(undefined);
 
-  expect(subscriber.mock.calls[1][0].state).toEqual([undefined, 0]);
+  expect(subscriber.mock.calls[1][0].state).toStrictEqual([undefined, 0]);
 });
 
 it("works with manually curried actions", () => {
@@ -223,9 +223,18 @@ it("supports slice actions", () => {
   slice2.subtract(8);
 
   expect(subscriber.mock.calls.length).toBe(4);
-  expect(subscriber.mock.calls[1][0].state).toEqual({ slice1: 1, slice2: 0 });
-  expect(subscriber.mock.calls[2][0].state).toEqual({ slice1: 1, slice2: 4 });
-  expect(subscriber.mock.calls[3][0].state).toEqual({ slice1: 1, slice2: -4 });
+  expect(subscriber.mock.calls[1][0].state).toStrictEqual({
+    slice1: 1,
+    slice2: 0
+  });
+  expect(subscriber.mock.calls[2][0].state).toStrictEqual({
+    slice1: 1,
+    slice2: 4
+  });
+  expect(subscriber.mock.calls[3][0].state).toStrictEqual({
+    slice1: 1,
+    slice2: -4
+  });
 });
 
 it("supports recursive slice actions", () => {
@@ -257,19 +266,19 @@ it("supports recursive slice actions", () => {
   slice.subslice2.subtract(8);
 
   expect(subscriber.mock.calls.length).toBe(4);
-  expect(subscriber.mock.calls[1][0].state).toEqual({
+  expect(subscriber.mock.calls[1][0].state).toStrictEqual({
     slice: {
       subslice1: 1,
       subslice2: 0
     }
   });
-  expect(subscriber.mock.calls[2][0].state).toEqual({
+  expect(subscriber.mock.calls[2][0].state).toStrictEqual({
     slice: {
       subslice1: 1,
       subslice2: 4
     }
   });
-  expect(subscriber.mock.calls[3][0].state).toEqual({
+  expect(subscriber.mock.calls[3][0].state).toStrictEqual({
     slice: {
       subslice1: 1,
       subslice2: -4
