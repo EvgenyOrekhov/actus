@@ -7,8 +7,8 @@ it("initializes", () => {
   init({
     state: 0,
     actions: {
-      inc: state => state + 1,
-      dec: state => state - 1
+      inc: (ignore, state) => state + 1,
+      dec: (ignore, state) => state - 1
     },
     subscribers: [subscriber1, subscriber2]
   });
@@ -39,8 +39,8 @@ it("passes actions to subscribers", done => {
   init({
     state: 0,
     actions: {
-      inc: state => state + 1,
-      dec: state => state - 1
+      inc: (ignore, state) => state + 1,
+      dec: (ignore, state) => state - 1
     },
     subscribers: [subscriber1, subscriber2]
   });
@@ -82,7 +82,7 @@ it("cancels notifying subscribers if an action was called by one of them", () =>
   init({
     state: 0,
     actions: {
-      inc: state => state + 1
+      inc: (ignore, state) => state + 1
     },
     subscribers: [subscriber1, subscriber2]
   });

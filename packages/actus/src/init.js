@@ -1,6 +1,6 @@
 import assocPath from "ramda/src/assocPath.js";
 
-const ACTION_ARITY = 2;
+const DEFAULT_ACTION_ARITY = 2;
 
 function getSlice(object, path) {
   return path.reduce(
@@ -52,19 +52,18 @@ export default function init({ state, actions, subscribers }) {
                 function getNewState() {
                   const currentSlice = getSlice(currentState, path);
 
-                  if (action.length === ACTION_ARITY) {
+                  if (action.length === DEFAULT_ACTION_ARITY) {
                     const newSlice = action(value, currentSlice);
 
                     return setSlice(currentState, path, newSlice);
                   }
 
-                  const partiallyAppliedActionOrNewSlice = action(currentSlice);
+                  const partiallyAppliedActionOrNewSlice = action(value);
 
                   const newSlice =
                     typeof partiallyAppliedActionOrNewSlice === "function"
-                      ? // Turns out we have a curried action here.
-                        // Reapplying arguments in the correct order:
-                        action(value)(currentSlice)
+                      ? // Turns out we have a curried action here:
+                        partiallyAppliedActionOrNewSlice(currentSlice)
                       : partiallyAppliedActionOrNewSlice;
 
                   return setSlice(currentState, path, newSlice);

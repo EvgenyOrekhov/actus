@@ -4,10 +4,10 @@ it("number", () => {
   const { set, increment, decrement } = makeDefaultActions(0);
 
   expect(set(1, 0)).toStrictEqual(1);
-  expect(increment(0)).toStrictEqual(1);
-  expect(increment(15)).toStrictEqual(16);
-  expect(decrement(0)).toStrictEqual(-1);
-  expect(decrement(16)).toStrictEqual(15);
+  expect(increment(undefined, 0)).toStrictEqual(1);
+  expect(increment(undefined, 15)).toStrictEqual(16);
+  expect(decrement(undefined, 0)).toStrictEqual(-1);
+  expect(decrement(undefined, 16)).toStrictEqual(15);
 });
 
 it("number - reset()", () => {
@@ -23,8 +23,8 @@ it("boolean", () => {
   expect(on(true)).toStrictEqual(true);
   expect(off(false)).toStrictEqual(false);
   expect(off(true)).toStrictEqual(false);
-  expect(toggle(false)).toStrictEqual(true);
-  expect(toggle(true)).toStrictEqual(false);
+  expect(toggle(undefined, false)).toStrictEqual(true);
+  expect(toggle(undefined, true)).toStrictEqual(false);
 });
 
 it("boolean - set()", () => {
@@ -60,7 +60,7 @@ it("string", () => {
 });
 
 it("object", () => {
-  const { set, reset, clear, merge, del } = makeDefaultActions({
+  const { set, reset, clear, merge, remove } = makeDefaultActions({
     foo: "bar",
     baz: "qux"
   });
@@ -76,7 +76,9 @@ it("object", () => {
   expect(
     merge({ abc: "def", uvw: "xyz", foo: "baz" }, { foo: "bar", baz: "qux" })
   ).toStrictEqual({ abc: "def", uvw: "xyz", foo: "baz", baz: "qux" });
-  expect(del("foo", { foo: "bar", baz: "qux" })).toStrictEqual({ baz: "qux" });
+  expect(remove("foo", { foo: "bar", baz: "qux" })).toStrictEqual({
+    baz: "qux"
+  });
 });
 
 it("array", () => {

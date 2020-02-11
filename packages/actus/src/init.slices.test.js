@@ -7,7 +7,7 @@ it("supports slice actions", () => {
     state: { slice1: 0, slice2: 0 },
     actions: {
       slice1: {
-        inc: state => state + 1
+        inc: (ignore, state) => state + 1
       },
       slice2: {
         add: (value, state) => state + value,
@@ -49,7 +49,7 @@ it("supports recursive slice actions", () => {
     actions: {
       slice: {
         subslice1: {
-          inc: state => state + 1
+          inc: (ignore, state) => state + 1
         },
         subslice2: {
           add: (value, state) => state + value,
@@ -92,7 +92,7 @@ it("doesn't fail when data slices are missing", () => {
     state: 0,
     actions: {
       slice: {
-        testUndefined: state => state
+        testUndefined: (ignore, state) => state
       }
     },
     subscribers: [subscriber]
@@ -111,7 +111,7 @@ it("doesn't fail with null", () => {
     state: null,
     actions: {
       slice: {
-        testUndefined: state => state
+        testUndefined: (ignore, state) => state
       }
     },
     subscribers: [subscriber]
@@ -131,7 +131,7 @@ it("passes current slice action name to subscribers", () => {
     actions: {
       slice: {
         subslice: {
-          testAction: state => state
+          testAction: (ignore, state) => state
         }
       }
     },

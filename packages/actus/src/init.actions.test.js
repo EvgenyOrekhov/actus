@@ -7,8 +7,8 @@ it("returns bound actions", () => {
   const { inc, dec } = init({
     state: 0,
     actions: {
-      inc: state => state + 1,
-      dec: state => state - 1
+      inc: (ignore, state) => state + 1,
+      dec: (ignore, state) => state - 1
     },
     subscribers: [subscriber1, subscriber2]
   });
@@ -81,7 +81,7 @@ it("doesn't pass value to actions that don't accept it", () => {
   const { inc } = init({
     state: 0,
     actions: {
-      inc: state => state + 1
+      inc: (ignore, state) => state + 1
     },
     subscribers: [subscriber1]
   });
@@ -106,4 +106,36 @@ it("works with unnecessarily curried actions", () => {
   inc();
 
   expect(subscriber1.mock.calls[1][0].state).toBe(1);
+});
+
+it("works with actions that ignore state", () => {
+  const subscriber1 = jest.fn();
+
+  const { testAction } = init({
+    state: 0,
+    actions: {
+      testAction: value => value
+    },
+    subscribers: [subscriber1]
+  });
+
+  testAction("test");
+
+  expect(subscriber1.mock.calls[1][0].state).toBe("test");
+});
+
+it("works with actions that ignore everything", () => {
+  const subscriber1 = jest.fn();
+
+  const { testAction } = init({
+    state: 0,
+    actions: {
+      testAction: () => "test"
+    },
+    subscribers: [subscriber1]
+  });
+
+  testAction();
+
+  expect(subscriber1.mock.calls[1][0].state).toBe("test");
 });

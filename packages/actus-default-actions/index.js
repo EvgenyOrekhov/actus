@@ -1,30 +1,30 @@
 export default function makeDefaultActions(initialState) {
   const defaultActions = {
     number: {
-      set: (value, ignore) => value,
+      set: value => value,
       reset: () => initialState,
-      increment: state => state + 1,
-      decrement: state => state - 1
+      increment: (ignore, state) => state + 1,
+      decrement: (ignore, state) => state - 1
     },
     boolean: {
-      set: (value, ignore) => value,
+      set: value => value,
       reset: () => initialState,
       on: () => true,
       off: () => false,
-      toggle: state => !state
+      toggle: (ignore, state) => !state
     },
     string: {
-      set: (value, ignore) => value,
+      set: value => value,
       reset: () => initialState,
       clear: () => "",
       concat: (value, state) => value + state
     },
     object: {
-      set: (value, ignore) => value,
+      set: value => value,
       reset: () => initialState,
       clear: () => ({}),
       merge: (value, state) => ({ ...state, ...value }),
-      del: (propertyName, state) => {
+      remove: (propertyName, state) => {
         // eslint-disable-next-line fp/no-rest-parameters
         const { [propertyName]: ignore, ...rest } = state;
 
@@ -32,7 +32,7 @@ export default function makeDefaultActions(initialState) {
       }
     },
     array: {
-      set: (value, ignore) => value,
+      set: value => value,
       reset: () => initialState,
       clear: () => [],
       append: (value, state) => [...state, value],
