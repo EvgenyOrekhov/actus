@@ -16,7 +16,9 @@
   "type": "module",
   "main": "index.js",
   "module": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "core-js": "^3.6.4"
+  },
   "engines": {
     "node": ">=10.17.0"
   }

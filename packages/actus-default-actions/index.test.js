@@ -107,3 +107,13 @@ it("array", () => {
     16
   ]);
 });
+
+it("recurses", () => {
+  const actions = makeDefaultActions({
+    name: "",
+    count: 0
+  });
+
+  expect(typeof actions.name.concat).toStrictEqual("function");
+  expect(typeof actions.count.increment).toStrictEqual("function");
+});

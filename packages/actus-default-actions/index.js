@@ -42,5 +42,15 @@ export default function makeDefaultActions(initialState) {
 
   const type = Array.isArray(initialState) ? "array" : typeof initialState;
 
-  return defaultActions[type];
+  return type === "object"
+    ? {
+        ...defaultActions[type],
+        ...Object.fromEntries(
+          Object.entries(initialState).map(([key, value]) => [
+            key,
+            makeDefaultActions(value)
+          ])
+        )
+      }
+    : defaultActions[type];
 }
