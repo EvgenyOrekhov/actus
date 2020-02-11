@@ -108,6 +108,14 @@ it("array", () => {
   ]);
 });
 
+it("null", () => {
+  expect(makeDefaultActions(null)).toStrictEqual({});
+});
+
+it("undefined", () => {
+  expect(makeDefaultActions(undefined)).toStrictEqual({});
+});
+
 it("recurses", () => {
   const actions = makeDefaultActions({
     name: "",
@@ -116,4 +124,10 @@ it("recurses", () => {
 
   expect(typeof actions.name.concat).toStrictEqual("function");
   expect(typeof actions.count.increment).toStrictEqual("function");
+});
+
+it("tolerates null", () => {
+  const actions = makeDefaultActions({ foo: { bar: null } });
+
+  expect(actions.foo).not.toHaveProperty("bar");
 });

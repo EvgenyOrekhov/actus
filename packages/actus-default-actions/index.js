@@ -40,16 +40,23 @@ export default function makeDefaultActions(initialState) {
     }
   };
 
+  if (initialState === null) {
+    return {};
+  }
+
   const type = Array.isArray(initialState) ? "array" : typeof initialState;
+
+  if (defaultActions[type] === undefined) {
+    return {};
+  }
 
   return type === "object"
     ? {
         ...defaultActions[type],
         ...Object.fromEntries(
-          Object.entries(initialState).map(([key, value]) => [
-            key,
-            makeDefaultActions(value)
-          ])
+          Object.entries(initialState)
+            .map(([key, value]) => [key, makeDefaultActions(value)])
+            .filter(([, value]) => Object.keys(value).length !== 0)
         )
       }
     : defaultActions[type];
