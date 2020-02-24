@@ -16,16 +16,16 @@ npm install actus-logger
 
 ```js
 import { init } from "actus";
-import makeLogger from "actus-logger";
+import logger from "actus-logger";
 
-init({
-  state: {...},
-  actions: {...},
-  subscribers: [
-    makeLogger(),
-    ...
-  ]
-});
+init([
+  logger(),
+  {
+    state: {...},
+    actions: {...},
+    subscribers: [...]
+  }
+]);
 ```
 
 ## Acknowledgements

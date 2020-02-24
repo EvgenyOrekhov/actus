@@ -9,6 +9,7 @@
   "license": "MIT",
   "author": "Evgeny Orekhov",
   "files": [
+    "makeLogger.js",
     "index.js",
     "commonjs/"
   ],

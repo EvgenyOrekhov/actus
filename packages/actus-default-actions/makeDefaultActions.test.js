@@ -1,4 +1,4 @@
-import makeDefaultActions from "./index.js";
+import makeDefaultActions from "./makeDefaultActions.js";
 
 it("number", () => {
   const { set, increment, decrement } = makeDefaultActions(0);

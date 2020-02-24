@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "build": "babel packages/actus/index.js --out-dir packages/actus/commonjs/ && babel packages/actus/src/ --out-dir packages/actus/commonjs/src/ --ignore **/*.test.js && babel packages/actus-logger/index.js --out-dir packages/actus-logger/commonjs/ && cp README.md packages/actus/",
+    "build": "babel packages/actus/index.js --out-dir packages/actus/commonjs/ && babel packages/actus/src/ --out-dir packages/actus/commonjs/src/ --ignore **/*.test.js && babel packages/actus-logger/makeLogger.js packages/actus-logger/index.js --out-dir packages/actus-logger/commonjs/ && cp README.md packages/actus/",
     "ci": "npm run lint && npm test",
     "lint": "run-p --aggregate-output lint:**",
     "lint:js": "eslint . --ext .js,.json",
