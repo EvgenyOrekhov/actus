@@ -4,6 +4,7 @@ it("number", () => {
   const { set, increment, decrement } = makeDefaultActions(0);
 
   expect(set(1, 0)).toStrictEqual(1);
+  expect(set("1", 0)).toStrictEqual(1);
   expect(increment(undefined, 0)).toStrictEqual(1);
   expect(increment(undefined, 15)).toStrictEqual(16);
   expect(decrement(undefined, 0)).toStrictEqual(-1);
@@ -34,6 +35,7 @@ it("boolean - set()", () => {
   expect(set(true, true)).toStrictEqual(true);
   expect(set(false, false)).toStrictEqual(false);
   expect(set(false, true)).toStrictEqual(false);
+  expect(set(undefined, true)).toStrictEqual(false);
 });
 
 it("boolean - reset() - false", () => {
@@ -54,6 +56,7 @@ it("string", () => {
   const { set, reset, clear, concat } = makeDefaultActions("foo");
 
   expect(set("bar", "baz")).toStrictEqual("bar");
+  expect(set(123, "baz")).toStrictEqual("123");
   expect(reset("bar")).toStrictEqual("foo");
   expect(clear("bar")).toStrictEqual("");
   expect(concat("bar", "baz")).toStrictEqual("barbaz");
