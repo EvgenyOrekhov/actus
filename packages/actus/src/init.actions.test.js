@@ -17,10 +17,10 @@ it("returns bound actions", () => {
   inc();
   dec();
 
-  expect(subscriber1.mock.calls.length).toBe(4);
-  expect(subscriber1.mock.calls[3][0].state).toBe(1);
-  expect(subscriber2.mock.calls.length).toBe(4);
-  expect(subscriber2.mock.calls[3][0].state).toBe(1);
+  expect(subscriber1.mock.calls.length).toStrictEqual(4);
+  expect(subscriber1.mock.calls[3][0].state).toStrictEqual(1);
+  expect(subscriber2.mock.calls.length).toStrictEqual(4);
+  expect(subscriber2.mock.calls[3][0].state).toStrictEqual(1);
 });
 
 it("passes value to actions", () => {
@@ -38,7 +38,7 @@ it("passes value to actions", () => {
   add(4);
   subtract(8);
 
-  expect(subscriber.mock.calls[2][0].state).toBe(-4);
+  expect(subscriber.mock.calls[2][0].state).toStrictEqual(-4);
 });
 
 it("allows to pass undefined to actions", () => {
@@ -72,7 +72,7 @@ it("works with manually curried actions", () => {
   add(4);
   subtract(8);
 
-  expect(subscriber.mock.calls[2][0].state).toBe(-4);
+  expect(subscriber.mock.calls[2][0].state).toStrictEqual(-4);
 });
 
 it("doesn't pass value to actions that don't accept it", () => {
@@ -88,7 +88,7 @@ it("doesn't pass value to actions that don't accept it", () => {
 
   inc("foo");
 
-  expect(subscriber1.mock.calls[1][0].state).toBe(1);
+  expect(subscriber1.mock.calls[1][0].state).toStrictEqual(1);
 });
 
 it("works with unnecessarily curried actions", () => {
@@ -105,7 +105,7 @@ it("works with unnecessarily curried actions", () => {
 
   inc();
 
-  expect(subscriber1.mock.calls[1][0].state).toBe(1);
+  expect(subscriber1.mock.calls[1][0].state).toStrictEqual(1);
 });
 
 it("works with actions that ignore state", () => {
@@ -121,7 +121,7 @@ it("works with actions that ignore state", () => {
 
   testAction("test");
 
-  expect(subscriber1.mock.calls[1][0].state).toBe("test");
+  expect(subscriber1.mock.calls[1][0].state).toStrictEqual("test");
 });
 
 it("works with actions that ignore everything", () => {
@@ -137,5 +137,5 @@ it("works with actions that ignore everything", () => {
 
   testAction();
 
-  expect(subscriber1.mock.calls[1][0].state).toBe("test");
+  expect(subscriber1.mock.calls[1][0].state).toStrictEqual("test");
 });

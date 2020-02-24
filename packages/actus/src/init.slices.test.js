@@ -21,7 +21,7 @@ it("supports slice actions", () => {
   slice2.add(4);
   slice2.subtract(8);
 
-  expect(subscriber.mock.calls.length).toBe(4);
+  expect(subscriber.mock.calls.length).toStrictEqual(4);
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({
     slice1: 1,
     slice2: 0
@@ -64,7 +64,7 @@ it("supports recursive slice actions", () => {
   slice.subslice2.add(4);
   slice.subslice2.subtract(8);
 
-  expect(subscriber.mock.calls.length).toBe(4);
+  expect(subscriber.mock.calls.length).toStrictEqual(4);
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({
     slice: {
       subslice1: 1,
@@ -100,7 +100,7 @@ it("doesn't fail when data slices are missing", () => {
 
   slice.testUndefined();
 
-  expect(subscriber.mock.calls.length).toBe(2);
+  expect(subscriber.mock.calls.length).toStrictEqual(2);
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({ slice: undefined });
 });
 
@@ -119,7 +119,7 @@ it("doesn't fail with null", () => {
 
   slice.testUndefined();
 
-  expect(subscriber.mock.calls.length).toBe(2);
+  expect(subscriber.mock.calls.length).toStrictEqual(2);
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({ slice: undefined });
 });
 
