@@ -78,7 +78,15 @@ it("supports plugins", () => {
 });
 
 it("doesn't throw when something is missing", () => {
-  init([{ state: { foo: "bar" } }, {}]);
+  init([
+    {
+      state: { foo: "bar" },
+      actions: {
+        testAction: (value, state) => state
+      }
+    },
+    {}
+  ]);
 });
 
 it("doesn't turn primitive states into objects", () => {

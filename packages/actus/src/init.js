@@ -27,7 +27,7 @@ function mergeConfigs(config) {
         typeof acc.state === "object" && typeof currentConfig.state === "object"
           ? mergeDeepRight(acc.state, currentConfig.state)
           : state,
-      actions: mergeDeepRight(acc.actions, currentConfig.actions),
+      actions: mergeDeepRight(acc.actions, currentConfig.actions || {}),
       subscribers: [
         ...(acc.subscribers || []),
         ...(currentConfig.subscribers || [])
