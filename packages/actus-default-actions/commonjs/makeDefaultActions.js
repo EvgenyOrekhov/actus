@@ -10,20 +10,20 @@ exports.default = makeDefaultActions;
 function makeDefaultActions(initialState) {
   const defaultActions = {
     number: {
-      set: value => value,
+      set: Number,
       reset: () => initialState,
       increment: (ignore, state) => state + 1,
       decrement: (ignore, state) => state - 1
     },
     boolean: {
-      set: value => value,
+      set: Boolean,
       reset: () => initialState,
       on: () => true,
       off: () => false,
       toggle: (ignore, state) => !state
     },
     string: {
-      set: value => value,
+      set: String,
       reset: () => initialState,
       clear: () => "",
       concat: (value, state) => value + state
