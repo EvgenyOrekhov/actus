@@ -25,11 +25,14 @@ function setSlice(object, path, slice) {
 
 function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
-  return configs.reduce((acc, currentConfig) => ({
-    state: (0, _mergeDeepRight.default)(acc.state, currentConfig.state),
-    actions: (0, _mergeDeepRight.default)(acc.actions, currentConfig.actions),
-    subscribers: [...(acc.subscribers || []), ...(currentConfig.subscribers || [])]
-  }));
+  return configs.reduce((acc, currentConfig) => {
+    const state = currentConfig.state === undefined ? acc.state : currentConfig.state;
+    return {
+      state: typeof acc.state === "object" && typeof currentConfig.state === "object" ? (0, _mergeDeepRight.default)(acc.state, currentConfig.state) : state,
+      actions: (0, _mergeDeepRight.default)(acc.actions, currentConfig.actions),
+      subscribers: [...(acc.subscribers || []), ...(currentConfig.subscribers || [])]
+    };
+  });
 }
 
 function init(config) {
