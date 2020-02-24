@@ -1,4 +1,5 @@
 import assocPath from "ramda/src/assocPath.js";
+import mergeDeepRight from "ramda/src/mergeDeepRight.js";
 
 const DEFAULT_ACTION_ARITY = 2;
 
@@ -14,7 +15,19 @@ function setSlice(object, path, slice) {
   return assocPath(path, slice, object);
 }
 
-export default function init({ state, actions, subscribers }) {
+function mergeConfigs(config) {
+  const configs = Array.isArray(config) ? config : [config];
+
+  return configs.reduce((acc, currentConfig) => ({
+    state: mergeDeepRight(acc.state, currentConfig.state),
+    actions: mergeDeepRight(acc.actions, currentConfig.actions),
+    subscribers: [...acc.subscribers, ...currentConfig.subscribers]
+  }));
+}
+
+export default function init(config) {
+  const { state, actions, subscribers } = mergeConfigs(config);
+
   // eslint-disable-next-line fp/no-let
   let currentState = state;
   // eslint-disable-next-line fp/no-let, init-declarations
