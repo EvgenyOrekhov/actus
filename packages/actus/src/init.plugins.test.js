@@ -76,3 +76,7 @@ it("supports plugins", () => {
     }
   });
 });
+
+it("doesn't throw when something is missing", () => {
+  init([{}, {}]);
+});

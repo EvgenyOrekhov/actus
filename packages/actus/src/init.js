@@ -21,7 +21,10 @@ function mergeConfigs(config) {
   return configs.reduce((acc, currentConfig) => ({
     state: mergeDeepRight(acc.state, currentConfig.state),
     actions: mergeDeepRight(acc.actions, currentConfig.actions),
-    subscribers: [...acc.subscribers, ...currentConfig.subscribers]
+    subscribers: [
+      ...(acc.subscribers || []),
+      ...(currentConfig.subscribers || [])
+    ]
   }));
 }
 
