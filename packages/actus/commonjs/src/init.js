@@ -29,7 +29,7 @@ function mergeConfigs(config) {
     const state = currentConfig.state === undefined ? acc.state : currentConfig.state;
     return {
       state: typeof acc.state === "object" && typeof currentConfig.state === "object" ? (0, _mergeDeepRight.default)(acc.state, currentConfig.state) : state,
-      actions: (0, _mergeDeepRight.default)(acc.actions, currentConfig.actions),
+      actions: (0, _mergeDeepRight.default)(acc.actions, currentConfig.actions || {}),
       subscribers: [...(acc.subscribers || []), ...(currentConfig.subscribers || [])]
     };
   });
