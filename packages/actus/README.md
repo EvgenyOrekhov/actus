@@ -22,8 +22,8 @@ import ReactDOM from "react-dom";
 init({
   state: 0,
   actions: {
-    inc: state => state + 1,
-    dec: state => state - 1
+    inc: (value, state) => state + 1,
+    dec: (value, state) => state - 1
   },
   subscribers: [
     ({ state, actions }) => {
@@ -59,12 +59,6 @@ const actions = init({
   // Actions accept an optional value and the current state, and must return
   // a new state:
   actions: {
-    // Unary action that accepts the current state (in plain JS):
-    increment: state => ({ ...state, number: state.number + 1 }),
-
-    // Unary action that accepts the current state (with Ramda functions):
-    decrement: evolve({ number: dec }),
-
     // Binary action that accepts a value and the current state:
     add: (value, state) => ({ ...state, number: state.number + value }),
 
