@@ -13,8 +13,8 @@ function logger({
   name
 } = {}) {
   return {
-    subscribers: (0, _makeLogger.default)({
+    subscribers: [(0, _makeLogger.default)({
       name
-    })
+    })]
   };
 }
