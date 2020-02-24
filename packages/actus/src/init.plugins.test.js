@@ -78,5 +78,37 @@ it("supports plugins", () => {
 });
 
 it("doesn't throw when something is missing", () => {
-  init([{}, {}]);
+  init([{ state: { foo: "bar" } }, {}]);
+});
+
+it("doesn't turn primitive states into objects", () => {
+  const subscriber = jest.fn();
+
+  init([
+    {
+      state: 1,
+      subscribers: [subscriber]
+    },
+    {
+      state: 0
+    }
+  ]);
+
+  expect(subscriber.mock.calls.length).toStrictEqual(1);
+  expect(subscriber.mock.calls[0][0].state).toStrictEqual(0);
+});
+
+it("ignores undefined states", () => {
+  const subscriber = jest.fn();
+
+  init([
+    {
+      state: 0,
+      subscribers: [subscriber]
+    },
+    {}
+  ]);
+
+  expect(subscriber.mock.calls.length).toStrictEqual(1);
+  expect(subscriber.mock.calls[0][0].state).toStrictEqual(0);
 });
