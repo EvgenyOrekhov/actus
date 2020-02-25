@@ -23,7 +23,11 @@
     "*.{js,json}": "eslint --fix --ext .js,.json"
   },
   "jest": {
-    "collectCoverage": true
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "packages/**/*.js",
+      "!**/commonjs/**"
+    ]
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
