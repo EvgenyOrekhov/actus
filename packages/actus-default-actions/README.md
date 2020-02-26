@@ -10,25 +10,39 @@ Default actions for actus
 npm install actus-default-actions
 ```
 
-## Usage
+## Examples
+
+### React Counter App
 
 ```js
 import { init } from "actus";
 import defaultActions from "actus-default-actions";
+import React from "react";
+import ReactDOM from "react-dom";
 
-const initialState = { counter: 0 };
+const initialState = 0;
 
-const actions = init([
+init([
   defaultActions(initialState),
   {
     state: initialState,
-    subscribers: [console.log]
+    subscribers: [
+      ({ state, actions }) => {
+        ReactDOM.render(
+          <>
+            <h1>{state}</h1>
+            <button onClick={actions.increment}>+</button>
+            <button onClick={actions.decrement}>-</button>
+          </>,
+          document.querySelector("#root")
+        );
+      }
+    ]
   }
 ]);
-
-actions.counter.increment();
-actions.counter.decrement();
 ```
+
+[Try it on CodeSandbox](https://codesandbox.io/s/actus-react-counter-app-example-with-actus-default-actions-wwsb4)
 
 ## Acknowledgements
 
