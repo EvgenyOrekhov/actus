@@ -63,7 +63,7 @@ it("string", () => {
 });
 
 it("object", () => {
-  const { set, reset, clear, merge, remove } = makeDefaultActions({
+  const { set, reset, clear, merge, mergeDeep, remove } = makeDefaultActions({
     foo: "bar",
     baz: "qux"
   });
@@ -79,6 +79,39 @@ it("object", () => {
   expect(
     merge({ abc: "def", uvw: "xyz", foo: "baz" }, { foo: "bar", baz: "qux" })
   ).toStrictEqual({ abc: "def", uvw: "xyz", foo: "baz", baz: "qux" });
+  expect(
+    mergeDeep(
+      {
+        abc: "def",
+        uvw: "xyz",
+        foo: "baz",
+        nested: {
+          abc: "def",
+          uvw: "xyz",
+          foo: "baz"
+        }
+      },
+      {
+        foo: "bar",
+        baz: "qux",
+        nested: {
+          foo: "bar",
+          baz: "qux"
+        }
+      }
+    )
+  ).toStrictEqual({
+    abc: "def",
+    uvw: "xyz",
+    foo: "baz",
+    baz: "qux",
+    nested: {
+      abc: "def",
+      uvw: "xyz",
+      foo: "baz",
+      baz: "qux"
+    }
+  });
   expect(remove("foo", { foo: "bar", baz: "qux" })).toStrictEqual({
     baz: "qux"
   });

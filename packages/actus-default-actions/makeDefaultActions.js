@@ -1,3 +1,5 @@
+import mergeDeepLeft from "ramda/src/mergeDeepLeft.js";
+
 export default function makeDefaultActions(initialState) {
   const defaultActions = {
     number: {
@@ -27,6 +29,7 @@ export default function makeDefaultActions(initialState) {
       reset: () => initialState,
       clear: () => ({}),
       merge: (value, state) => ({ ...state, ...value }),
+      mergeDeep: mergeDeepLeft,
       remove: (propertyName, state) => {
         // eslint-disable-next-line fp/no-rest-parameters
         const { [propertyName]: ignore, ...rest } = state;
