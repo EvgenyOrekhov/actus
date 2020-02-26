@@ -43,7 +43,8 @@ export default function makeDefaultActions(initialState) {
       reset: () => initialState,
       clear: () => [],
       append: (value, state) => [...state, value],
-      prepend: (value, state) => [value, ...state]
+      prepend: (value, state) => [value, ...state],
+      concat: (value, state) => [...state, ...value]
     }
   };
 

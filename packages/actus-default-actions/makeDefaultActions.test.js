@@ -118,7 +118,7 @@ it("object", () => {
 });
 
 it("array", () => {
-  const { set, reset, clear, append, prepend } = makeDefaultActions([
+  const { set, reset, clear, append, prepend, concat } = makeDefaultActions([
     4,
     8,
     15,
@@ -141,6 +141,14 @@ it("array", () => {
     8,
     15,
     16
+  ]);
+  expect(concat([23, 42], [4, 8, 15, 16])).toStrictEqual([
+    4,
+    8,
+    15,
+    16,
+    23,
+    42
   ]);
 });
 
