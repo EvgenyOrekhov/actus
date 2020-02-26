@@ -7,6 +7,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = makeDefaultActions;
 
+var _mergeDeepLeft = _interopRequireDefault(require("ramda/src/mergeDeepLeft.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function makeDefaultActions(initialState) {
   const defaultActions = {
     number: {
@@ -35,6 +39,7 @@ function makeDefaultActions(initialState) {
       merge: (value, state) => ({ ...state,
         ...value
       }),
+      mergeDeep: _mergeDeepLeft.default,
       remove: (propertyName, state) => {
         // eslint-disable-next-line fp/no-rest-parameters
         const {
@@ -49,7 +54,8 @@ function makeDefaultActions(initialState) {
       reset: () => initialState,
       clear: () => [],
       append: (value, state) => [...state, value],
-      prepend: (value, state) => [value, ...state]
+      prepend: (value, state) => [value, ...state],
+      concat: (value, state) => [...state, ...value]
     }
   };
 
