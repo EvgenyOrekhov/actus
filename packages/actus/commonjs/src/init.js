@@ -15,6 +15,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const DEFAULT_ACTION_ARITY = 2;
 
+function isEmptyObject(value) {
+  return typeof value === "object" && Object.keys(value).length === 0;
+}
+
 function getSlice(object, path) {
   return path.reduce((acc, property) => acc === undefined || acc === null ? undefined : acc[property], object);
 }
@@ -26,7 +30,7 @@ function setSlice(object, path, slice) {
 function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
   return configs.reduce((acc, currentConfig) => {
-    const state = currentConfig.state === undefined ? acc.state : currentConfig.state;
+    const state = currentConfig.state === undefined || isEmptyObject(currentConfig.state) ? acc.state : currentConfig.state;
     return {
       state: typeof acc.state === "object" && typeof currentConfig.state === "object" ? (0, _mergeDeepRight.default)(acc.state, currentConfig.state) : state,
       actions: (0, _mergeDeepRight.default)(acc.actions, currentConfig.actions || {}),
