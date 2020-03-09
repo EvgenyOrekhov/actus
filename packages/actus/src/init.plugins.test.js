@@ -106,6 +106,23 @@ it("doesn't turn primitive states into objects", () => {
   expect(subscriber.mock.calls[0][0].state).toStrictEqual(0);
 });
 
+it("doesn't merge empty objects", () => {
+  const subscriber = jest.fn();
+
+  init([
+    {
+      state: 1,
+      subscribers: [subscriber]
+    },
+    {
+      state: {}
+    }
+  ]);
+
+  expect(subscriber.mock.calls.length).toStrictEqual(1);
+  expect(subscriber.mock.calls[0][0].state).toStrictEqual(1);
+});
+
 it("ignores undefined states", () => {
   const subscriber = jest.fn();
 

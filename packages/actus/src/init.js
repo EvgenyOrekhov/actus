@@ -3,6 +3,10 @@ import mergeDeepRight from "ramda/src/mergeDeepRight.js";
 
 const DEFAULT_ACTION_ARITY = 2;
 
+function isEmptyObject(value) {
+  return typeof value === "object" && Object.keys(value).length === 0;
+}
+
 function getSlice(object, path) {
   return path.reduce(
     (acc, property) =>
@@ -20,7 +24,9 @@ function mergeConfigs(config) {
 
   return configs.reduce((acc, currentConfig) => {
     const state =
-      currentConfig.state === undefined ? acc.state : currentConfig.state;
+      currentConfig.state === undefined || isEmptyObject(currentConfig.state)
+        ? acc.state
+        : currentConfig.state;
 
     return {
       state:
