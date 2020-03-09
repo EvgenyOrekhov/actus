@@ -31,7 +31,6 @@ export default function makeDefaultActions(initialState) {
       merge: (value, state) => ({ ...state, ...value }),
       mergeDeep: mergeDeepLeft,
       remove: (propertyName, state) => {
-        // eslint-disable-next-line fp/no-rest-parameters
         const { [propertyName]: ignore, ...rest } = state;
 
         return rest;

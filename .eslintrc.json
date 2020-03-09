@@ -12,18 +12,6 @@
   },
 
   "rules": {
-    "import/extensions": ["error", "always"],
-    "no-shadow": ["error", { "builtinGlobals": true }],
-    "no-magic-numbers": [
-      "error",
-      {
-        "ignore": [0, 1],
-        "enforceConst": true
-      }
-    ],
-    "unicorn/import-index": ["error", { "ignoreImports": true }],
-    "import/no-useless-path-segments": ["error", { "commonjs": true }],
-
     "no-inline-comments": "off",
     "line-comment-position": "off",
     "node/no-unsupported-features/es-builtins": "off",
