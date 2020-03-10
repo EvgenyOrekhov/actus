@@ -89,6 +89,30 @@ it("doesn't throw when something is missing", () => {
   ]);
 });
 
+it("ignores configs that are falsy values", () => {
+  init([
+    {
+      state: { foo: "bar" },
+      actions: {
+        testAction: (value, state) => state
+      },
+      subscribers: []
+    },
+    undefined
+  ]);
+
+  init([
+    {
+      state: { foo: "bar" },
+      actions: {
+        testAction: (value, state) => state
+      },
+      subscribers: []
+    },
+    ""
+  ]);
+});
+
 it("doesn't turn primitive states into objects", () => {
   const subscriber = jest.fn();
 

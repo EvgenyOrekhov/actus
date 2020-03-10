@@ -22,7 +22,7 @@ function setSlice(object, path, slice) {
 function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
 
-  return configs.reduce((acc, currentConfig) => {
+  return configs.filter(Boolean).reduce((acc, currentConfig) => {
     const state =
       currentConfig.state === undefined || isEmptyObject(currentConfig.state)
         ? acc.state
