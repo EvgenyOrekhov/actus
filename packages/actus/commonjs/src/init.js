@@ -29,7 +29,7 @@ function setSlice(object, path, slice) {
 
 function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
-  return configs.reduce((acc, currentConfig) => {
+  return configs.filter(Boolean).reduce((acc, currentConfig) => {
     const state = currentConfig.state === undefined || isEmptyObject(currentConfig.state) ? acc.state : currentConfig.state;
     return {
       state: typeof acc.state === "object" && typeof currentConfig.state === "object" ? (0, _mergeDeepRight.default)(acc.state, currentConfig.state) : state,
@@ -57,18 +57,37 @@ function init(config) {
     value
   } = {}) {
     // eslint-disable-next-line fp/no-mutation
-    shouldNotifySubscribers = true;
+    shouldNotifySubscribers = true; // eslint-disable-next-line fp/no-let
+
+    let errors = [];
     subscribers.every(subscriber => {
-      subscriber({
-        state: currentState,
-        actions: boundActions,
-        actionName,
-        value
-      });
+      try {
+        subscriber({
+          state: currentState,
+          actions: boundActions,
+          actionName,
+          value
+        });
+      } catch (error) {
+        // eslint-disable-next-line fp/no-mutation
+        errors = [...errors, error];
+      }
+
       return shouldNotifySubscribers;
     }); // eslint-disable-next-line fp/no-mutation
 
     shouldNotifySubscribers = false;
+
+    if (errors.length !== 0) {
+      if (errors.length === 1) {
+        throw errors[0];
+      }
+
+      const error = new Error("Multiple subscribers threw errors. See `errors` property for details."); // eslint-disable-next-line fp/no-mutation
+
+      error.errors = errors;
+      throw error;
+    }
   } // eslint-disable-next-line sonarjs/cognitive-complexity
 
 
