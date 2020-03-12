@@ -92,3 +92,55 @@ it("cancels notifying subscribers if an action was called by one of them", () =>
   expect(subscriber2.mock.calls.length).toStrictEqual(1);
   expect(subscriber2.mock.calls[0][0].state).toStrictEqual(1);
 });
+
+it("doesn't stop calling subsequent subscribers when one throws", () => {
+  expect.assertions(3);
+
+  const expectedError = new Error("Expected error");
+
+  const subscriber1 = jest.fn(() => {
+    throw expectedError;
+  });
+  const subscriber2 = jest.fn();
+
+  try {
+    init({
+      state: 0,
+      actions: {},
+      subscribers: [subscriber1, subscriber2]
+    });
+  } catch (error) {
+    expect(error).toStrictEqual(expectedError);
+  }
+
+  expect(subscriber1.mock.calls.length).toStrictEqual(1);
+  expect(subscriber2.mock.calls.length).toStrictEqual(1);
+});
+
+it("reports multiple errors", () => {
+  expect.assertions(3);
+
+  const expectedError1 = new Error("Expected error 1");
+  const expectedError2 = new Error("Expected error 2");
+
+  const subscriber1 = jest.fn(() => {
+    throw expectedError1;
+  });
+  const subscriber2 = jest.fn(() => {
+    throw expectedError2;
+  });
+
+  try {
+    init({
+      state: 0,
+      actions: {},
+      subscribers: [subscriber1, subscriber2]
+    });
+  } catch (error) {
+    expect(error.message).toStrictEqual(
+      "Multiple subscribers threw errors. See `errors` property for details."
+    );
+    expect(error.errors[0]).toStrictEqual(expectedError1);
+    expect(error.errors[1]).toStrictEqual(expectedError2);
+  }
+});

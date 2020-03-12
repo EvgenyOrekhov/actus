@@ -56,19 +56,42 @@ export default function init(config) {
     // eslint-disable-next-line fp/no-mutation
     shouldNotifySubscribers = true;
 
+    // eslint-disable-next-line fp/no-let
+    let errors = [];
+
     subscribers.every(subscriber => {
-      subscriber({
-        state: currentState,
-        actions: boundActions,
-        actionName,
-        value
-      });
+      try {
+        subscriber({
+          state: currentState,
+          actions: boundActions,
+          actionName,
+          value
+        });
+      } catch (error) {
+        // eslint-disable-next-line fp/no-mutation
+        errors = [...errors, error];
+      }
 
       return shouldNotifySubscribers;
     });
 
     // eslint-disable-next-line fp/no-mutation
     shouldNotifySubscribers = false;
+
+    if (errors.length !== 0) {
+      if (errors.length === 1) {
+        throw errors[0];
+      }
+
+      const error = new Error(
+        "Multiple subscribers threw errors. See `errors` property for details."
+      );
+
+      // eslint-disable-next-line fp/no-mutation
+      error.errors = errors;
+
+      throw error;
+    }
   }
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
