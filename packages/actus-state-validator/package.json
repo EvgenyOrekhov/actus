@@ -1,0 +1,27 @@
+{
+  "name": "actus-state-validator",
+  "version": "0.0.0-alpha.0",
+  "description": "State validator for actus",
+  "keywords": [
+    "actus"
+  ],
+  "repository": "https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-state-validator",
+  "license": "MIT",
+  "author": "Evgeny Orekhov",
+  "files": [
+    "makeStateValidator.js",
+    "index.js",
+    "commonjs/"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
+  "dependencies": {
+    "@hapi/joi": "^17.1.0",
+    "core-js": "^3.6.4"
+  },
+  "engines": {
+    "node": ">=10.17.0"
+  }
+}
