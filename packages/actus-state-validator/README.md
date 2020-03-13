@@ -13,45 +13,69 @@ npm install actus-state-validator @hapi/joi
 
 ## Examples
 
-### React Counter App
+### Usage
 
 ```js
 import { init } from "actus";
 import stateValidator from "actus-state-validator";
 import Joi from "@hapi/joi";
+
+init([
+  stateValidator(Joi.object({...}), { /* joi validation options */ }),
+  {
+    state: {...},
+    actions: {...},
+    subscribers: [...]
+  }
+]);
+```
+
+### React Counter App
+
+```js
+import { init } from "actus";
+import stateValidator from "actus-state-validator";
+import logger from "actus-logger";
+import Joi from "@hapi/joi";
 import React from "react";
 import ReactDOM from "react-dom";
 
-init({
-  state: 0,
-  actions: {
-    inc: (value, state) => state + 1,
-    dec: (value, state) => state - 1,
-    tryConvertingToString: String,
-    trySettingToUndefined: () => undefined
-  },
-  subscribers: [
-    stateValidator(
-      Joi.number()
-        .required()
-        .integer()
-    ),
-    ({ state, actions }) => {
-      ReactDOM.render(
-        <>
-          <h1>{state}</h1>
-          <button onClick={actions.inc}>+</button>
-          <button onClick={actions.dec}>-</button>
-          <button onClick={actions.tryConvertingToString}>
-            try converting to string (will be coerced to number)
-          </button>
-          <button onClick={actions.trySettingToUndefined}>
-            try setting to undefined (will throw error)
-          </button>
-        </>,
-        document.querySelector("#root")
-      );
-    }
-  ]
-});
+init([
+  logger(),
+  stateValidator(
+    Joi.number()
+      .required()
+      .integer()
+  ),
+  {
+    state: 0,
+    actions: {
+      inc: (value, state) => state + 1,
+      dec: (value, state) => state - 1,
+      tryConvertingToString: (value, state) => String(state),
+      trySettingToUndefined: () => undefined
+    },
+    subscribers: [
+      ({ state, actions }) => {
+        ReactDOM.render(
+          <>
+            <h1>{state}</h1>
+            <button onClick={() => actions.inc()}>+</button>
+            <button onClick={() => actions.dec()}>-</button>
+            <br />
+            <button onClick={() => actions.tryConvertingToString()}>
+              try converting to string (will be coerced to number)
+            </button>
+            <button onClick={() => actions.trySettingToUndefined()}>
+              try setting to undefined (will throw error)
+            </button>
+          </>,
+          document.querySelector("#root")
+        );
+      }
+    ]
+  }
+]);
 ```
+
+[Try it on CodeSandbox](https://codesandbox.io/s/actus-react-counter-app-example-with-actus-state-validator-onwgk)
