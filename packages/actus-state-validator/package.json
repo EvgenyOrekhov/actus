@@ -1,7 +1,7 @@
 {
   "name": "actus-state-validator",
   "version": "0.0.0-alpha.0",
-  "description": "State validator for actus",
+  "description": "State validator and normalizer for actus (powered by joi)",
   "keywords": [
     "actus"
   ],
