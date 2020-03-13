@@ -55,3 +55,7 @@ it("saves state to localStorage with custom selector", () => {
 
   expect(JSON.parse(storage.state)).toStrictEqual({ baz: "qux" });
 });
+
+it("doesn't throw when there are no options", () => {
+  localStoragePlugin();
+});
