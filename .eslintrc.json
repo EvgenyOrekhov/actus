@@ -32,6 +32,20 @@
       "rules": {
         "no-magic-numbers": "off"
       }
+    },
+
+    {
+      "files": ["packages/actus-redux-devtools/index.js"],
+
+      "rules": {
+        "no-underscore-dangle": [
+          "error",
+          {
+            "enforceInMethodNames": true,
+            "allow": ["__REDUX_DEVTOOLS_EXTENSION__"]
+          }
+        ]
+      }
     }
   ],
 

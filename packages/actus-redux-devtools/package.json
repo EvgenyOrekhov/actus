@@ -1,0 +1,25 @@
+{
+  "name": "actus-redux-devtools",
+  "version": "0.0.0-alpha.0",
+  "description": "Use Redux DevTools Extension with actus",
+  "keywords": [
+    "actus"
+  ],
+  "repository": "https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-redux-devtools",
+  "license": "MIT",
+  "author": "Evgeny Orekhov",
+  "files": [
+    "index.js",
+    "commonjs/"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
+  "dependencies": {
+    "core-js": "^3.6.4"
+  },
+  "engines": {
+    "node": ">=10.17.0"
+  }
+}
