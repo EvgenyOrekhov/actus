@@ -65,3 +65,5 @@ init([
   localStoragePlugin()
 ]);
 ```
+
+[Try it on CodeSandbox](https://codesandbox.io/s/actus-react-counter-app-example-with-actus-localstorage-3dk0n)
