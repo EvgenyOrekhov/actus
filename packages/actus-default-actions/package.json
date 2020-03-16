@@ -18,7 +18,7 @@
   "main": "index.js",
   "module": "index.js",
   "dependencies": {
-    "ramda": "^0.27.0"
+    "deep-extend": "^0.6.0"
   },
   "engines": {
     "node": ">=12.6.1"

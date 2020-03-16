@@ -1,5 +1,5 @@
 import assocPath from "ramda/src/assocPath.js";
-import mergeDeepRight from "ramda/src/mergeDeepRight.js";
+import deepExtend from "deep-extend";
 
 const DEFAULT_ACTION_ARITY = 2;
 
@@ -31,9 +31,9 @@ function mergeConfigs(config) {
     return {
       state:
         typeof acc.state === "object" && typeof currentConfig.state === "object"
-          ? mergeDeepRight(acc.state, currentConfig.state)
+          ? deepExtend({}, acc.state, currentConfig.state)
           : state,
-      actions: mergeDeepRight(acc.actions, currentConfig.actions || {}),
+      actions: deepExtend({}, acc.actions, currentConfig.actions),
       subscribers: [
         ...(acc.subscribers || []),
         ...(currentConfig.subscribers || [])
