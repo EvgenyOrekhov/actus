@@ -1,7 +1,5 @@
 "use strict";
 
-require("core-js/modules/es.object.from-entries");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });

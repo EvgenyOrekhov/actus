@@ -19,13 +19,12 @@
   "module": "index.js",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
-    "core-js": "^3.6.4",
     "fast-deep-equal": "^3.1.1"
   },
   "peerDependencies": {
     "@hapi/joi": ">=17.1.0"
   },
   "engines": {
-    "node": ">=10.17.0"
+    "node": ">=12.6.1"
   }
 }

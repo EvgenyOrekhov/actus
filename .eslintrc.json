@@ -14,9 +14,7 @@
   "rules": {
     "no-inline-comments": "off",
     "line-comment-position": "off",
-    "node/no-unsupported-features/es-builtins": "off",
     "node/no-unsupported-features/es-syntax": "off",
-    "node/no-unsupported-features/node-builtins": "off",
     "fp/no-throw": "off"
   },
 
