@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = init;
 
-var _assocPath = _interopRequireDefault(require("ramda/src/assocPath.js"));
+var _dotPropImmutable = require("dot-prop-immutable");
 
-var _mergeDeepRight = _interopRequireDefault(require("ramda/src/mergeDeepRight.js"));
+var _deepExtend = _interopRequireDefault(require("deep-extend"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22,7 +22,7 @@ function getSlice(object, path) {
 }
 
 function setSlice(object, path, slice) {
-  return (0, _assocPath.default)(path, slice, object);
+  return (0, _dotPropImmutable.set)(object || {}, path, slice);
 }
 
 function mergeConfigs(config) {
@@ -30,8 +30,8 @@ function mergeConfigs(config) {
   return configs.filter(Boolean).reduce((acc, currentConfig) => {
     const state = currentConfig.state === undefined || isEmptyObject(currentConfig.state) ? acc.state : currentConfig.state;
     return {
-      state: typeof acc.state === "object" && typeof currentConfig.state === "object" ? (0, _mergeDeepRight.default)(acc.state, currentConfig.state) : state,
-      actions: (0, _mergeDeepRight.default)(acc.actions, currentConfig.actions || {}),
+      state: typeof acc.state === "object" && typeof currentConfig.state === "object" ? (0, _deepExtend.default)({}, acc.state, currentConfig.state) : state,
+      actions: (0, _deepExtend.default)({}, acc.actions, currentConfig.actions),
       subscribers: [...(acc.subscribers || []), ...(currentConfig.subscribers || [])]
     };
   });

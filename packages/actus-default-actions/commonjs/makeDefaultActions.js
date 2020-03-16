@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = makeDefaultActions;
 
-var _mergeDeepLeft = _interopRequireDefault(require("ramda/src/mergeDeepLeft.js"));
+var _deepExtend = _interopRequireDefault(require("deep-extend"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37,7 +37,7 @@ function makeDefaultActions(initialState) {
       merge: (value, state) => ({ ...state,
         ...value
       }),
-      mergeDeep: _mergeDeepLeft.default,
+      mergeDeep: (value, state) => (0, _deepExtend.default)({}, state, value),
       remove: (propertyName, state) => {
         const {
           [propertyName]: ignore,
