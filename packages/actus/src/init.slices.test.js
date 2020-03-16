@@ -123,6 +123,26 @@ it("doesn't fail with null", () => {
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({ slice: undefined });
 });
 
+it("doesn't fail with null - curried action", () => {
+  const subscriber = jest.fn();
+
+  const { slice } = init({
+    state: null,
+    actions: {
+      slice: {
+        // eslint-disable-next-line unicorn/consistent-function-scoping
+        testUndefined: ignore => state => state
+      }
+    },
+    subscribers: [subscriber]
+  });
+
+  slice.testUndefined();
+
+  expect(subscriber.mock.calls.length).toStrictEqual(2);
+  expect(subscriber.mock.calls[1][0].state).toStrictEqual({ slice: undefined });
+});
+
 it("passes current slice action name to subscribers", () => {
   const subscriber = jest.fn();
 

@@ -1,4 +1,4 @@
-import assocPath from "ramda/src/assocPath.js";
+import { set } from "dot-prop-immutable";
 import deepExtend from "deep-extend";
 
 const DEFAULT_ACTION_ARITY = 2;
@@ -16,7 +16,7 @@ function getSlice(object, path) {
 }
 
 function setSlice(object, path, slice) {
-  return assocPath(path, slice, object);
+  return set(object || {}, path, slice);
 }
 
 function mergeConfigs(config) {

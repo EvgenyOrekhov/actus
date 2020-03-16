@@ -28,7 +28,7 @@
   "module": "index.js",
   "dependencies": {
     "deep-extend": "^0.6.0",
-    "ramda": "^0.27.0"
+    "dot-prop-immutable": "^2.1.0"
   },
   "engines": {
     "node": ">=12.6.1"
