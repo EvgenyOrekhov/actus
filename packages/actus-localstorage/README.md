@@ -1,6 +1,6 @@
 # actus-localstorage
 
-Persisting actus state to localStorage
+Persisting actus state to `localStorage`
 
 [![npm version](https://img.shields.io/npm/v/actus-localstorage.svg?style=flat-square)](https://www.npmjs.com/package/actus-localstorage)
 
