@@ -83,6 +83,17 @@ const actions = init({
 });
 ```
 
+## Plugins
+
+- [actus-default-actions](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-default-actions) - basic actions for your state properties (`set()`, `reset()`, `toggle()`, etc.)
+- [actus-localstorage](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-localstorage) - persists state to `localStorage`
+- [actus-state-validator](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-state-validator) - state validator and normalizer powered by [joi](https://github.com/hapijs/joi)
+
+## Plugins for development
+
+- [actus-logger](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-logger) - logs actions and state changes to your console
+- [actus-redux-devtools](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-redux-devtools) - Use [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension) with actus
+
 ## Acknowledgements
 
 Sources of inspiration:
