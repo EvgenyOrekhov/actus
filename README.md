@@ -6,7 +6,7 @@ Minimalist state container
 [![Travis CI build status](https://img.shields.io/travis/EvgenyOrekhov/actus/master.svg?style=flat-square)](https://travis-ci.org/EvgenyOrekhov/actus)
 
 - **Simple** - it takes 2 minutes to learn
-- **Small** - [no dependencies](https://bundlephobia.com/result?p=actus)
+- **Small** - [see for yourself](https://bundlephobia.com/result?p=actus)
 - **Functional** - immutable data-last actions
 - **Framework-agnostic**
 
