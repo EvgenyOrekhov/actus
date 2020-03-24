@@ -6,7 +6,7 @@
     "ci": "npm run lint && npm test",
     "lint": "run-p --aggregate-output lint:**",
     "lint:js": "eslint . --ext .js,.json",
-    "lint:prettier": "prettier --check **/*.{js,css,json,md,html,yml,yaml}",
+    "lint:prettier": "prettier --check .",
     "prepare": "lerna bootstrap",
     "release": "lerna publish",
     "test": "jest",

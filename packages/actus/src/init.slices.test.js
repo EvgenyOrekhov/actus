@@ -7,14 +7,14 @@ it("supports slice actions", () => {
     state: { slice1: 0, slice2: 0 },
     actions: {
       slice1: {
-        inc: (ignore, state) => state + 1
+        inc: (ignore, state) => state + 1,
       },
       slice2: {
         add: (value, state) => state + value,
-        subtract: value => state => state - value
-      }
+        subtract: (value) => (state) => state - value,
+      },
     },
-    subscribers: [subscriber]
+    subscribers: [subscriber],
   });
 
   slice1.inc();
@@ -24,15 +24,15 @@ it("supports slice actions", () => {
   expect(subscriber.mock.calls.length).toStrictEqual(4);
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({
     slice1: 1,
-    slice2: 0
+    slice2: 0,
   });
   expect(subscriber.mock.calls[2][0].state).toStrictEqual({
     slice1: 1,
-    slice2: 4
+    slice2: 4,
   });
   expect(subscriber.mock.calls[3][0].state).toStrictEqual({
     slice1: 1,
-    slice2: -4
+    slice2: -4,
   });
 });
 
@@ -43,21 +43,21 @@ it("supports recursive slice actions", () => {
     state: {
       slice: {
         subslice1: 0,
-        subslice2: 0
-      }
+        subslice2: 0,
+      },
     },
     actions: {
       slice: {
         subslice1: {
-          inc: (ignore, state) => state + 1
+          inc: (ignore, state) => state + 1,
         },
         subslice2: {
           add: (value, state) => state + value,
-          subtract: value => state => state - value
-        }
-      }
+          subtract: (value) => (state) => state - value,
+        },
+      },
     },
-    subscribers: [subscriber]
+    subscribers: [subscriber],
   });
 
   slice.subslice1.inc();
@@ -68,20 +68,20 @@ it("supports recursive slice actions", () => {
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({
     slice: {
       subslice1: 1,
-      subslice2: 0
-    }
+      subslice2: 0,
+    },
   });
   expect(subscriber.mock.calls[2][0].state).toStrictEqual({
     slice: {
       subslice1: 1,
-      subslice2: 4
-    }
+      subslice2: 4,
+    },
   });
   expect(subscriber.mock.calls[3][0].state).toStrictEqual({
     slice: {
       subslice1: 1,
-      subslice2: -4
-    }
+      subslice2: -4,
+    },
   });
 });
 
@@ -92,10 +92,10 @@ it("doesn't fail when data slices are missing", () => {
     state: 0,
     actions: {
       slice: {
-        testUndefined: (ignore, state) => state
-      }
+        testUndefined: (ignore, state) => state,
+      },
     },
-    subscribers: [subscriber]
+    subscribers: [subscriber],
   });
 
   slice.testUndefined();
@@ -111,10 +111,10 @@ it("doesn't fail with null", () => {
     state: null,
     actions: {
       slice: {
-        testUndefined: (ignore, state) => state
-      }
+        testUndefined: (ignore, state) => state,
+      },
     },
-    subscribers: [subscriber]
+    subscribers: [subscriber],
   });
 
   slice.testUndefined();
@@ -131,11 +131,11 @@ it("passes current slice action name to subscribers", () => {
     actions: {
       slice: {
         subslice: {
-          testAction: (ignore, state) => state
-        }
-      }
+          testAction: (ignore, state) => state,
+        },
+      },
     },
-    subscribers: [subscriber]
+    subscribers: [subscriber],
   });
 
   slice.subslice.testAction();
@@ -143,6 +143,6 @@ it("passes current slice action name to subscribers", () => {
   expect(subscriber.mock.calls[1][0].actionName).toStrictEqual([
     "slice",
     "subslice",
-    "testAction"
+    "testAction",
   ]);
 });

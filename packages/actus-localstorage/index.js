@@ -2,8 +2,8 @@
 
 export default function localStoragePlugin({
   key = "state",
-  selector = state => state,
-  storage = localStorage
+  selector = (state) => state,
+  storage = localStorage,
 } = {}) {
   function getState() {
     try {
@@ -20,7 +20,7 @@ export default function localStoragePlugin({
       ({ state }) => {
         // eslint-disable-next-line fp/no-mutation, no-param-reassign
         storage[key] = JSON.stringify(selector(state));
-      }
-    ]
+      },
+    ],
   };
 }

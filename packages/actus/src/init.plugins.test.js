@@ -13,41 +13,41 @@ it("supports plugins", () => {
         nested: {
           bar: "qux",
           qux: "bar",
-          count: 123
-        }
+          count: 123,
+        },
       },
       actions: {
         inc: () => 0,
         nested: {
           count: {
-            dec: (ignore, state) => state - 1
-          }
-        }
+            dec: (ignore, state) => state - 1,
+          },
+        },
       },
-      subscribers: [subscriber1]
+      subscribers: [subscriber1],
     },
     {
       state: {
         nested: {
-          count: 0
-        }
+          count: 0,
+        },
       },
       actions: {
         inc: (ignore, state) => ({
           ...state,
           nested: {
             ...state.nested,
-            count: state.nested.count + 1
-          }
+            count: state.nested.count + 1,
+          },
         }),
         nested: {
           count: {
-            triple: (ignore, state) => state * 3
-          }
-        }
+            triple: (ignore, state) => state * 3,
+          },
+        },
       },
-      subscribers: [subscriber2]
-    }
+      subscribers: [subscriber2],
+    },
   ]);
 
   actions.inc();
@@ -62,8 +62,8 @@ it("supports plugins", () => {
     nested: {
       bar: "qux",
       qux: "bar",
-      count: 3
-    }
+      count: 3,
+    },
   });
   expect(subscriber2.mock.calls.length).toStrictEqual(5);
   expect(subscriber2.mock.calls[4][0].state).toStrictEqual({
@@ -72,8 +72,8 @@ it("supports plugins", () => {
     nested: {
       bar: "qux",
       qux: "bar",
-      count: 3
-    }
+      count: 3,
+    },
   });
 });
 
@@ -82,10 +82,10 @@ it("doesn't throw when something is missing", () => {
     {
       state: { foo: "bar" },
       actions: {
-        testAction: (value, state) => state
-      }
+        testAction: (value, state) => state,
+      },
     },
-    {}
+    {},
   ]);
 });
 
@@ -94,22 +94,22 @@ it("ignores configs that are falsy values", () => {
     {
       state: { foo: "bar" },
       actions: {
-        testAction: (value, state) => state
+        testAction: (value, state) => state,
       },
-      subscribers: []
+      subscribers: [],
     },
-    undefined
+    undefined,
   ]);
 
   init([
     {
       state: { foo: "bar" },
       actions: {
-        testAction: (value, state) => state
+        testAction: (value, state) => state,
       },
-      subscribers: []
+      subscribers: [],
     },
-    ""
+    "",
   ]);
 });
 
@@ -119,11 +119,11 @@ it("doesn't turn primitive states into objects", () => {
   init([
     {
       state: 1,
-      subscribers: [subscriber]
+      subscribers: [subscriber],
     },
     {
-      state: 0
-    }
+      state: 0,
+    },
   ]);
 
   expect(subscriber.mock.calls.length).toStrictEqual(1);
@@ -136,11 +136,11 @@ it("doesn't merge empty objects", () => {
   init([
     {
       state: 1,
-      subscribers: [subscriber]
+      subscribers: [subscriber],
     },
     {
-      state: {}
-    }
+      state: {},
+    },
   ]);
 
   expect(subscriber.mock.calls.length).toStrictEqual(1);
@@ -153,9 +153,9 @@ it("ignores undefined states", () => {
   init([
     {
       state: 0,
-      subscribers: [subscriber]
+      subscribers: [subscriber],
     },
-    {}
+    {},
   ]);
 
   expect(subscriber.mock.calls.length).toStrictEqual(1);

@@ -8,15 +8,15 @@
   "repository": "https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-logger",
   "license": "MIT",
   "author": "Evgeny Orekhov",
+  "sideEffects": false,
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
   "files": [
     "makeLogger.js",
     "index.js",
     "commonjs/"
   ],
-  "sideEffects": false,
-  "type": "module",
-  "main": "index.js",
-  "module": "index.js",
   "dependencies": {
     "deep-object-diff": "^1.1.0"
   },

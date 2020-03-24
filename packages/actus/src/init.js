@@ -36,8 +36,8 @@ function mergeConfigs(config) {
       actions: mergeDeepRight(acc.actions, currentConfig.actions || {}),
       subscribers: [
         ...(acc.subscribers || []),
-        ...(currentConfig.subscribers || [])
-      ]
+        ...(currentConfig.subscribers || []),
+      ],
     };
   });
 }
@@ -59,13 +59,13 @@ export default function init(config) {
     // eslint-disable-next-line fp/no-let
     let errors = [];
 
-    subscribers.every(subscriber => {
+    subscribers.every((subscriber) => {
       try {
         subscriber({
           state: currentState,
           actions: boundActions,
           actionName,
-          value
+          value,
         });
       } catch (error) {
         // eslint-disable-next-line fp/no-mutation
@@ -128,9 +128,9 @@ export default function init(config) {
                 notifySubscribers({
                   actionName:
                     path.length === 0 ? actionName : [...path, actionName],
-                  value
+                  value,
                 });
-              }
+              },
             ]
           : [actionName, bindActions(action, [...path, actionName])]
       )

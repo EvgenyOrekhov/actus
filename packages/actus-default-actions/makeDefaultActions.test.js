@@ -65,7 +65,7 @@ it("string", () => {
 it("object", () => {
   const { set, reset, clear, merge, mergeDeep, remove } = makeDefaultActions({
     foo: "bar",
-    baz: "qux"
+    baz: "qux",
   });
 
   expect(
@@ -73,7 +73,7 @@ it("object", () => {
   ).toStrictEqual({ abc: "def", uvw: "xyz" });
   expect(reset({ abc: "def", uvw: "xyz" })).toStrictEqual({
     foo: "bar",
-    baz: "qux"
+    baz: "qux",
   });
   expect(clear({ foo: "bar", baz: "qux" })).toStrictEqual({});
   expect(
@@ -88,16 +88,16 @@ it("object", () => {
         nested: {
           abc: "def",
           uvw: "xyz",
-          foo: "baz"
-        }
+          foo: "baz",
+        },
       },
       {
         foo: "bar",
         baz: "qux",
         nested: {
           foo: "bar",
-          baz: "qux"
-        }
+          baz: "qux",
+        },
       }
     )
   ).toStrictEqual({
@@ -109,11 +109,11 @@ it("object", () => {
       abc: "def",
       uvw: "xyz",
       foo: "baz",
-      baz: "qux"
-    }
+      baz: "qux",
+    },
   });
   expect(remove("foo", { foo: "bar", baz: "qux" })).toStrictEqual({
-    baz: "qux"
+    baz: "qux",
   });
 });
 
@@ -122,7 +122,7 @@ it("array", () => {
     4,
     8,
     15,
-    16
+    16,
   ]);
 
   expect(set([23, 42], [4, 8, 15, 16])).toStrictEqual([23, 42]);
@@ -133,14 +133,14 @@ it("array", () => {
     8,
     15,
     16,
-    [23, 42]
+    [23, 42],
   ]);
   expect(prepend([23, 42], [4, 8, 15, 16])).toStrictEqual([
     [23, 42],
     4,
     8,
     15,
-    16
+    16,
   ]);
   expect(concat([23, 42], [4, 8, 15, 16])).toStrictEqual([
     4,
@@ -148,7 +148,7 @@ it("array", () => {
     15,
     16,
     23,
-    42
+    42,
   ]);
 });
 
@@ -163,7 +163,7 @@ it("undefined", () => {
 it("recurses", () => {
   const actions = makeDefaultActions({
     name: "",
-    count: 0
+    count: 0,
   });
 
   expect(typeof actions.name.concat).toStrictEqual("function");

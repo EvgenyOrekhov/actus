@@ -8,9 +8,9 @@ it("initializes", () => {
     state: 0,
     actions: {
       inc: (ignore, state) => state + 1,
-      dec: (ignore, state) => state - 1
+      dec: (ignore, state) => state - 1,
     },
-    subscribers: [subscriber1, subscriber2]
+    subscribers: [subscriber1, subscriber2],
   });
 
   expect(subscriber1.mock.calls.length).toStrictEqual(1);
@@ -19,7 +19,7 @@ it("initializes", () => {
   expect(subscriber2.mock.calls[0][0].state).toStrictEqual(0);
 });
 
-it("passes actions to subscribers", done => {
+it("passes actions to subscribers", (done) => {
   const subscriber1 = jest.fn(({ actions }) => {
     setTimeout(actions.inc, 0);
     setTimeout(actions.inc, 0);
@@ -40,9 +40,9 @@ it("passes actions to subscribers", done => {
     state: 0,
     actions: {
       inc: (ignore, state) => state + 1,
-      dec: (ignore, state) => state - 1
+      dec: (ignore, state) => state - 1,
     },
-    subscribers: [subscriber1, subscriber2]
+    subscribers: [subscriber1, subscriber2],
   });
 });
 
@@ -55,15 +55,15 @@ it("passes current action name and value to subscribers", () => {
     state: 0,
     actions: {
       add: (value, state) => state + value,
-      subtract: (value, state) => state - value
+      subtract: (value, state) => state - value,
     },
-    subscribers
+    subscribers,
   });
 
   add(4);
   subtract(8);
 
-  subscribers.forEach(subscriber => {
+  subscribers.forEach((subscriber) => {
     expect(subscriber.mock.calls[1][0].actionName).toStrictEqual("add");
     expect(subscriber.mock.calls[1][0].value).toStrictEqual(4);
     expect(subscriber.mock.calls[2][0].actionName).toStrictEqual("subtract");
@@ -82,9 +82,9 @@ it("cancels notifying subscribers if an action was called by one of them", () =>
   init({
     state: 0,
     actions: {
-      inc: (ignore, state) => state + 1
+      inc: (ignore, state) => state + 1,
     },
-    subscribers: [subscriber1, subscriber2]
+    subscribers: [subscriber1, subscriber2],
   });
 
   expect(subscriber1.mock.calls.length).toStrictEqual(2);
@@ -107,7 +107,7 @@ it("doesn't stop calling subsequent subscribers when one throws", () => {
     init({
       state: 0,
       actions: {},
-      subscribers: [subscriber1, subscriber2]
+      subscribers: [subscriber1, subscriber2],
     });
   } catch (error) {
     expect(error).toStrictEqual(expectedError);
@@ -134,7 +134,7 @@ it("reports multiple errors", () => {
     init({
       state: 0,
       actions: {},
-      subscribers: [subscriber1, subscriber2]
+      subscribers: [subscriber1, subscriber2],
     });
   } catch (error) {
     expect(error.message).toStrictEqual(

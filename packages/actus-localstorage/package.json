@@ -8,14 +8,14 @@
   "repository": "https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-localstorage",
   "license": "MIT",
   "author": "Evgeny Orekhov",
-  "files": [
-    "index.js",
-    "commonjs/"
-  ],
   "sideEffects": false,
   "type": "module",
   "main": "index.js",
   "module": "index.js",
+  "files": [
+    "index.js",
+    "commonjs/"
+  ],
   "dependencies": {},
   "engines": {
     "node": ">=12.6.1"

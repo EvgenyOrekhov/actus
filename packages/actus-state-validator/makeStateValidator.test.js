@@ -15,7 +15,7 @@ it("supports options", () => {
   const schema = Joi.object({ foo: Joi.number() });
   const validateState = makeStateValidator(schema, {
     convert: false,
-    allowUnknown: true
+    allowUnknown: true,
   });
 
   expect(() => validateState({ state: { foo: "123" } })).toThrow(

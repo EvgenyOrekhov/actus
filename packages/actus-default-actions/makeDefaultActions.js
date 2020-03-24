@@ -6,7 +6,7 @@ export default function makeDefaultActions(initialState) {
       set: Number,
       reset: () => initialState,
       increment: (ignore, state) => state + 1,
-      decrement: (ignore, state) => state - 1
+      decrement: (ignore, state) => state - 1,
     },
 
     boolean: {
@@ -14,18 +14,18 @@ export default function makeDefaultActions(initialState) {
       reset: () => initialState,
       on: () => true,
       off: () => false,
-      toggle: (ignore, state) => !state
+      toggle: (ignore, state) => !state,
     },
 
     string: {
       set: String,
       reset: () => initialState,
       clear: () => "",
-      concat: (value, state) => value + state
+      concat: (value, state) => value + state,
     },
 
     object: {
-      set: value => value,
+      set: (value) => value,
       reset: () => initialState,
       clear: () => ({}),
       merge: (value, state) => ({ ...state, ...value }),
@@ -34,17 +34,17 @@ export default function makeDefaultActions(initialState) {
         const { [propertyName]: ignore, ...rest } = state;
 
         return rest;
-      }
+      },
     },
 
     array: {
-      set: value => value,
+      set: (value) => value,
       reset: () => initialState,
       clear: () => [],
       append: (value, state) => [...state, value],
       prepend: (value, state) => [value, ...state],
-      concat: (value, state) => [...state, ...value]
-    }
+      concat: (value, state) => [...state, ...value],
+    },
   };
 
   if (initialState === null) {
@@ -64,7 +64,7 @@ export default function makeDefaultActions(initialState) {
           Object.entries(initialState)
             .map(([key, value]) => [key, makeDefaultActions(value)])
             .filter(([, value]) => Object.keys(value).length !== 0)
-        )
+        ),
       }
     : defaultActions[type];
 }

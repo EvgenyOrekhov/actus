@@ -42,18 +42,14 @@ import ReactDOM from "react-dom";
 
 init([
   logger(),
-  stateValidator(
-    Joi.number()
-      .required()
-      .integer()
-  ),
+  stateValidator(Joi.number().required().integer()),
   {
     state: 0,
     actions: {
       inc: (value, state) => state + 1,
       dec: (value, state) => state - 1,
       tryConvertingToString: (value, state) => String(state),
-      trySettingToUndefined: () => undefined
+      trySettingToUndefined: () => undefined,
     },
     subscribers: [
       ({ state, actions }) => {
@@ -72,9 +68,9 @@ init([
           </>,
           document.querySelector("#root")
         );
-      }
-    ]
-  }
+      },
+    ],
+  },
 ]);
 ```
 

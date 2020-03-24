@@ -19,7 +19,7 @@ export default function reduxDevTools({ name = undefined } = {}) {
 
   return {
     actions: {
-      setStateFromDevTools: value => value
+      setStateFromDevTools: (value) => value,
     },
 
     subscribers: [
@@ -63,12 +63,12 @@ export default function reduxDevTools({ name = undefined } = {}) {
                 skip: false, // skip (cancel) actions
                 reorder: false, // drag and drop actions in the history list
                 dispatch: true, // dispatch custom actions or action creators
-                test: false // generate tests for the selected actions
-              }
+                test: false, // generate tests for the selected actions
+              },
             });
 
             // eslint-disable-next-line max-statements, complexity
-            devTools.subscribe(message => {
+            devTools.subscribe((message) => {
               if (message.type === "ACTION") {
                 const payload =
                   typeof message.payload === "string"
@@ -139,7 +139,7 @@ export default function reduxDevTools({ name = undefined } = {}) {
 
           devTools.send({ type, payload: value }, state);
         };
-      })()
-    ]
+      })(),
+    ],
   };
 }

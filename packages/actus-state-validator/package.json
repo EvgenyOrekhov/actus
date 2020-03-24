@@ -8,15 +8,15 @@
   "repository": "https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-state-validator",
   "license": "MIT",
   "author": "Evgeny Orekhov",
+  "sideEffects": false,
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
   "files": [
     "makeStateValidator.js",
     "index.js",
     "commonjs/"
   ],
-  "sideEffects": false,
-  "type": "module",
-  "main": "index.js",
-  "module": "index.js",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
     "fast-deep-equal": "^3.1.1"

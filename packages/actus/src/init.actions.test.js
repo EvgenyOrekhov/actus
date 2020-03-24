@@ -8,9 +8,9 @@ it("returns bound actions", () => {
     state: 0,
     actions: {
       inc: (ignore, state) => state + 1,
-      dec: (ignore, state) => state - 1
+      dec: (ignore, state) => state - 1,
     },
-    subscribers: [subscriber1, subscriber2]
+    subscribers: [subscriber1, subscriber2],
   });
 
   inc();
@@ -30,9 +30,9 @@ it("passes value to actions", () => {
     state: 0,
     actions: {
       add: (value, state) => state + value,
-      subtract: (value, state) => state - value
+      subtract: (value, state) => state - value,
     },
-    subscribers: [subscriber]
+    subscribers: [subscriber],
   });
 
   add(4);
@@ -47,9 +47,9 @@ it("allows to pass undefined to actions", () => {
   const { testAction } = init({
     state: 0,
     actions: {
-      testAction: (value, state) => [value, state]
+      testAction: (value, state) => [value, state],
     },
-    subscribers: [subscriber]
+    subscribers: [subscriber],
   });
 
   testAction(undefined);
@@ -63,10 +63,10 @@ it("works with manually curried actions", () => {
   const { add, subtract } = init({
     state: 0,
     actions: {
-      add: value => state => state + value,
-      subtract: value => state => state - value
+      add: (value) => (state) => state + value,
+      subtract: (value) => (state) => state - value,
     },
-    subscribers: [subscriber]
+    subscribers: [subscriber],
   });
 
   add(4);
@@ -81,9 +81,9 @@ it("doesn't pass value to actions that don't accept it", () => {
   const { inc } = init({
     state: 0,
     actions: {
-      inc: (ignore, state) => state + 1
+      inc: (ignore, state) => state + 1,
     },
-    subscribers: [subscriber1]
+    subscribers: [subscriber1],
   });
 
   inc("foo");
@@ -98,9 +98,9 @@ it("works with unnecessarily curried actions", () => {
     state: 0,
     actions: {
       // eslint-disable-next-line unicorn/consistent-function-scoping
-      inc: () => state => state + 1
+      inc: () => (state) => state + 1,
     },
-    subscribers: [subscriber1]
+    subscribers: [subscriber1],
   });
 
   inc();
@@ -114,9 +114,9 @@ it("works with actions that ignore state", () => {
   const { testAction } = init({
     state: 0,
     actions: {
-      testAction: value => value
+      testAction: (value) => value,
     },
-    subscribers: [subscriber1]
+    subscribers: [subscriber1],
   });
 
   testAction("test");
@@ -130,9 +130,9 @@ it("works with actions that ignore everything", () => {
   const { testAction } = init({
     state: 0,
     actions: {
-      testAction: () => "test"
+      testAction: () => "test",
     },
-    subscribers: [subscriber1]
+    subscribers: [subscriber1],
   });
 
   testAction();

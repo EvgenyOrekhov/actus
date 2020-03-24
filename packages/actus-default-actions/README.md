@@ -36,9 +36,9 @@ init([
           </>,
           document.querySelector("#root")
         );
-      }
-    ]
-  }
+      },
+    ],
+  },
 ]);
 ```
 
