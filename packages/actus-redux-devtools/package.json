@@ -1,6 +1,6 @@
 {
   "name": "actus-redux-devtools",
-  "version": "0.0.0-alpha.1",
+  "version": "0.1.0-alpha.0",
   "description": "Use Redux DevTools Extension with actus",
   "keywords": [
     "actus"
@@ -16,7 +16,6 @@
     "index.js",
     "commonjs/"
   ],
-  "dependencies": {},
   "engines": {
     "node": ">=12.6.1"
   }
