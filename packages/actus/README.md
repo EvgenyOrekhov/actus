@@ -3,10 +3,10 @@
 Minimalist state container
 
 [![npm version](https://img.shields.io/npm/v/actus.svg?style=flat-square)](https://www.npmjs.com/package/actus)
-[![Travis CI build status](https://img.shields.io/travis/EvgenyOrekhov/actus/master.svg?style=flat-square)](https://travis-ci.org/EvgenyOrekhov/actus)
+[![Travis CI build status](https://img.shields.io/travis/com/EvgenyOrekhov/actus/master.svg?style=flat-square)](https://travis-ci.org/EvgenyOrekhov/actus)
 
 - **Simple** - it takes 2 minutes to learn
-- **Small** - [no dependencies](https://bundlephobia.com/result?p=actus)
+- **Small** - [see for yourself](https://bundlephobia.com/result?p=actus)
 - **Functional** - immutable data-last actions
 - **Framework-agnostic**
 
@@ -82,6 +82,17 @@ const actions = init({
   subscribers: [({ state, actions, actionName, value }) => {}],
 });
 ```
+
+## Plugins
+
+- [actus-default-actions](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-default-actions) - basic actions for your state properties (`set()`, `reset()`, `toggle()`, etc.)
+- [actus-localstorage](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-localstorage) - persists state to `localStorage`
+- [actus-state-validator](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-state-validator) - state validator and normalizer powered by [joi](https://github.com/hapijs/joi)
+
+## Plugins for development
+
+- [actus-logger](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-logger) - logs actions and state changes to your console
+- [actus-redux-devtools](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-redux-devtools) - Use [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension) with actus
 
 ## Acknowledgements
 
