@@ -5,7 +5,8 @@
     "hardcore/node",
     "prettier",
     "prettier/unicorn",
-    "plugin:jest/all"
+    "plugin:jest/all",
+    "plugin:jest-formatting/strict"
   ],
 
   "parserOptions": {

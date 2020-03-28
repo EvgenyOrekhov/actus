@@ -34,6 +34,7 @@ test("passes actions to subscribers", async () => {
         expect(subscriber1.mock.calls[4][0].state).toStrictEqual(2);
         expect(subscriber2.mock.calls).toHaveLength(5);
         expect(subscriber2.mock.calls[4][0].state).toStrictEqual(2);
+
         resolve();
       }, 0);
     });
