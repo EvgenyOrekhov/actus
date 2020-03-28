@@ -1,6 +1,6 @@
 import init from "./init.js";
 
-it("returns bound actions", () => {
+test("returns bound actions", () => {
   const subscriber1 = jest.fn();
   const subscriber2 = jest.fn();
 
@@ -17,13 +17,13 @@ it("returns bound actions", () => {
   inc();
   dec();
 
-  expect(subscriber1.mock.calls.length).toStrictEqual(4);
+  expect(subscriber1.mock.calls).toHaveLength(4);
   expect(subscriber1.mock.calls[3][0].state).toStrictEqual(1);
-  expect(subscriber2.mock.calls.length).toStrictEqual(4);
+  expect(subscriber2.mock.calls).toHaveLength(4);
   expect(subscriber2.mock.calls[3][0].state).toStrictEqual(1);
 });
 
-it("passes value to actions", () => {
+test("passes value to actions", () => {
   const subscriber = jest.fn();
 
   const { add, subtract } = init({
@@ -41,7 +41,7 @@ it("passes value to actions", () => {
   expect(subscriber.mock.calls[2][0].state).toStrictEqual(-4);
 });
 
-it("allows to pass undefined to actions", () => {
+test("allows to pass undefined to actions", () => {
   const subscriber = jest.fn();
 
   const { testAction } = init({
@@ -57,7 +57,7 @@ it("allows to pass undefined to actions", () => {
   expect(subscriber.mock.calls[1][0].state).toStrictEqual([undefined, 0]);
 });
 
-it("works with manually curried actions", () => {
+test("works with manually curried actions", () => {
   const subscriber = jest.fn();
 
   const { add, subtract } = init({
@@ -75,7 +75,7 @@ it("works with manually curried actions", () => {
   expect(subscriber.mock.calls[2][0].state).toStrictEqual(-4);
 });
 
-it("doesn't pass value to actions that don't accept it", () => {
+test("doesn't pass value to actions that don't accept it", () => {
   const subscriber1 = jest.fn();
 
   const { inc } = init({
@@ -91,7 +91,7 @@ it("doesn't pass value to actions that don't accept it", () => {
   expect(subscriber1.mock.calls[1][0].state).toStrictEqual(1);
 });
 
-it("works with unnecessarily curried actions", () => {
+test("works with unnecessarily curried actions", () => {
   const subscriber1 = jest.fn();
 
   const { inc } = init({
@@ -108,7 +108,7 @@ it("works with unnecessarily curried actions", () => {
   expect(subscriber1.mock.calls[1][0].state).toStrictEqual(1);
 });
 
-it("works with actions that ignore state", () => {
+test("works with actions that ignore state", () => {
   const subscriber1 = jest.fn();
 
   const { testAction } = init({
@@ -124,7 +124,7 @@ it("works with actions that ignore state", () => {
   expect(subscriber1.mock.calls[1][0].state).toStrictEqual("test");
 });
 
-it("works with actions that ignore everything", () => {
+test("works with actions that ignore everything", () => {
   const subscriber1 = jest.fn();
 
   const { testAction } = init({

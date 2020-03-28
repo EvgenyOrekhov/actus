@@ -1,6 +1,6 @@
 import localStoragePlugin from "./index.js";
 
-it("loads state from localStorage", () => {
+test("loads state from localStorage", () => {
   const { state } = localStoragePlugin({
     storage: { state: JSON.stringify({ foo: "bar" }) },
   });
@@ -8,7 +8,7 @@ it("loads state from localStorage", () => {
   expect(state).toStrictEqual({ foo: "bar" });
 });
 
-it("loads state from localStorage with custom key", () => {
+test("loads state from localStorage with custom key", () => {
   const { state } = localStoragePlugin({
     key: "customKey",
     storage: { customKey: JSON.stringify({ foo: "bar" }) },
@@ -17,13 +17,13 @@ it("loads state from localStorage with custom key", () => {
   expect(state).toStrictEqual({ foo: "bar" });
 });
 
-it("tolerates missing/invalid state", () => {
+test("tolerates missing/invalid state", () => {
   const { state } = localStoragePlugin({ storage: {} });
 
-  expect(state).toStrictEqual(undefined);
+  expect(state).toBeUndefined();
 });
 
-it("saves state to localStorage", () => {
+test("saves state to localStorage", () => {
   const storage = {};
   const [saveStateToLocalStorage] = localStoragePlugin({ storage }).subscribers;
 
@@ -32,7 +32,7 @@ it("saves state to localStorage", () => {
   expect(JSON.parse(storage.state)).toStrictEqual({ foo: "bar" });
 });
 
-it("saves state to localStorage with custom key", () => {
+test("saves state to localStorage with custom key", () => {
   const storage = {};
   const [saveStateToLocalStorage] = localStoragePlugin({
     key: "customKey",
@@ -44,7 +44,7 @@ it("saves state to localStorage with custom key", () => {
   expect(JSON.parse(storage.customKey)).toStrictEqual({ foo: "bar" });
 });
 
-it("saves state to localStorage with custom selector", () => {
+test("saves state to localStorage with custom selector", () => {
   const storage = {};
   const [saveStateToLocalStorage] = localStoragePlugin({
     selector: ({ baz }) => ({ baz }),
@@ -56,6 +56,8 @@ it("saves state to localStorage with custom selector", () => {
   expect(JSON.parse(storage.state)).toStrictEqual({ baz: "qux" });
 });
 
-it("doesn't throw when there are no options", () => {
+test("doesn't throw when there are no options", () => {
+  expect.assertions(0);
+
   localStoragePlugin();
 });

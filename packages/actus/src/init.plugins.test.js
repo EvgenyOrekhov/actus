@@ -1,7 +1,7 @@
 import init from "./init.js";
 
 // eslint-disable-next-line max-statements
-it("supports plugins", () => {
+test("supports plugins", () => {
   const subscriber1 = jest.fn();
   const subscriber2 = jest.fn();
 
@@ -55,7 +55,7 @@ it("supports plugins", () => {
   actions.nested.count.dec();
   actions.nested.count.triple();
 
-  expect(subscriber1.mock.calls.length).toStrictEqual(5);
+  expect(subscriber1.mock.calls).toHaveLength(5);
   expect(subscriber1.mock.calls[4][0].state).toStrictEqual({
     foo: "bar",
     baz: "qux",
@@ -65,7 +65,7 @@ it("supports plugins", () => {
       count: 3,
     },
   });
-  expect(subscriber2.mock.calls.length).toStrictEqual(5);
+  expect(subscriber2.mock.calls).toHaveLength(5);
   expect(subscriber2.mock.calls[4][0].state).toStrictEqual({
     foo: "bar",
     baz: "qux",
@@ -77,7 +77,9 @@ it("supports plugins", () => {
   });
 });
 
-it("doesn't throw when something is missing", () => {
+test("doesn't throw when something is missing", () => {
+  expect.assertions(0);
+
   init([
     {
       state: { foo: "bar" },
@@ -89,7 +91,9 @@ it("doesn't throw when something is missing", () => {
   ]);
 });
 
-it("ignores configs that are falsy values", () => {
+test("ignores configs that are falsy values", () => {
+  expect.assertions(0);
+
   init([
     {
       state: { foo: "bar" },
@@ -113,7 +117,7 @@ it("ignores configs that are falsy values", () => {
   ]);
 });
 
-it("doesn't turn primitive states into objects", () => {
+test("doesn't turn primitive states into objects", () => {
   const subscriber = jest.fn();
 
   init([
@@ -126,11 +130,11 @@ it("doesn't turn primitive states into objects", () => {
     },
   ]);
 
-  expect(subscriber.mock.calls.length).toStrictEqual(1);
+  expect(subscriber.mock.calls).toHaveLength(1);
   expect(subscriber.mock.calls[0][0].state).toStrictEqual(0);
 });
 
-it("doesn't merge empty objects", () => {
+test("doesn't merge empty objects", () => {
   const subscriber = jest.fn();
 
   init([
@@ -143,11 +147,11 @@ it("doesn't merge empty objects", () => {
     },
   ]);
 
-  expect(subscriber.mock.calls.length).toStrictEqual(1);
+  expect(subscriber.mock.calls).toHaveLength(1);
   expect(subscriber.mock.calls[0][0].state).toStrictEqual(1);
 });
 
-it("ignores undefined states", () => {
+test("ignores undefined states", () => {
   const subscriber = jest.fn();
 
   init([
@@ -158,6 +162,6 @@ it("ignores undefined states", () => {
     {},
   ]);
 
-  expect(subscriber.mock.calls.length).toStrictEqual(1);
+  expect(subscriber.mock.calls).toHaveLength(1);
   expect(subscriber.mock.calls[0][0].state).toStrictEqual(0);
 });

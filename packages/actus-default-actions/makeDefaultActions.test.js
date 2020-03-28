@@ -1,6 +1,6 @@
 import makeDefaultActions from "./makeDefaultActions.js";
 
-it("number", () => {
+test("number", () => {
   const { set, increment, decrement } = makeDefaultActions(0);
 
   expect(set(1, 0)).toStrictEqual(1);
@@ -11,13 +11,13 @@ it("number", () => {
   expect(decrement(undefined, 16)).toStrictEqual(15);
 });
 
-it("number - reset()", () => {
+test("number - reset()", () => {
   const { reset } = makeDefaultActions(4);
 
   expect(reset(0)).toStrictEqual(4);
 });
 
-it("boolean", () => {
+test("boolean", () => {
   const { on, off, toggle } = makeDefaultActions(false);
 
   expect(on(false)).toStrictEqual(true);
@@ -28,7 +28,7 @@ it("boolean", () => {
   expect(toggle(undefined, true)).toStrictEqual(false);
 });
 
-it("boolean - set()", () => {
+test("boolean - set()", () => {
   const { set } = makeDefaultActions(false);
 
   expect(set(true, false)).toStrictEqual(true);
@@ -38,21 +38,21 @@ it("boolean - set()", () => {
   expect(set(undefined, true)).toStrictEqual(false);
 });
 
-it("boolean - reset() - false", () => {
+test("boolean - reset() - false", () => {
   const { reset } = makeDefaultActions(false);
 
   expect(reset(false)).toStrictEqual(false);
   expect(reset(true)).toStrictEqual(false);
 });
 
-it("boolean - reset() - true", () => {
+test("boolean - reset() - true", () => {
   const { reset } = makeDefaultActions(true);
 
   expect(reset(false)).toStrictEqual(true);
   expect(reset(true)).toStrictEqual(true);
 });
 
-it("string", () => {
+test("string", () => {
   const { set, reset, clear, concat } = makeDefaultActions("foo");
 
   expect(set("bar", "baz")).toStrictEqual("bar");
@@ -62,7 +62,7 @@ it("string", () => {
   expect(concat("bar", "baz")).toStrictEqual("barbaz");
 });
 
-it("object", () => {
+test("object", () => {
   const { set, reset, clear, merge, mergeDeep, remove } = makeDefaultActions({
     foo: "bar",
     baz: "qux",
@@ -117,7 +117,7 @@ it("object", () => {
   });
 });
 
-it("array", () => {
+test("array", () => {
   const { set, reset, clear, append, prepend, concat } = makeDefaultActions([
     4,
     8,
@@ -152,15 +152,15 @@ it("array", () => {
   ]);
 });
 
-it("null", () => {
+test("null", () => {
   expect(makeDefaultActions(null)).toStrictEqual({});
 });
 
-it("undefined", () => {
+test("undefined", () => {
   expect(makeDefaultActions(undefined)).toStrictEqual({});
 });
 
-it("recurses", () => {
+test("recurses", () => {
   const actions = makeDefaultActions({
     name: "",
     count: 0,
@@ -170,7 +170,7 @@ it("recurses", () => {
   expect(typeof actions.count.increment).toStrictEqual("function");
 });
 
-it("tolerates null", () => {
+test("tolerates null", () => {
   const actions = makeDefaultActions({ foo: { bar: null } });
 
   expect(actions.foo).not.toHaveProperty("bar");

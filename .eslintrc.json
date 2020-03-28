@@ -4,7 +4,8 @@
     "hardcore/fp",
     "hardcore/node",
     "prettier",
-    "prettier/unicorn"
+    "prettier/unicorn",
+    "plugin:jest/all"
   ],
 
   "parserOptions": {
@@ -15,7 +16,11 @@
     "no-inline-comments": "off",
     "line-comment-position": "off",
     "node/no-unsupported-features/es-syntax": "off",
-    "fp/no-throw": "off"
+    "fp/no-throw": "off",
+
+    "jest/require-top-level-describe": "off",
+    "jest/prefer-expect-assertions": "off",
+    "jest/no-try-expect": "off"
   },
 
   "overrides": [

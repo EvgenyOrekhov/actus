@@ -1,6 +1,6 @@
 import init from "./init.js";
 
-it("supports slice actions", () => {
+test("supports slice actions", () => {
   const subscriber = jest.fn();
 
   const { slice1, slice2 } = init({
@@ -21,7 +21,7 @@ it("supports slice actions", () => {
   slice2.add(4);
   slice2.subtract(8);
 
-  expect(subscriber.mock.calls.length).toStrictEqual(4);
+  expect(subscriber.mock.calls).toHaveLength(4);
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({
     slice1: 1,
     slice2: 0,
@@ -36,7 +36,7 @@ it("supports slice actions", () => {
   });
 });
 
-it("supports recursive slice actions", () => {
+test("supports recursive slice actions", () => {
   const subscriber = jest.fn();
 
   const { slice } = init({
@@ -64,7 +64,7 @@ it("supports recursive slice actions", () => {
   slice.subslice2.add(4);
   slice.subslice2.subtract(8);
 
-  expect(subscriber.mock.calls.length).toStrictEqual(4);
+  expect(subscriber.mock.calls).toHaveLength(4);
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({
     slice: {
       subslice1: 1,
@@ -85,7 +85,7 @@ it("supports recursive slice actions", () => {
   });
 });
 
-it("doesn't fail when data slices are missing", () => {
+test("doesn't fail when data slices are missing", () => {
   const subscriber = jest.fn();
 
   const { slice } = init({
@@ -100,11 +100,11 @@ it("doesn't fail when data slices are missing", () => {
 
   slice.testUndefined();
 
-  expect(subscriber.mock.calls.length).toStrictEqual(2);
+  expect(subscriber.mock.calls).toHaveLength(2);
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({ slice: undefined });
 });
 
-it("doesn't fail with null", () => {
+test("doesn't fail with null", () => {
   const subscriber = jest.fn();
 
   const { slice } = init({
@@ -119,11 +119,11 @@ it("doesn't fail with null", () => {
 
   slice.testUndefined();
 
-  expect(subscriber.mock.calls.length).toStrictEqual(2);
+  expect(subscriber.mock.calls).toHaveLength(2);
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({ slice: undefined });
 });
 
-it("passes current slice action name to subscribers", () => {
+test("passes current slice action name to subscribers", () => {
   const subscriber = jest.fn();
 
   const { slice } = init({

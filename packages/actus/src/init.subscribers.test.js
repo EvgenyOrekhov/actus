@@ -1,6 +1,6 @@
 import init from "./init.js";
 
-it("initializes", () => {
+test("initializes", () => {
   const subscriber1 = jest.fn();
   const subscriber2 = jest.fn();
 
@@ -13,40 +13,43 @@ it("initializes", () => {
     subscribers: [subscriber1, subscriber2],
   });
 
-  expect(subscriber1.mock.calls.length).toStrictEqual(1);
+  expect(subscriber1.mock.calls).toHaveLength(1);
   expect(subscriber1.mock.calls[0][0].state).toStrictEqual(0);
-  expect(subscriber2.mock.calls.length).toStrictEqual(1);
+  expect(subscriber2.mock.calls).toHaveLength(1);
   expect(subscriber2.mock.calls[0][0].state).toStrictEqual(0);
 });
 
-it("passes actions to subscribers", (done) => {
-  const subscriber1 = jest.fn(({ actions }) => {
-    setTimeout(actions.inc, 0);
-    setTimeout(actions.inc, 0);
-    setTimeout(actions.inc, 0);
-  });
-  const subscriber2 = jest.fn(({ actions }) => {
-    setTimeout(actions.dec, 0);
-    setTimeout(() => {
-      expect(subscriber1.mock.calls.length).toStrictEqual(5);
-      expect(subscriber1.mock.calls[4][0].state).toStrictEqual(2);
-      expect(subscriber2.mock.calls.length).toStrictEqual(5);
-      expect(subscriber2.mock.calls[4][0].state).toStrictEqual(2);
-      done();
-    }, 0);
-  });
+test("passes actions to subscribers", async () => {
+  // eslint-disable-next-line promise/avoid-new
+  await new Promise((resolve) => {
+    const subscriber1 = jest.fn(({ actions }) => {
+      setTimeout(actions.inc, 0);
+      setTimeout(actions.inc, 0);
+      setTimeout(actions.inc, 0);
+    });
+    const subscriber2 = jest.fn(({ actions }) => {
+      setTimeout(actions.dec, 0);
+      setTimeout(() => {
+        expect(subscriber1.mock.calls).toHaveLength(5);
+        expect(subscriber1.mock.calls[4][0].state).toStrictEqual(2);
+        expect(subscriber2.mock.calls).toHaveLength(5);
+        expect(subscriber2.mock.calls[4][0].state).toStrictEqual(2);
+        resolve();
+      }, 0);
+    });
 
-  init({
-    state: 0,
-    actions: {
-      inc: (ignore, state) => state + 1,
-      dec: (ignore, state) => state - 1,
-    },
-    subscribers: [subscriber1, subscriber2],
+    init({
+      state: 0,
+      actions: {
+        inc: (ignore, state) => state + 1,
+        dec: (ignore, state) => state - 1,
+      },
+      subscribers: [subscriber1, subscriber2],
+    });
   });
 });
 
-it("passes current action name and value to subscribers", () => {
+test("passes current action name and value to subscribers", () => {
   const subscriber1 = jest.fn();
   const subscriber2 = jest.fn();
   const subscribers = [subscriber1, subscriber2];
@@ -71,7 +74,7 @@ it("passes current action name and value to subscribers", () => {
   });
 });
 
-it("cancels notifying subscribers if an action was called by one of them", () => {
+test("cancels notifying subscribers if an action was called by one of them", () => {
   const subscriber1 = jest.fn(({ state, actions }) => {
     if (state === 0) {
       actions.inc();
@@ -87,13 +90,13 @@ it("cancels notifying subscribers if an action was called by one of them", () =>
     subscribers: [subscriber1, subscriber2],
   });
 
-  expect(subscriber1.mock.calls.length).toStrictEqual(2);
+  expect(subscriber1.mock.calls).toHaveLength(2);
   expect(subscriber1.mock.calls[1][0].state).toStrictEqual(1);
-  expect(subscriber2.mock.calls.length).toStrictEqual(1);
+  expect(subscriber2.mock.calls).toHaveLength(1);
   expect(subscriber2.mock.calls[0][0].state).toStrictEqual(1);
 });
 
-it("doesn't stop calling subsequent subscribers when one throws", () => {
+test("doesn't stop calling subsequent subscribers when one throws", () => {
   expect.assertions(3);
 
   const expectedError = new Error("Expected error");
@@ -113,11 +116,11 @@ it("doesn't stop calling subsequent subscribers when one throws", () => {
     expect(error).toStrictEqual(expectedError);
   }
 
-  expect(subscriber1.mock.calls.length).toStrictEqual(1);
-  expect(subscriber2.mock.calls.length).toStrictEqual(1);
+  expect(subscriber1.mock.calls).toHaveLength(1);
+  expect(subscriber2.mock.calls).toHaveLength(1);
 });
 
-it("reports multiple errors", () => {
+test("reports multiple errors", () => {
   expect.assertions(3);
 
   const expectedError1 = new Error("Expected error 1");
