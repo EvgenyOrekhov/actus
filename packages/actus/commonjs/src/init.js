@@ -25,12 +25,19 @@ function setSlice(object, path, slice) {
   return (0, _assocPath.default)(path, slice, object);
 }
 
+function mergeStates(left, right) {
+  if (typeof left === "object" && typeof right === "object") {
+    return (0, _mergeDeepRight.default)(left, right);
+  }
+
+  return left !== undefined && (right === undefined || isEmptyObject(right)) ? left : right;
+}
+
 function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
   return configs.filter(Boolean).reduce((acc, currentConfig) => {
-    const state = currentConfig.state === undefined || isEmptyObject(currentConfig.state) ? acc.state : currentConfig.state;
     return {
-      state: typeof acc.state === "object" && typeof currentConfig.state === "object" ? (0, _mergeDeepRight.default)(acc.state, currentConfig.state) : state,
+      state: mergeStates(acc.state, currentConfig.state),
       actions: (0, _mergeDeepRight.default)(acc.actions, currentConfig.actions || {}),
       subscribers: [...(acc.subscribers || []), ...(currentConfig.subscribers || [])]
     };
