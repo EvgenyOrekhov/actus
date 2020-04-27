@@ -19,20 +19,22 @@ function setSlice(object, path, slice) {
   return assocPath(path, slice, object);
 }
 
+function mergeStates(left, right) {
+  if (typeof left === "object" && typeof right === "object") {
+    return mergeDeepRight(left, right);
+  }
+
+  return left !== undefined && (right === undefined || isEmptyObject(right))
+    ? left
+    : right;
+}
+
 function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
 
   return configs.filter(Boolean).reduce((acc, currentConfig) => {
-    const state =
-      currentConfig.state === undefined || isEmptyObject(currentConfig.state)
-        ? acc.state
-        : currentConfig.state;
-
     return {
-      state:
-        typeof acc.state === "object" && typeof currentConfig.state === "object"
-          ? mergeDeepRight(acc.state, currentConfig.state)
-          : state,
+      state: mergeStates(acc.state, currentConfig.state),
       actions: mergeDeepRight(acc.actions, currentConfig.actions || {}),
       subscribers: [
         ...(acc.subscribers || []),

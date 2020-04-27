@@ -165,3 +165,18 @@ test("ignores undefined states", () => {
   expect(subscriber.mock.calls).toHaveLength(1);
   expect(subscriber.mock.calls[0][0].state).toStrictEqual(0);
 });
+
+test("doesn't ignore empty object as state", () => {
+  const subscriber = jest.fn();
+
+  init([
+    {},
+    {
+      state: {},
+      subscribers: [subscriber],
+    },
+  ]);
+
+  expect(subscriber.mock.calls).toHaveLength(1);
+  expect(subscriber.mock.calls[0][0].state).toStrictEqual({});
+});
