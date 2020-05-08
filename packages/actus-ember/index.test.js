@@ -1,11 +1,8 @@
 import logger from "actus-logger";
-// eslint-disable-next-line import/no-unresolved, node/no-missing-import
-import { getOwner, mockResolveRegistration } from "@ember/application";
 
 import actusify from "./index.js";
 
 jest.mock("actus-logger");
-jest.mock("@ember/application");
 
 test("actusify()", () => {
   const target = {
@@ -71,23 +68,6 @@ test("logger is disabled when not in development mode", () => {
   actusify(target, { isDevelopment: false });
 
   expect(logger.mock.calls).toHaveLength(0);
-});
-
-test("detects development mode", () => {
-  getOwner.mockClear();
-  mockResolveRegistration.mockClear();
-
-  const target = { state: 0 };
-
-  actusify(target);
-
-  expect(getOwner.mock.calls).toHaveLength(1);
-  expect(getOwner.mock.calls[0][0]).toStrictEqual(target);
-
-  expect(mockResolveRegistration.mock.calls).toHaveLength(1);
-  expect(mockResolveRegistration.mock.calls[0][0]).toStrictEqual(
-    "config:environment"
-  );
 });
 
 test("deep freeze state", () => {
