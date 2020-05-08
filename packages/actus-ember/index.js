@@ -1,5 +1,3 @@
-/* eslint-disable fp/no-mutation, no-param-reassign */
-
 import { init } from "actus";
 import logger from "actus-logger";
 import defaultActions from "actus-default-actions";
@@ -17,6 +15,7 @@ export default function actusify(
   target,
   { isDevelopment = getIsDevelopment(target) } = {}
 ) {
+  // eslint-disable-next-line fp/no-mutation, no-param-reassign
   target.actions = init([
     isDevelopment && logger({ name: target.constructor.name }),
     defaultActions(target.state),
@@ -25,6 +24,7 @@ export default function actusify(
       actions: target.actions || {},
       subscribers: [
         ({ state }) => {
+          // eslint-disable-next-line fp/no-mutation, no-param-reassign
           target.state = state;
         },
       ],
