@@ -4,8 +4,7 @@
   "description": "Ember bindings for actus",
   "keywords": [
     "actus",
-    "ember",
-    "ember-addon"
+    "ember"
   ],
   "repository": "https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-ember",
   "license": "MIT",
