@@ -62,5 +62,17 @@
     }
   ],
 
-  "ignorePatterns": ["commonjs/"]
+  "ignorePatterns": [
+    "commonjs/",
+
+    "packages/ember-actus/config/ember-try.js",
+    "packages/ember-actus/config/environment.js",
+    "packages/ember-actus/ember-cli-build.js",
+    "packages/ember-actus/testem.js",
+    "packages/ember-actus/tests/dummy/app/app.js",
+    "packages/ember-actus/tests/dummy/app/router.js",
+    "packages/ember-actus/tests/dummy/config/environment.js",
+    "packages/ember-actus/tests/dummy/config/targets.js",
+    "packages/ember-actus/tests/test-helper.js"
+  ]
 }
