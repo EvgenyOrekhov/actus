@@ -26,7 +26,7 @@ export default function actusify(
       subscribers: [
         ({ state }) => {
           // eslint-disable-next-line fp/no-mutation, no-param-reassign
-          target.state = deepFreeze(state);
+          target.state = isDevelopment ? deepFreeze(state) : state;
         },
       ],
     },

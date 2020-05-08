@@ -90,7 +90,7 @@ test("detects development mode", () => {
   );
 });
 
-test("deep freeze", () => {
+test("deep freeze state", () => {
   const target = { state: { foo: "old" } };
 
   actusify(target);
@@ -101,4 +101,15 @@ test("deep freeze", () => {
   }).toThrow("Cannot assign to read only property 'foo' of object '#<Object>'");
 
   expect(target.state.foo).toStrictEqual("old");
+});
+
+test("do not deep freeze state when not in development", () => {
+  const target = { state: { foo: "old" } };
+
+  actusify(target, { isDevelopment: false });
+
+  // eslint-disable-next-line fp/no-mutation
+  target.state.foo = "new";
+
+  expect(target.state.foo).toStrictEqual("new");
 });
