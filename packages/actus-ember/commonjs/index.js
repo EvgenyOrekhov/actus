@@ -13,17 +13,10 @@ var _actusDefaultActions = _interopRequireDefault(require("actus-default-actions
 
 var _deepFreeze = _interopRequireDefault(require("deep-freeze"));
 
-var _application = require("@ember/application");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// eslint-disable-next-line import/no-unresolved, node/no-missing-import
-function getIsDevelopment(target) {
-  return (0, _application.getOwner)(target).resolveRegistration("config:environment").environment === "development";
-}
-
 function actusify(target, {
-  isDevelopment = getIsDevelopment(target)
+  isDevelopment = true
 } = {}) {
   // eslint-disable-next-line fp/no-mutation, no-param-reassign
   target.actions = (0, _actus.init)([isDevelopment && (0, _actusLogger.default)({
