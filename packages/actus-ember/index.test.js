@@ -89,3 +89,16 @@ test("detects development mode", () => {
     "config:environment"
   );
 });
+
+test("deep freeze", () => {
+  const target = { state: { foo: "old" } };
+
+  actusify(target);
+
+  expect(() => {
+    // eslint-disable-next-line fp/no-mutation
+    target.state.foo = "new";
+  }).toThrow("Cannot assign to read only property 'foo' of object '#<Object>'");
+
+  expect(target.state.foo).toStrictEqual("old");
+});

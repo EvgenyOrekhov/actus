@@ -1,6 +1,7 @@
 import { init } from "actus";
 import logger from "actus-logger";
 import defaultActions from "actus-default-actions";
+import deepFreeze from "deep-freeze";
 // eslint-disable-next-line import/no-unresolved, node/no-missing-import
 import { getOwner } from "@ember/application";
 
@@ -25,7 +26,7 @@ export default function actusify(
       subscribers: [
         ({ state }) => {
           // eslint-disable-next-line fp/no-mutation, no-param-reassign
-          target.state = state;
+          target.state = deepFreeze(state);
         },
       ],
     },
