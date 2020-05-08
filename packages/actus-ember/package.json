@@ -1,0 +1,33 @@
+{
+  "name": "actus-ember",
+  "version": "0.0.0-alpha.0",
+  "description": "Ember bindings for actus",
+  "keywords": [
+    "actus",
+    "ember",
+    "ember-addon"
+  ],
+  "repository": "https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-ember",
+  "license": "MIT",
+  "author": "Evgeny Orekhov",
+  "sideEffects": false,
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
+  "files": [
+    "index.js",
+    "commonjs/"
+  ],
+  "dependencies": {
+    "actus": "^0.2.0-alpha.2",
+    "actus-default-actions": "0.1.0-alpha.0",
+    "actus-logger": "^0.2.0-alpha.0",
+    "deep-freeze": "0.0.1"
+  },
+  "peerDependencies": {
+    "ember-source": ">=3.15.0"
+  },
+  "engines": {
+    "node": ">=12.6.1"
+  }
+}

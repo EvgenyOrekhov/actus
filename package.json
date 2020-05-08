@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "build": "babel packages/actus/index.js --out-dir packages/actus/commonjs/ && babel packages/actus/src/ --out-dir packages/actus/commonjs/src/ --ignore **/*.test.js && babel packages/actus-logger/makeLogger.js packages/actus-logger/index.js --out-dir packages/actus-logger/commonjs/ && babel packages/actus-default-actions/makeDefaultActions.js packages/actus-default-actions/index.js --out-dir packages/actus-default-actions/commonjs/ && babel packages/actus-state-validator/makeStateValidator.js packages/actus-state-validator/index.js --out-dir packages/actus-state-validator/commonjs/ && babel packages/actus-localstorage/index.js --out-dir packages/actus-localstorage/commonjs/ && babel packages/actus-redux-devtools/index.js --out-dir packages/actus-redux-devtools/commonjs/ && cp README.md packages/actus/",
+    "build": "babel packages/actus/index.js --out-dir packages/actus/commonjs/ && babel packages/actus/src/ --out-dir packages/actus/commonjs/src/ --ignore **/*.test.js && babel packages/actus-logger/makeLogger.js packages/actus-logger/index.js --out-dir packages/actus-logger/commonjs/ && babel packages/actus-default-actions/makeDefaultActions.js packages/actus-default-actions/index.js --out-dir packages/actus-default-actions/commonjs/ && babel packages/actus-state-validator/makeStateValidator.js packages/actus-state-validator/index.js --out-dir packages/actus-state-validator/commonjs/ && babel packages/actus-localstorage/index.js --out-dir packages/actus-localstorage/commonjs/ && babel packages/actus-redux-devtools/index.js --out-dir packages/actus-redux-devtools/commonjs/ && babel packages/actus-ember/index.js --out-dir packages/actus-ember/commonjs/ && cp README.md packages/actus/",
     "ci": "npm run lint && npm test",
     "lint": "run-p --aggregate-output lint:**",
     "lint:js": "eslint . --ext .js,.json",
@@ -10,7 +10,7 @@
     "prepare": "lerna bootstrap",
     "release": "lerna publish",
     "test": "jest",
-    "preversion": "npm run build && git add packages/actus/commonjs/ packages/actus-logger/commonjs/ packages/actus-default-actions/commonjs/ packages/actus-state-validator/commonjs/ packages/actus-localstorage/commonjs/ packages/actus-redux-devtools/commonjs/"
+    "preversion": "npm run build && git add packages/actus/commonjs/ packages/actus-logger/commonjs/ packages/actus-default-actions/commonjs/ packages/actus-state-validator/commonjs/ packages/actus-localstorage/commonjs/ packages/actus-redux-devtools/commonjs/ packages/actus-ember/commonjs/"
   },
   "husky": {
     "hooks": {

@@ -94,6 +94,10 @@ const actions = init({
 - [actus-logger](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-logger) - logs actions and state changes to your console
 - [actus-redux-devtools](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-redux-devtools) - Use [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension) with actus
 
+## Frameworks
+
+- [actus-ember](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-ember)
+
 ## Acknowledgements
 
 Sources of inspiration:
