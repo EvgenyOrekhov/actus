@@ -1,8 +1,11 @@
 import logger from "actus-logger";
+// eslint-disable-next-line import/no-unresolved, node/no-missing-import
+import { getOwner, mockResolveRegistration } from "@ember/application";
 
 import actusify from "./index.js";
 
 jest.mock("actus-logger");
+jest.mock("@ember/application");
 
 test("actusify()", () => {
   const target = {
@@ -47,7 +50,7 @@ test("default actions can be overridden", () => {
 });
 
 test("logger", () => {
-  logger.mockReset();
+  logger.mockClear();
 
   const target = {
     state: 0,
@@ -56,22 +59,33 @@ test("logger", () => {
 
   actusify(target);
 
-  target.actions.increment();
-
   expect(logger.mock.calls).toHaveLength(1);
   expect(logger.mock.calls[0][0]).toStrictEqual({ name: "constructor name" });
 });
 
 test("logger is disabled when not in development mode", () => {
-  logger.mockReset();
+  logger.mockClear();
 
-  const target = {
-    state: 0,
-  };
+  const target = { state: 0 };
 
   actusify(target, { isDevelopment: false });
 
-  target.actions.increment();
-
   expect(logger.mock.calls).toHaveLength(0);
+});
+
+test("detects development mode", () => {
+  getOwner.mockClear();
+  mockResolveRegistration.mockClear();
+
+  const target = { state: 0 };
+
+  actusify(target);
+
+  expect(getOwner.mock.calls).toHaveLength(1);
+  expect(getOwner.mock.calls[0][0]).toStrictEqual(target);
+
+  expect(mockResolveRegistration.mock.calls).toHaveLength(1);
+  expect(mockResolveRegistration.mock.calls[0][0]).toStrictEqual(
+    "config:environment"
+  );
 });
