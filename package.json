@@ -5,7 +5,7 @@
     "build": "babel packages/actus/index.js --out-dir packages/actus/commonjs/ && babel packages/actus/src/ --out-dir packages/actus/commonjs/src/ --ignore **/*.test.js && babel packages/actus-logger/makeLogger.js packages/actus-logger/index.js --out-dir packages/actus-logger/commonjs/ && babel packages/actus-default-actions/makeDefaultActions.js packages/actus-default-actions/index.js --out-dir packages/actus-default-actions/commonjs/ && babel packages/actus-state-validator/makeStateValidator.js packages/actus-state-validator/index.js --out-dir packages/actus-state-validator/commonjs/ && babel packages/actus-localstorage/index.js --out-dir packages/actus-localstorage/commonjs/ && babel packages/actus-redux-devtools/index.js --out-dir packages/actus-redux-devtools/commonjs/ && babel packages/actus-ember/index.js --out-dir packages/actus-ember/commonjs/ && cp README.md packages/actus/",
     "ci": "npm run lint && npm test",
     "lint": "run-p --aggregate-output lint:**",
-    "lint:js": "eslint . --ext .js,.json",
+    "lint:js": "eslint .",
     "lint:prettier": "prettier --check .",
     "prepare": "lerna bootstrap",
     "release": "lerna publish",
@@ -20,7 +20,7 @@
   },
   "lint-staged": {
     "*.{js,css,json,md,html,yml,yaml}": "prettier --write",
-    "*.{js,json}": "eslint --fix --ext .js,.json"
+    "*.{js,json}": "eslint --fix"
   },
   "jest": {
     "collectCoverage": true,
@@ -34,8 +34,8 @@
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "babel-jest": "^26.0.1",
-    "eslint": "^6.8.0",
-    "eslint-config-hardcore": "^10.3.0",
+    "eslint": "^7.0.0",
+    "eslint-config-hardcore": "^11.0.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-jest": "^23.10.0",
     "eslint-plugin-jest-formatting": "^1.2.0",

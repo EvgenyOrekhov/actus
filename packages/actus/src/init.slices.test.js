@@ -108,6 +108,7 @@ test("doesn't fail with null", () => {
   const subscriber = jest.fn();
 
   const { slice } = init({
+    // eslint-disable-next-line unicorn/no-null
     state: null,
     actions: {
       slice: {

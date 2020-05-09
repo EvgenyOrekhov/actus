@@ -153,6 +153,7 @@ test("array", () => {
 });
 
 test("null", () => {
+  // eslint-disable-next-line unicorn/no-null
   expect(makeDefaultActions(null)).toStrictEqual({});
 });
 
@@ -171,6 +172,7 @@ test("recurses", () => {
 });
 
 test("tolerates null", () => {
+  // eslint-disable-next-line unicorn/no-null
   const actions = makeDefaultActions({ foo: { bar: null } });
 
   expect(actions.foo).not.toHaveProperty("bar");
