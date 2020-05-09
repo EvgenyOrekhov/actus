@@ -10,7 +10,7 @@
     "prepare": "lerna bootstrap",
     "release": "lerna publish",
     "test": "jest",
-    "preversion": "npm run build && git add packages/actus/commonjs/ packages/actus-logger/commonjs/ packages/actus-default-actions/commonjs/ packages/actus-state-validator/commonjs/ packages/actus-localstorage/commonjs/ packages/actus-redux-devtools/commonjs/ packages/actus-ember/commonjs/"
+    "preversion": "npm run build && git add packages/actus/commonjs/ packages/actus/README.md packages/actus-logger/commonjs/ packages/actus-default-actions/commonjs/ packages/actus-state-validator/commonjs/ packages/actus-localstorage/commonjs/ packages/actus-redux-devtools/commonjs/ packages/actus-ember/commonjs/"
   },
   "husky": {
     "hooks": {

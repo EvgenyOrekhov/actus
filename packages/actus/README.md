@@ -48,7 +48,7 @@ init({
 import { init } from "actus";
 
 // You don't have to use Ramda, but it plays very nicely with actus
-import { evolve, dec, multiply } from "ramda";
+import { evolve, multiply } from "ramda";
 
 // init() returns actions bound to the current state, if you need them outside
 // of subscribers:
