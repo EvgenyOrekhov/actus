@@ -4,13 +4,21 @@ import actusify from "./index.js";
 
 jest.mock("actus-logger");
 
+// eslint-disable-next-line fp/no-class
+class EmberObjectMock {
+  constructor(properties) {
+    // eslint-disable-next-line fp/no-this, fp/no-mutating-assign
+    Object.assign(this, properties);
+  }
+}
+
 test("actusify()", () => {
-  const target = {
+  const target = new EmberObjectMock({
     state: 0,
     actions: {
       inc: (ignore, state) => state + 1,
     },
-  };
+  });
 
   actusify(target);
 
@@ -20,9 +28,9 @@ test("actusify()", () => {
 });
 
 test("default actions", () => {
-  const target = {
+  const target = new EmberObjectMock({
     state: 0,
-  };
+  });
 
   actusify(target);
 
@@ -32,12 +40,12 @@ test("default actions", () => {
 });
 
 test("default actions can be overridden", () => {
-  const target = {
+  const target = new EmberObjectMock({
     state: 0,
     actions: {
       increment: () => 123,
     },
-  };
+  });
 
   actusify(target);
 
@@ -49,10 +57,10 @@ test("default actions can be overridden", () => {
 test("logger", () => {
   logger.mockClear();
 
-  const target = {
+  const target = new EmberObjectMock({
     state: 0,
     constructor: { name: "constructor name" },
-  };
+  });
 
   actusify(target);
 
@@ -63,7 +71,7 @@ test("logger", () => {
 test("logger is disabled when not in development mode", () => {
   logger.mockClear();
 
-  const target = { state: 0 };
+  const target = new EmberObjectMock({ state: 0 });
 
   actusify(target, { isDevelopment: false });
 
@@ -71,7 +79,7 @@ test("logger is disabled when not in development mode", () => {
 });
 
 test("deep freeze state", () => {
-  const target = { state: { foo: "old" } };
+  const target = new EmberObjectMock({ state: { foo: "old" } });
 
   actusify(target);
 
@@ -84,7 +92,7 @@ test("deep freeze state", () => {
 });
 
 test("do not deep freeze state when not in development", () => {
-  const target = { state: { foo: "old" } };
+  const target = new EmberObjectMock({ state: { foo: "old" } });
 
   actusify(target, { isDevelopment: false });
 
@@ -95,39 +103,32 @@ test("do not deep freeze state when not in development", () => {
 });
 
 test("supports plugins", () => {
-  const target = {
+  const target = new EmberObjectMock({
     state: 0,
     actions: {
       inc: (ignore, state) => state + 1,
     },
-  };
+  });
 
   const subscriber1 = jest.fn();
   const subscriber2 = jest.fn();
 
-  actusify(target, {
-    plugins: [
-      {
-        subscribers: [subscriber1],
-      },
-      {
-        subscribers: [subscriber2],
-      },
-    ],
-  });
+  actusify([
+    {
+      state: 1,
+      subscribers: [subscriber1],
+    },
+    target,
+    {
+      state: 2,
+      subscribers: [subscriber2],
+    },
+  ]);
 
   target.actions.inc();
 
   expect(subscriber1.mock.calls).toHaveLength(2);
-  expect(subscriber1.mock.calls[1][0].state).toStrictEqual(1);
+  expect(subscriber1.mock.calls[1][0].state).toStrictEqual(3);
   expect(subscriber2.mock.calls).toHaveLength(2);
-  expect(subscriber2.mock.calls[1][0].state).toStrictEqual(1);
-});
-
-test("supports overriding plugins' data", () => {
-  const target = { state: 0 };
-
-  actusify(target, { plugins: [{ state: 1 }] });
-
-  expect(target.state).toStrictEqual(0);
+  expect(subscriber2.mock.calls[1][0].state).toStrictEqual(3);
 });

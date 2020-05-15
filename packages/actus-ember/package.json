@@ -21,7 +21,8 @@
     "actus": "^0.2.0-alpha.4",
     "actus-default-actions": "^0.1.0-alpha.1",
     "actus-logger": "^0.2.0-alpha.0",
-    "deep-freeze": "0.0.1"
+    "deep-freeze": "0.0.1",
+    "is-plain-obj": "^2.1.0"
   },
   "peerDependencies": {
     "ember-source": ">=3.15.0"
