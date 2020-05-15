@@ -16,12 +16,13 @@ var _deepFreeze = _interopRequireDefault(require("deep-freeze"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function actusify(target, {
-  isDevelopment = true
+  isDevelopment = true,
+  plugins = []
 } = {}) {
   // eslint-disable-next-line fp/no-mutation, no-param-reassign
   target.actions = (0, _actus.init)([isDevelopment && (0, _actusLogger.default)({
     name: target.constructor.name
-  }), (0, _actusDefaultActions.default)(target.state), {
+  }), (0, _actusDefaultActions.default)(target.state), ...plugins, {
     state: target.state,
     actions: target.actions || {},
     subscribers: [({
