@@ -11,6 +11,7 @@ export default function actusify(
   target.actions = init([
     isDevelopment && logger({ name: target.constructor.name }),
     defaultActions(target.state),
+    ...plugins,
     {
       state: target.state,
       actions: target.actions || {},
@@ -21,6 +22,5 @@ export default function actusify(
         },
       ],
     },
-    ...plugins,
   ]);
 }

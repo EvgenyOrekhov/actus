@@ -123,3 +123,11 @@ test("supports plugins", () => {
   expect(subscriber2.mock.calls).toHaveLength(2);
   expect(subscriber2.mock.calls[1][0].state).toStrictEqual(1);
 });
+
+test("supports overriding plugins' data", () => {
+  const target = { state: 0 };
+
+  actusify(target, { plugins: [{ state: 1 }] });
+
+  expect(target.state).toStrictEqual(0);
+});
