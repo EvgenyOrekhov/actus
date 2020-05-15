@@ -93,3 +93,33 @@ test("do not deep freeze state when not in development", () => {
 
   expect(target.state.foo).toStrictEqual("new");
 });
+
+test("supports plugins", () => {
+  const target = {
+    state: 0,
+    actions: {
+      inc: (ignore, state) => state + 1,
+    },
+  };
+
+  const subscriber1 = jest.fn();
+  const subscriber2 = jest.fn();
+
+  actusify(target, {
+    plugins: [
+      {
+        subscribers: [subscriber1],
+      },
+      {
+        subscribers: [subscriber2],
+      },
+    ],
+  });
+
+  target.actions.inc();
+
+  expect(subscriber1.mock.calls).toHaveLength(2);
+  expect(subscriber1.mock.calls[1][0].state).toStrictEqual(1);
+  expect(subscriber2.mock.calls).toHaveLength(2);
+  expect(subscriber2.mock.calls[1][0].state).toStrictEqual(1);
+});
