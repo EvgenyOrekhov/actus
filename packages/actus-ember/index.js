@@ -6,10 +6,10 @@ import isPlainObject from "is-plain-obj";
 
 export default function actusify(config, { isDevelopment = true } = {}) {
   const plugins = Array.isArray(config) ? config : [config];
+  const enabledPlugins = plugins.filter(Boolean);
+  const target = enabledPlugins.find((plugin) => !isPlainObject(plugin));
 
-  const target = plugins.find((plugin) => !isPlainObject(plugin));
-
-  const normalizedPlugins = plugins.map((plugin) =>
+  const normalizedPlugins = enabledPlugins.map((plugin) =>
     plugin === target
       ? {
           state: target.state,

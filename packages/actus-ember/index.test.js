@@ -132,3 +132,17 @@ test("supports plugins", () => {
   expect(subscriber2.mock.calls).toHaveLength(2);
   expect(subscriber2.mock.calls[1][0].state).toStrictEqual(3);
 });
+
+test("ignores disabled (falsy) plugins", () => {
+  expect.assertions(0);
+
+  const target = new EmberObjectMock({ state: 0 });
+
+  actusify([
+    undefined,
+    // eslint-disable-next-line unicorn/no-null
+    null,
+    false,
+    target,
+  ]);
+});
