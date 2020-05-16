@@ -13,7 +13,7 @@ export default function actusify(config, { isDevelopment = true } = {}) {
     plugin === target
       ? {
           state: target.state,
-          actions: target.actions || {},
+          actions: target.actions,
           subscribers: [
             ({ state }) => {
               // eslint-disable-next-line fp/no-mutation
