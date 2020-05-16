@@ -21,10 +21,11 @@ function actusify(config, {
   isDevelopment = true
 } = {}) {
   const plugins = Array.isArray(config) ? config : [config];
-  const target = plugins.find(plugin => !(0, _isPlainObj.default)(plugin));
-  const normalizedPlugins = plugins.map(plugin => plugin === target ? {
+  const enabledPlugins = plugins.filter(Boolean);
+  const target = enabledPlugins.find(plugin => !(0, _isPlainObj.default)(plugin));
+  const normalizedPlugins = enabledPlugins.map(plugin => plugin === target ? {
     state: target.state,
-    actions: target.actions || {},
+    actions: target.actions,
     subscribers: [({
       state
     }) => {
