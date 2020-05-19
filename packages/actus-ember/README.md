@@ -8,6 +8,7 @@ Ember bindings for actus
 
 - [actus-default-actions](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-default-actions)
 - [actus-logger](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-logger)
+- [actus-freeze](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-freeze)
 
 ## Install
 
@@ -22,7 +23,7 @@ npm install actus-ember
 ```js
 import Service from "@ember/service";
 import { tracked } from "@glimmer/tracking";
-import { init } from "actus-ember";
+import actusify from "actus-ember";
 
 export default class ExampleService extends Service {
   @tracked state = {...};
@@ -32,7 +33,7 @@ export default class ExampleService extends Service {
   constructor(...args) {
     super(...args);
 
-    init(this);
+    actusify(this);
   }
 }
 ```

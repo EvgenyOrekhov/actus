@@ -1,7 +1,7 @@
 import { init } from "actus";
 import logger from "actus-logger";
+import freeze from "actus-freeze";
 import defaultActions from "actus-default-actions";
-import deepFreeze from "deep-freeze";
 import isPlainObject from "is-plain-obj";
 
 export default function actusify(config, { isDevelopment = true } = {}) {
@@ -17,7 +17,7 @@ export default function actusify(config, { isDevelopment = true } = {}) {
           subscribers: [
             ({ state }) => {
               // eslint-disable-next-line fp/no-mutation
-              target.state = isDevelopment ? deepFreeze(state) : state;
+              target.state = state;
             },
           ],
         }
@@ -26,7 +26,9 @@ export default function actusify(config, { isDevelopment = true } = {}) {
 
   // eslint-disable-next-line fp/no-mutation
   target.actions = init([
-    isDevelopment && logger({ name: target.constructor.name }),
+    ...(isDevelopment
+      ? [logger({ name: target.constructor.name }), freeze()]
+      : []),
     defaultActions(target.state),
     ...normalizedPlugins,
   ]);
