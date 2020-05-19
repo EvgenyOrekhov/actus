@@ -9,9 +9,9 @@ var _actus = require("actus");
 
 var _actusLogger = _interopRequireDefault(require("actus-logger"));
 
-var _actusDefaultActions = _interopRequireDefault(require("actus-default-actions"));
+var _actusFreeze = _interopRequireDefault(require("actus-freeze"));
 
-var _deepFreeze = _interopRequireDefault(require("deep-freeze"));
+var _actusDefaultActions = _interopRequireDefault(require("actus-default-actions"));
 
 var _isPlainObj = _interopRequireDefault(require("is-plain-obj"));
 
@@ -30,11 +30,11 @@ function actusify(config, {
       state
     }) => {
       // eslint-disable-next-line fp/no-mutation
-      target.state = isDevelopment ? (0, _deepFreeze.default)(state) : state;
+      target.state = state;
     }]
   } : plugin); // eslint-disable-next-line fp/no-mutation
 
-  target.actions = (0, _actus.init)([isDevelopment && (0, _actusLogger.default)({
+  target.actions = (0, _actus.init)([...(isDevelopment ? [(0, _actusLogger.default)({
     name: target.constructor.name
-  }), (0, _actusDefaultActions.default)(target.state), ...normalizedPlugins]);
+  }), (0, _actusFreeze.default)()] : []), (0, _actusDefaultActions.default)(target.state), ...normalizedPlugins]);
 }
