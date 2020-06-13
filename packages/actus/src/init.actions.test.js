@@ -6,10 +6,12 @@ test("returns bound actions", () => {
 
   const { inc, dec } = init({
     state: 0,
+
     actions: {
       inc: (ignore, state) => state + 1,
       dec: (ignore, state) => state - 1,
     },
+
     subscribers: [subscriber1, subscriber2],
   });
 
@@ -28,10 +30,12 @@ test("passes value to actions", () => {
 
   const { add, subtract } = init({
     state: 0,
+
     actions: {
       add: (value, state) => state + value,
       subtract: (value, state) => state - value,
     },
+
     subscribers: [subscriber],
   });
 
@@ -46,9 +50,11 @@ test("allows to pass undefined to actions", () => {
 
   const { testAction } = init({
     state: 0,
+
     actions: {
       testAction: (value, state) => [value, state],
     },
+
     subscribers: [subscriber],
   });
 
@@ -62,10 +68,12 @@ test("works with manually curried actions", () => {
 
   const { add, subtract } = init({
     state: 0,
+
     actions: {
       add: (value) => (state) => state + value,
       subtract: (value) => (state) => state - value,
     },
+
     subscribers: [subscriber],
   });
 
@@ -80,9 +88,11 @@ test("doesn't pass value to actions that don't accept it", () => {
 
   const { inc } = init({
     state: 0,
+
     actions: {
       inc: (ignore, state) => state + 1,
     },
+
     subscribers: [subscriber1],
   });
 
@@ -96,10 +106,12 @@ test("works with unnecessarily curried actions", () => {
 
   const { inc } = init({
     state: 0,
+
     actions: {
       // eslint-disable-next-line unicorn/consistent-function-scoping
       inc: () => (state) => state + 1,
     },
+
     subscribers: [subscriber1],
   });
 
@@ -113,9 +125,11 @@ test("works with actions that ignore state", () => {
 
   const { testAction } = init({
     state: 0,
+
     actions: {
       testAction: (value) => value,
     },
+
     subscribers: [subscriber1],
   });
 
@@ -129,9 +143,11 @@ test("works with actions that ignore everything", () => {
 
   const { testAction } = init({
     state: 0,
+
     actions: {
       testAction: () => "test",
     },
+
     subscribers: [subscriber1],
   });
 

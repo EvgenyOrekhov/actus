@@ -5,15 +5,18 @@ test("supports slice actions", () => {
 
   const { slice1, slice2 } = init({
     state: { slice1: 0, slice2: 0 },
+
     actions: {
       slice1: {
         inc: (ignore, state) => state + 1,
       },
+
       slice2: {
         add: (value, state) => state + value,
         subtract: (value) => (state) => state - value,
       },
     },
+
     subscribers: [subscriber],
   });
 
@@ -46,17 +49,20 @@ test("supports recursive slice actions", () => {
         subslice2: 0,
       },
     },
+
     actions: {
       slice: {
         subslice1: {
           inc: (ignore, state) => state + 1,
         },
+
         subslice2: {
           add: (value, state) => state + value,
           subtract: (value) => (state) => state - value,
         },
       },
     },
+
     subscribers: [subscriber],
   });
 
@@ -90,11 +96,13 @@ test("doesn't fail when data slices are missing", () => {
 
   const { slice } = init({
     state: 0,
+
     actions: {
       slice: {
         testUndefined: (ignore, state) => state,
       },
     },
+
     subscribers: [subscriber],
   });
 
@@ -110,11 +118,13 @@ test("doesn't fail with null", () => {
   const { slice } = init({
     // eslint-disable-next-line unicorn/no-null
     state: null,
+
     actions: {
       slice: {
         testUndefined: (ignore, state) => state,
       },
     },
+
     subscribers: [subscriber],
   });
 
@@ -129,6 +139,7 @@ test("passes current slice action name to subscribers", () => {
 
   const { slice } = init({
     state: {},
+
     actions: {
       slice: {
         subslice: {
@@ -136,6 +147,7 @@ test("passes current slice action name to subscribers", () => {
         },
       },
     },
+
     subscribers: [subscriber],
   });
 

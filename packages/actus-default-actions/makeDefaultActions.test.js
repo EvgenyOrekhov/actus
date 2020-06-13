@@ -85,6 +85,7 @@ test("object", () => {
         abc: "def",
         uvw: "xyz",
         foo: "baz",
+
         nested: {
           abc: "def",
           uvw: "xyz",
@@ -94,6 +95,7 @@ test("object", () => {
       {
         foo: "bar",
         baz: "qux",
+
         nested: {
           foo: "bar",
           baz: "qux",
@@ -105,6 +107,7 @@ test("object", () => {
     uvw: "xyz",
     foo: "baz",
     baz: "qux",
+
     nested: {
       abc: "def",
       uvw: "xyz",

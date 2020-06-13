@@ -36,7 +36,6 @@
     "babel-jest": "^26.0.1",
     "eslint": "^7.2.0",
     "eslint-config-hardcore": "^12.2.0",
-    "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-jest": "^23.13.2",
     "eslint-plugin-jest-formatting": "^1.2.0",
     "husky": "^4.2.5",

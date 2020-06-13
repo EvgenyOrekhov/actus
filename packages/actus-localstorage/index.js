@@ -1,4 +1,4 @@
-/*global localStorage */
+/* global localStorage */
 
 export default function localStoragePlugin({
   key = "state",
