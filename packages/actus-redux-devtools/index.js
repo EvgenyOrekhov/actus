@@ -1,9 +1,11 @@
-/*global window */
+/* global window */
 
 function getSlice(object, path) {
   return path.reduce(
-    (acc, property) =>
-      acc === undefined || acc === null ? undefined : acc[property],
+    (accumulator, property) =>
+      accumulator === undefined || accumulator === null
+        ? undefined
+        : accumulator[property],
     object
   );
 }
@@ -53,6 +55,7 @@ export default function reduxDevTools({ name = undefined } = {}) {
               name,
               actionCreators: actions,
               actionsBlacklist: ["setStateFromDevTools"],
+
               features: {
                 pause: true, // start/pause recording of dispatched actions
                 lock: false, // lock/unlock dispatching actions and side effects

@@ -9,8 +9,10 @@ function isEmptyObject(value) {
 
 function getSlice(object, path) {
   return path.reduce(
-    (acc, property) =>
-      acc === undefined || acc === null ? undefined : acc[property],
+    (accumulator, property) =>
+      accumulator === undefined || accumulator === null
+        ? undefined
+        : accumulator[property],
     object
   );
 }
@@ -32,16 +34,15 @@ function mergeStates(left, right) {
 function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
 
-  return configs.filter(Boolean).reduce((acc, currentConfig) => {
-    return {
-      state: mergeStates(acc.state, currentConfig.state),
-      actions: mergeDeepRight(acc.actions, currentConfig.actions || {}),
-      subscribers: [
-        ...(acc.subscribers || []),
-        ...(currentConfig.subscribers || []),
-      ],
-    };
-  });
+  return configs.filter(Boolean).reduce((accumulator, currentConfig) => ({
+    state: mergeStates(accumulator.state, currentConfig.state),
+    actions: mergeDeepRight(accumulator.actions, currentConfig.actions || {}),
+
+    subscribers: [
+      ...(accumulator.subscribers || []),
+      ...(currentConfig.subscribers || []),
+    ],
+  }));
 }
 
 export default function init(config) {
@@ -130,6 +131,7 @@ export default function init(config) {
                 notifySubscribers({
                   actionName:
                     path.length === 0 ? actionName : [...path, actionName],
+
                   value,
                 });
               },

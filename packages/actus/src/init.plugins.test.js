@@ -10,20 +10,24 @@ test("supports plugins", () => {
       state: {
         foo: "bar",
         baz: "qux",
+
         nested: {
           bar: "qux",
           qux: "bar",
           count: 123,
         },
       },
+
       actions: {
         inc: () => 0,
+
         nested: {
           count: {
             dec: (ignore, state) => state - 1,
           },
         },
       },
+
       subscribers: [subscriber1],
     },
     {
@@ -32,20 +36,24 @@ test("supports plugins", () => {
           count: 0,
         },
       },
+
       actions: {
         inc: (ignore, state) => ({
           ...state,
+
           nested: {
             ...state.nested,
             count: state.nested.count + 1,
           },
         }),
+
         nested: {
           count: {
             triple: (ignore, state) => state * 3,
           },
         },
       },
+
       subscribers: [subscriber2],
     },
   ]);
@@ -59,6 +67,7 @@ test("supports plugins", () => {
   expect(subscriber1.mock.calls[4][0].state).toStrictEqual({
     foo: "bar",
     baz: "qux",
+
     nested: {
       bar: "qux",
       qux: "bar",
@@ -69,6 +78,7 @@ test("supports plugins", () => {
   expect(subscriber2.mock.calls[4][0].state).toStrictEqual({
     foo: "bar",
     baz: "qux",
+
     nested: {
       bar: "qux",
       qux: "bar",
@@ -83,6 +93,7 @@ test("doesn't throw when something is missing", () => {
   init([
     {
       state: { foo: "bar" },
+
       actions: {
         testAction: (value, state) => state,
       },
@@ -97,9 +108,11 @@ test("ignores configs that are falsy values", () => {
   init([
     {
       state: { foo: "bar" },
+
       actions: {
         testAction: (value, state) => state,
       },
+
       subscribers: [],
     },
     undefined,
@@ -108,9 +121,11 @@ test("ignores configs that are falsy values", () => {
   init([
     {
       state: { foo: "bar" },
+
       actions: {
         testAction: (value, state) => state,
       },
+
       subscribers: [],
     },
     "",

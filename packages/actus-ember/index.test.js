@@ -15,6 +15,7 @@ class EmberObjectMock {
 test("actusify()", () => {
   const target = new EmberObjectMock({
     state: 0,
+
     actions: {
       inc: (ignore, state) => state + 1,
     },
@@ -42,6 +43,7 @@ test("default actions", () => {
 test("default actions can be overridden", () => {
   const target = new EmberObjectMock({
     state: 0,
+
     actions: {
       increment: () => 123,
     },
@@ -105,6 +107,7 @@ test("do not deep freeze state when not in development", () => {
 test("supports plugins", () => {
   const target = new EmberObjectMock({
     state: 0,
+
     actions: {
       inc: (ignore, state) => state + 1,
     },

@@ -30,6 +30,7 @@ export default function makeDefaultActions(initialState) {
       clear: () => ({}),
       merge: (value, state) => ({ ...state, ...value }),
       mergeDeep: mergeDeepLeft,
+
       remove: (propertyName, state) => {
         const { [propertyName]: ignore, ...rest } = state;
 
@@ -60,6 +61,7 @@ export default function makeDefaultActions(initialState) {
   return type === "object"
     ? {
         ...defaultActions[type],
+
         ...Object.fromEntries(
           Object.entries(initialState)
             .map(([key, value]) => [key, makeDefaultActions(value)])

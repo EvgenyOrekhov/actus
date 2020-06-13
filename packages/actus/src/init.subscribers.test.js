@@ -6,10 +6,12 @@ test("initializes", () => {
 
   init({
     state: 0,
+
     actions: {
       inc: (ignore, state) => state + 1,
       dec: (ignore, state) => state - 1,
     },
+
     subscribers: [subscriber1, subscriber2],
   });
 
@@ -41,10 +43,12 @@ test("passes actions to subscribers", async () => {
 
     init({
       state: 0,
+
       actions: {
         inc: (ignore, state) => state + 1,
         dec: (ignore, state) => state - 1,
       },
+
       subscribers: [subscriber1, subscriber2],
     });
   });
@@ -57,10 +61,12 @@ test("passes current action name and value to subscribers", () => {
 
   const { add, subtract } = init({
     state: 0,
+
     actions: {
       add: (value, state) => state + value,
       subtract: (value, state) => state - value,
     },
+
     subscribers,
   });
 
@@ -85,9 +91,11 @@ test("cancels notifying subscribers if an action was called by one of them", () 
 
   init({
     state: 0,
+
     actions: {
       inc: (ignore, state) => state + 1,
     },
+
     subscribers: [subscriber1, subscriber2],
   });
 

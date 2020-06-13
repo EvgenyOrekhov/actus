@@ -3,8 +3,6 @@
     "hardcore",
     "hardcore/fp",
     "hardcore/node",
-    "prettier",
-    "prettier/unicorn",
     "plugin:jest/all",
     "plugin:jest-formatting/strict"
   ],
@@ -14,6 +12,18 @@
   },
 
   "rules": {
+    "unicorn/prevent-abbreviations": [
+      "error",
+      {
+        "whitelist": {
+          "args": true,
+          "reduxDevTools": true,
+          "devTools": true
+        },
+        "checkShorthandProperties": true
+      }
+    ],
+
     "no-inline-comments": "off",
     "line-comment-position": "off",
     "node/no-unsupported-features/es-syntax": "off",
