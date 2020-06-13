@@ -3,7 +3,6 @@
 Minimalist state container
 
 [![npm version](https://img.shields.io/npm/v/actus.svg?style=flat-square)](https://www.npmjs.com/package/actus)
-[![Travis CI build status](https://img.shields.io/travis/com/EvgenyOrekhov/actus/master.svg?style=flat-square)](https://travis-ci.com/EvgenyOrekhov/actus)
 
 - **Simple** - it takes 2 minutes to learn
 - **Small** - [see for yourself](https://bundlephobia.com/result?p=actus)
