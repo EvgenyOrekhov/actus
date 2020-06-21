@@ -57,6 +57,7 @@ export default function reduxDevTools({ name = undefined } = {}) {
               actionsBlacklist: ["setStateFromDevTools"],
 
               features: {
+                /* eslint-disable @typescript-eslint/naming-convention */
                 pause: true, // start/pause recording of dispatched actions
                 lock: false, // lock/unlock dispatching actions and side effects
                 persist: false, // persist states on page reloading
@@ -67,6 +68,7 @@ export default function reduxDevTools({ name = undefined } = {}) {
                 reorder: false, // drag and drop actions in the history list
                 dispatch: true, // dispatch custom actions or action creators
                 test: false, // generate tests for the selected actions
+                /* eslint-enable */
               },
             });
 

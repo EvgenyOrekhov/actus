@@ -14,8 +14,10 @@ test("validates state", () => {
 test("supports options", () => {
   const schema = Joi.object({ foo: Joi.number() });
   const validateState = makeStateValidator(schema, {
+    /* eslint-disable @typescript-eslint/naming-convention */
     convert: false,
     allowUnknown: true,
+    /* eslint-enable */
   });
 
   expect(() => validateState({ state: { foo: "123" } })).toThrow(

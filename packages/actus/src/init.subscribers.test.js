@@ -21,6 +21,7 @@ test("initializes", () => {
   expect(subscriber2.mock.calls[0][0].state).toStrictEqual(0);
 });
 
+/* eslint-disable @typescript-eslint/no-implied-eval */
 test("passes actions to subscribers", async () => {
   // eslint-disable-next-line promise/avoid-new
   await new Promise((resolve) => {
@@ -53,6 +54,7 @@ test("passes actions to subscribers", async () => {
     });
   });
 });
+/* eslint-enable */
 
 test("passes current action name and value to subscribers", () => {
   const subscriber1 = jest.fn();
