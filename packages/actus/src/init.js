@@ -46,7 +46,12 @@ function mergeConfigs(config) {
 }
 
 export default function init(config) {
-  const { state, actions, subscribers } = mergeConfigs(config);
+  const {
+    state,
+    actions,
+    getNextState = (previousState, actionResult) => actionResult,
+    subscribers,
+  } = mergeConfigs(config);
 
   // eslint-disable-next-line fp/no-let
   let currentState = state;
@@ -111,7 +116,11 @@ export default function init(config) {
                   if (action.length === DEFAULT_ACTION_ARITY) {
                     const newSlice = action(value, currentSlice);
 
-                    return setSlice(currentState, path, newSlice);
+                    return setSlice(
+                      currentState,
+                      path,
+                      getNextState(currentSlice, newSlice)
+                    );
                   }
 
                   const partiallyAppliedActionOrNewSlice = action(value);
@@ -122,7 +131,11 @@ export default function init(config) {
                         partiallyAppliedActionOrNewSlice(currentSlice)
                       : partiallyAppliedActionOrNewSlice;
 
-                  return setSlice(currentState, path, newSlice);
+                  return setSlice(
+                    currentState,
+                    path,
+                    getNextState(currentSlice, newSlice)
+                  );
                 }
 
                 // eslint-disable-next-line fp/no-mutation
