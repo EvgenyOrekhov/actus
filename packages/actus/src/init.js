@@ -110,36 +110,26 @@ export default function init(config) {
           ? [
               actionName,
               function boundAction(value) {
-                function getNewState() {
-                  const currentSlice = getSlice(currentState, path);
+                const currentSlice = getSlice(currentState, path);
 
+                function getNewSlice() {
                   if (action.length === DEFAULT_ACTION_ARITY) {
-                    const newSlice = action(value, currentSlice);
-
-                    return setSlice(
-                      currentState,
-                      path,
-                      getNextState(currentSlice, newSlice)
-                    );
+                    return action(value, currentSlice);
                   }
 
                   const partiallyAppliedActionOrNewSlice = action(value);
 
-                  const newSlice =
-                    typeof partiallyAppliedActionOrNewSlice === "function"
-                      ? // Turns out we have a curried action here:
-                        partiallyAppliedActionOrNewSlice(currentSlice)
-                      : partiallyAppliedActionOrNewSlice;
-
-                  return setSlice(
-                    currentState,
-                    path,
-                    getNextState(currentSlice, newSlice)
-                  );
+                  return typeof partiallyAppliedActionOrNewSlice === "function"
+                    ? // Turns out we have a curried action here:
+                      partiallyAppliedActionOrNewSlice(currentSlice)
+                    : partiallyAppliedActionOrNewSlice;
                 }
 
+                const newSlice = getNewSlice();
+                const nextState = getNextState(currentSlice, newSlice);
+
                 // eslint-disable-next-line fp/no-mutation
-                currentState = getNewState();
+                currentState = setSlice(currentState, path, nextState);
 
                 notifySubscribers({
                   actionName:
