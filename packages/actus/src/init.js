@@ -31,27 +31,46 @@ function mergeStates(left, right) {
     : right;
 }
 
+function getActionsWithNextStateGetter(
+  actions = {},
+  getNextState = (previousState, actionResult) => actionResult
+) {
+  return Object.fromEntries(
+    Object.entries(actions).map(([actionName, action]) => [
+      actionName,
+      typeof action === "function"
+        ? [action, getNextState]
+        : getActionsWithNextStateGetter(action, getNextState),
+    ])
+  );
+}
+
 function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
 
-  return configs.filter(Boolean).reduce((accumulator, currentConfig) => ({
-    state: mergeStates(accumulator.state, currentConfig.state),
-    actions: mergeDeepRight(accumulator.actions, currentConfig.actions || {}),
+  return configs.filter(Boolean).reduce(
+    (accumulator, currentConfig) => ({
+      state: mergeStates(accumulator.state, currentConfig.state),
 
-    subscribers: [
-      ...(accumulator.subscribers || []),
-      ...(currentConfig.subscribers || []),
-    ],
-  }));
+      actions: mergeDeepRight(
+        accumulator.actions,
+        getActionsWithNextStateGetter(
+          currentConfig.actions,
+          currentConfig.getNextState
+        ) || {}
+      ),
+
+      subscribers: [
+        ...(accumulator.subscribers || []),
+        ...(currentConfig.subscribers || []),
+      ],
+    }),
+    { state: {}, actions: {}, subscribers: [] }
+  );
 }
 
 export default function init(config) {
-  const {
-    state,
-    actions,
-    getNextState = (previousState, actionResult) => actionResult,
-    subscribers,
-  } = mergeConfigs(config);
+  const { state, actions, subscribers } = mergeConfigs(config);
 
   // eslint-disable-next-line fp/no-let
   let currentState = state;
@@ -105,9 +124,12 @@ export default function init(config) {
   // eslint-disable-next-line sonarjs/cognitive-complexity
   function bindActions(unboundActions, path = []) {
     return Object.fromEntries(
-      Object.entries(unboundActions).map(([actionName, action]) =>
-        typeof action === "function"
-          ? [
+      Object.entries(unboundActions).map(
+        ([actionName, actionWithNextStateGetter]) => {
+          if (Array.isArray(actionWithNextStateGetter)) {
+            const [action, getNextState] = actionWithNextStateGetter;
+
+            return [
               actionName,
               function boundAction(value) {
                 const currentSlice = getSlice(currentState, path);
@@ -138,8 +160,14 @@ export default function init(config) {
                   value,
                 });
               },
-            ]
-          : [actionName, bindActions(action, [...path, actionName])]
+            ];
+          }
+
+          return [
+            actionName,
+            bindActions(actionWithNextStateGetter, [...path, actionName]),
+          ];
+        }
       )
     );
   }
