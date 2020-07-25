@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = localStoragePlugin;
 
-/*global localStorage */
+/* global localStorage */
 function localStoragePlugin({
   key = "state",
   selector = state => state,

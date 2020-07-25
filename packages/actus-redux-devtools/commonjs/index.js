@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = reduxDevTools;
 
-/*global window */
+/* global window */
 function getSlice(object, path) {
-  return path.reduce((acc, property) => acc === undefined || acc === null ? undefined : acc[property], object);
+  return path.reduce((accumulator, property) => accumulator === undefined || accumulator === null ? undefined : accumulator[property], object);
 } // eslint-disable-next-line sonarjs/cognitive-complexity
 
 
@@ -56,6 +56,7 @@ function reduxDevTools({
             actionCreators: actions,
             actionsBlacklist: ["setStateFromDevTools"],
             features: {
+              /* eslint-disable @typescript-eslint/naming-convention */
               pause: true,
               // start/pause recording of dispatched actions
               lock: false,
@@ -75,6 +76,8 @@ function reduxDevTools({
               dispatch: true,
               // dispatch custom actions or action creators
               test: false // generate tests for the selected actions
+
+              /* eslint-enable */
 
             }
           }); // eslint-disable-next-line max-statements, complexity

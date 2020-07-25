@@ -18,7 +18,7 @@ function isEmptyObject(value) {
 }
 
 function getSlice(object, path) {
-  return path.reduce((acc, property) => acc === undefined || acc === null ? undefined : acc[property], object);
+  return path.reduce((accumulator, property) => accumulator === undefined || accumulator === null ? undefined : accumulator[property], object);
 }
 
 function setSlice(object, path, slice) {
@@ -33,14 +33,20 @@ function mergeStates(left, right) {
   return left !== undefined && (right === undefined || isEmptyObject(right)) ? left : right;
 }
 
+function getActionsWithNextStateGetter(actions = {}, getNextState = (previousState, actionResult) => actionResult) {
+  return Object.fromEntries(Object.entries(actions).map(([actionName, action]) => [actionName, typeof action === "function" ? [action, getNextState] : getActionsWithNextStateGetter(action, getNextState)]));
+}
+
 function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
-  return configs.filter(Boolean).reduce((acc, currentConfig) => {
-    return {
-      state: mergeStates(acc.state, currentConfig.state),
-      actions: (0, _mergeDeepRight.default)(acc.actions, currentConfig.actions || {}),
-      subscribers: [...(acc.subscribers || []), ...(currentConfig.subscribers || [])]
-    };
+  return configs.filter(Boolean).reduce((accumulator, currentConfig) => ({
+    state: mergeStates(accumulator.state, currentConfig.state),
+    actions: (0, _mergeDeepRight.default)(accumulator.actions, getActionsWithNextStateGetter(currentConfig.actions, currentConfig.getNextState) || {}),
+    subscribers: [...(accumulator.subscribers || []), ...(currentConfig.subscribers || [])]
+  }), {
+    state: {},
+    actions: {},
+    subscribers: []
   });
 }
 
@@ -97,28 +103,35 @@ function init(config) {
 
 
   function bindActions(unboundActions, path = []) {
-    return Object.fromEntries(Object.entries(unboundActions).map(([actionName, action]) => typeof action === "function" ? [actionName, function boundAction(value) {
-      function getNewState() {
-        const currentSlice = getSlice(currentState, path);
+    return Object.fromEntries(Object.entries(unboundActions).map(([actionName, actionWithNextStateGetter]) => {
+      if (Array.isArray(actionWithNextStateGetter)) {
+        const [action, getNextState] = actionWithNextStateGetter;
+        return [actionName, function boundAction(value) {
+          const currentSlice = getSlice(currentState, path);
 
-        if (action.length === DEFAULT_ACTION_ARITY) {
-          const newSlice = action(value, currentSlice);
-          return setSlice(currentState, path, newSlice);
-        }
+          function getNewSlice() {
+            if (action.length === DEFAULT_ACTION_ARITY) {
+              return action(value, currentSlice);
+            }
 
-        const partiallyAppliedActionOrNewSlice = action(value);
-        const newSlice = typeof partiallyAppliedActionOrNewSlice === "function" ? // Turns out we have a curried action here:
-        partiallyAppliedActionOrNewSlice(currentSlice) : partiallyAppliedActionOrNewSlice;
-        return setSlice(currentState, path, newSlice);
-      } // eslint-disable-next-line fp/no-mutation
+            const partiallyAppliedActionOrNewSlice = action(value);
+            return typeof partiallyAppliedActionOrNewSlice === "function" ? // Turns out we have a curried action here:
+            partiallyAppliedActionOrNewSlice(currentSlice) : partiallyAppliedActionOrNewSlice;
+          }
 
+          const newSlice = getNewSlice();
+          const nextState = getNextState(currentSlice, newSlice); // eslint-disable-next-line fp/no-mutation
 
-      currentState = getNewState();
-      notifySubscribers({
-        actionName: path.length === 0 ? actionName : [...path, actionName],
-        value
-      });
-    }] : [actionName, bindActions(action, [...path, actionName])]));
+          currentState = setSlice(currentState, path, nextState);
+          notifySubscribers({
+            actionName: path.length === 0 ? actionName : [...path, actionName],
+            value
+          });
+        }];
+      }
+
+      return [actionName, bindActions(actionWithNextStateGetter, [...path, actionName])];
+    }));
   } // eslint-disable-next-line fp/no-mutation
 
 
