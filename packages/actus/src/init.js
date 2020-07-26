@@ -49,22 +49,24 @@ function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
 
   return configs.filter(Boolean).reduce(
-    (accumulator, currentConfig) => ({
-      state: mergeStates(accumulator.state, currentConfig.state),
+    function mergeConfig(accumulator, currentConfig) {
+      return {
+        state: mergeStates(accumulator.state, currentConfig.state),
 
-      actions: mergeDeepRight(
-        accumulator.actions,
-        getActionsWithNextStateGetter(
-          currentConfig.actions,
-          currentConfig.getNextState
-        ) || {}
-      ),
+        actions: mergeDeepRight(
+          accumulator.actions,
+          getActionsWithNextStateGetter(
+            currentConfig.actions,
+            currentConfig.getNextState
+          ) || {}
+        ),
 
-      subscribers: [
-        ...(accumulator.subscribers || []),
-        ...(currentConfig.subscribers || []),
-      ],
-    }),
+        subscribers: [
+          ...(accumulator.subscribers || []),
+          ...(currentConfig.subscribers || []),
+        ],
+      };
+    },
     { state: {}, actions: {}, subscribers: [] }
   );
 }
@@ -86,7 +88,7 @@ export default function init(config) {
     // eslint-disable-next-line fp/no-let
     let errors = [];
 
-    subscribers.every((subscriber) => {
+    subscribers.every(function notifySubscriber(subscriber) {
       try {
         subscriber({
           state: currentState,
@@ -124,51 +126,52 @@ export default function init(config) {
   // eslint-disable-next-line sonarjs/cognitive-complexity
   function bindActions(unboundActions, path = []) {
     return Object.fromEntries(
-      Object.entries(unboundActions).map(
-        ([actionName, actionWithNextStateGetter]) => {
-          if (Array.isArray(actionWithNextStateGetter)) {
-            const [action, getNextState] = actionWithNextStateGetter;
-
-            return [
-              actionName,
-              function boundAction(value) {
-                const currentSlice = getSlice(currentState, path);
-
-                function getNewSlice() {
-                  if (action.length === DEFAULT_ACTION_ARITY) {
-                    return action(value, currentSlice);
-                  }
-
-                  const partiallyAppliedActionOrNewSlice = action(value);
-
-                  return typeof partiallyAppliedActionOrNewSlice === "function"
-                    ? // Turns out we have a curried action here:
-                      partiallyAppliedActionOrNewSlice(currentSlice)
-                    : partiallyAppliedActionOrNewSlice;
-                }
-
-                const newSlice = getNewSlice();
-                const nextState = getNextState(currentSlice, newSlice);
-
-                // eslint-disable-next-line fp/no-mutation
-                currentState = setSlice(currentState, path, nextState);
-
-                notifySubscribers({
-                  actionName:
-                    path.length === 0 ? actionName : [...path, actionName],
-
-                  value,
-                });
-              },
-            ];
-          }
+      Object.entries(unboundActions).map(function bindAction([
+        actionName,
+        actionWithNextStateGetter,
+      ]) {
+        if (Array.isArray(actionWithNextStateGetter)) {
+          const [action, getNextState] = actionWithNextStateGetter;
 
           return [
             actionName,
-            bindActions(actionWithNextStateGetter, [...path, actionName]),
+            (value) => {
+              const currentSlice = getSlice(currentState, path);
+
+              function getNewSlice() {
+                if (action.length === DEFAULT_ACTION_ARITY) {
+                  return action(value, currentSlice);
+                }
+
+                const partiallyAppliedActionOrNewSlice = action(value);
+
+                return typeof partiallyAppliedActionOrNewSlice === "function"
+                  ? // Turns out we have a curried action here:
+                    partiallyAppliedActionOrNewSlice(currentSlice)
+                  : partiallyAppliedActionOrNewSlice;
+              }
+
+              const newSlice = getNewSlice();
+              const nextState = getNextState(currentSlice, newSlice);
+
+              // eslint-disable-next-line fp/no-mutation
+              currentState = setSlice(currentState, path, nextState);
+
+              notifySubscribers({
+                actionName:
+                  path.length === 0 ? actionName : [...path, actionName],
+
+                value,
+              });
+            },
           ];
         }
-      )
+
+        return [
+          actionName,
+          bindActions(actionWithNextStateGetter, [...path, actionName]),
+        ];
+      })
     );
   }
 
