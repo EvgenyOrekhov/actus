@@ -21,9 +21,9 @@ function localStoragePlugin({
 
   return {
     state: getState(),
-    subscribers: [({
+    subscribers: [function saveStateToLocalStorage({
       state
-    }) => {
+    }) {
       // eslint-disable-next-line fp/no-mutation, no-param-reassign
       storage[key] = JSON.stringify(selector(state));
     }]

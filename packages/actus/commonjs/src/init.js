@@ -39,11 +39,13 @@ function getActionsWithNextStateGetter(actions = {}, getNextState = (previousSta
 
 function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
-  return configs.filter(Boolean).reduce((accumulator, currentConfig) => ({
-    state: mergeStates(accumulator.state, currentConfig.state),
-    actions: (0, _mergeDeepRight.default)(accumulator.actions, getActionsWithNextStateGetter(currentConfig.actions, currentConfig.getNextState) || {}),
-    subscribers: [...(accumulator.subscribers || []), ...(currentConfig.subscribers || [])]
-  }), {
+  return configs.filter(Boolean).reduce(function mergeConfig(accumulator, currentConfig) {
+    return {
+      state: mergeStates(accumulator.state, currentConfig.state),
+      actions: (0, _mergeDeepRight.default)(accumulator.actions, getActionsWithNextStateGetter(currentConfig.actions, currentConfig.getNextState) || {}),
+      subscribers: [...(accumulator.subscribers || []), ...(currentConfig.subscribers || [])]
+    };
+  }, {
     state: {},
     actions: {},
     subscribers: []
@@ -71,7 +73,7 @@ function init(config) {
     shouldNotifySubscribers = true; // eslint-disable-next-line fp/no-let
 
     let errors = [];
-    subscribers.every(subscriber => {
+    subscribers.every(function notifySubscriber(subscriber) {
       try {
         subscriber({
           state: currentState,
@@ -103,10 +105,10 @@ function init(config) {
 
 
   function bindActions(unboundActions, path = []) {
-    return Object.fromEntries(Object.entries(unboundActions).map(([actionName, actionWithNextStateGetter]) => {
+    return Object.fromEntries(Object.entries(unboundActions).map(function bindAction([actionName, actionWithNextStateGetter]) {
       if (Array.isArray(actionWithNextStateGetter)) {
         const [action, getNextState] = actionWithNextStateGetter;
-        return [actionName, function boundAction(value) {
+        return [actionName, value => {
           const currentSlice = getSlice(currentState, path);
 
           function getNewSlice() {
