@@ -13,11 +13,11 @@ function makeLogger({
 } = {}) {
   // eslint-disable-next-line fp/no-let, init-declarations
   let previousState;
-  return ({
+  return function logAction({
     state,
     actionName,
     value
-  }) => {
+  }) {
     const prettyActionName = Array.isArray(actionName) ? actionName.join(".") : actionName;
 
     if (name === undefined) {

@@ -108,7 +108,7 @@ function init(config) {
     return Object.fromEntries(Object.entries(unboundActions).map(function bindAction([actionName, actionWithNextStateGetter]) {
       if (Array.isArray(actionWithNextStateGetter)) {
         const [action, getNextState] = actionWithNextStateGetter;
-        return [actionName, value => {
+        return [actionName, function boundAction(value) {
           const currentSlice = getSlice(currentState, path);
 
           function getNewSlice() {

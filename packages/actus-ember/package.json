@@ -1,6 +1,6 @@
 {
   "name": "actus-ember",
-  "version": "0.2.1-alpha.4",
+  "version": "0.2.1-alpha.5",
   "description": "Ember bindings for actus",
   "keywords": [
     "actus",
@@ -18,10 +18,10 @@
     "commonjs/"
   ],
   "dependencies": {
-    "actus": "^0.3.0-alpha.1",
+    "actus": "^0.3.0-alpha.2",
     "actus-default-actions": "^0.1.0-alpha.2",
     "actus-freeze": "0.0.1-alpha.0",
-    "actus-logger": "^0.2.0-alpha.0",
+    "actus-logger": "^0.2.0-alpha.1",
     "is-plain-obj": "^2.1.0"
   },
   "peerDependencies": {
