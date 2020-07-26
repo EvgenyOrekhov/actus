@@ -16,7 +16,7 @@ export default function actusify(config, { isDevelopment = true } = {}) {
           actions: target.actions,
 
           subscribers: [
-            ({ state }) => {
+            function setState({ state }) {
               // eslint-disable-next-line fp/no-mutation
               target.state = state;
             },
