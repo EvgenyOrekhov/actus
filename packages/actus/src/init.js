@@ -135,7 +135,7 @@ export default function init(config) {
 
           return [
             actionName,
-            (value) => {
+            function boundAction(value) {
               const currentSlice = getSlice(currentState, path);
 
               function getNewSlice() {
