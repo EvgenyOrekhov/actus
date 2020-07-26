@@ -73,7 +73,7 @@ export default function reduxDevTools({ name = undefined } = {}) {
             });
 
             // eslint-disable-next-line max-statements, complexity
-            devTools.subscribe((message) => {
+            devTools.subscribe(function handleMessage(message) {
               if (message.type === "ACTION") {
                 const payload =
                   typeof message.payload === "string"
