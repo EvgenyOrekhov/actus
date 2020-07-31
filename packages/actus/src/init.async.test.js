@@ -176,7 +176,11 @@ test("handles errors", async () => {
 
   const { nested } = init({
     state: {
-      errors: { oldError: "old error" },
+      errors: {
+        oldError: "old error",
+        nested: { getUser: "old getUser error" },
+      },
+
       users: ["user1"],
       foo: "bar",
     },
@@ -211,6 +215,7 @@ test("handles errors", async () => {
 
     errors: {
       oldError: "old error",
+      nested: { getUser: undefined },
     },
 
     users: ["user1"],

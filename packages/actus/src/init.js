@@ -86,6 +86,10 @@ const defaultConfig = {
         actionPath,
         true
       ),
+
+      ...(getSlice(state.errors, actionPath) === undefined
+        ? {}
+        : { errors: setSlice(state.errors, actionPath, undefined) }),
     }),
 
     unsetLoading,
