@@ -107,3 +107,64 @@ test("can call async actions from async actions", async () => {
     foo: "bar",
   });
 });
+
+test("handles nested async actions", async () => {
+  const subscriber = jest.fn();
+
+  const { nested } = init({
+    state: {
+      users: ["user1"],
+      foo: "bar",
+    },
+
+    actions: {
+      receiveUser: (user, state) => ({
+        ...state,
+        users: [...state.users, user],
+      }),
+
+      nested: {
+        getUser: async (id, ignore, actions) => {
+          await Promise.resolve();
+          actions.receiveUser(id);
+        },
+      },
+    },
+
+    subscribers: [subscriber],
+  });
+
+  await nested.getUser("user2");
+
+  expect(subscriber.mock.calls).toHaveLength(4);
+
+  expect(subscriber.mock.calls[1][0].state).toStrictEqual({
+    loading: {
+      global: true,
+      nested: { getUser: true },
+    },
+
+    users: ["user1"],
+    foo: "bar",
+  });
+
+  expect(subscriber.mock.calls[2][0].state).toStrictEqual({
+    loading: {
+      global: true,
+      nested: { getUser: true },
+    },
+
+    users: ["user1", "user2"],
+    foo: "bar",
+  });
+
+  expect(subscriber.mock.calls[3][0].state).toStrictEqual({
+    loading: {
+      global: false,
+      nested: { getUser: false },
+    },
+
+    users: ["user1", "user2"],
+    foo: "bar",
+  });
+});

@@ -45,34 +45,45 @@ function getActionsWithNextStateGetter(
   );
 }
 
+function getGlobalLoading(loading) {
+  return Object.values(loading).some((value) =>
+    typeof value === "boolean" ? value : getGlobalLoading(value)
+  );
+}
+
 const defaultConfig = {
   actions: {
-    setLoading: (actionName, state) => ({
+    setLoading: (actionPath, state) => ({
       ...state,
 
-      loading: {
-        ...state.loading,
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        global: true,
-        [actionName]: true,
-      },
+      loading: setSlice(
+        {
+          ...state.loading,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          global: true,
+        },
+        actionPath,
+        true
+      ),
     }),
 
-    unsetLoading: (actionName, state) => {
-      const loading = {
-        ...state.loading,
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        global: false,
-        [actionName]: false,
-      };
+    unsetLoading: (actionPath, state) => {
+      const loading = setSlice(
+        {
+          ...state.loading,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          global: false,
+        },
+        actionPath,
+        false
+      );
 
       return {
         ...state,
 
         loading: {
           ...loading,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          global: Object.values(loading).some(Boolean),
+          global: getGlobalLoading(loading),
         },
       };
     },
@@ -189,10 +200,13 @@ export default function init(config) {
               const newSlice = getNewSlice();
 
               if (typeof newSlice?.then === "function") {
-                boundActions.setLoading(actionName);
+                const actionPath =
+                  path.length === 0 ? [actionName] : [...path, actionName];
+
+                boundActions.setLoading(actionPath);
 
                 return newSlice.then((result) => {
-                  boundActions.unsetLoading(actionName);
+                  boundActions.unsetLoading(actionPath);
 
                   return result;
                 });
