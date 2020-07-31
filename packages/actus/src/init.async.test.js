@@ -205,7 +205,7 @@ test("handles errors", async () => {
 
   await nested.getUser("user2");
 
-  expect(subscriber.mock.calls).toHaveLength(3);
+  expect(subscriber.mock.calls).toHaveLength(4);
 
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({
     loading: {
@@ -223,6 +223,21 @@ test("handles errors", async () => {
   });
 
   expect(subscriber.mock.calls[2][0].state).toStrictEqual({
+    loading: {
+      global: true,
+      nested: { getUser: true },
+    },
+
+    errors: {
+      oldError: "old error",
+      nested: { getUser: error },
+    },
+
+    users: ["user1"],
+    foo: "bar",
+  });
+
+  expect(subscriber.mock.calls[3][0].state).toStrictEqual({
     loading: {
       global: false,
       nested: { getUser: false },
