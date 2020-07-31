@@ -45,10 +45,45 @@ function getActionsWithNextStateGetter(
   );
 }
 
+const defaultConfig = {
+  actions: {
+    setLoading: (actionName, state) => ({
+      ...state,
+
+      loading: {
+        ...state.loading,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        global: true,
+        [actionName]: true,
+      },
+    }),
+
+    unsetLoading: (actionName, state) => {
+      const loading = {
+        ...state.loading,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        global: false,
+        [actionName]: false,
+      };
+
+      return {
+        ...state,
+
+        loading: {
+          ...loading,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          global: Object.values(loading).some(Boolean),
+        },
+      };
+    },
+  },
+};
+
 function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
+  const configsWithDefaultConfig = [defaultConfig, ...configs];
 
-  return configs.filter(Boolean).reduce(
+  return configsWithDefaultConfig.filter(Boolean).reduce(
     function mergeConfig(accumulator, currentConfig) {
       return {
         state: mergeStates(accumulator.state, currentConfig.state),
@@ -154,7 +189,13 @@ export default function init(config) {
               const newSlice = getNewSlice();
 
               if (typeof newSlice?.then === "function") {
-                return newSlice;
+                boundActions.setLoading(actionName);
+
+                return newSlice.then((result) => {
+                  boundActions.unsetLoading(actionName);
+
+                  return result;
+                });
               }
 
               const nextState = getNextState(currentSlice, newSlice);

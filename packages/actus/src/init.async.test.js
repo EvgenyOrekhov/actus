@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import init from "./init.js";
 
-test("can call actions from async actions", () => {
+test("can call actions from async actions", async () => {
   const subscriber = jest.fn();
 
   const { getUser } = init({
@@ -15,8 +17,8 @@ test("can call actions from async actions", () => {
         users: [...state.users, user],
       }),
 
-      // eslint-disable-next-line @typescript-eslint/require-await
       getUser: async (id, ignore, actions) => {
+        await Promise.resolve();
         actions.receiveUser(id);
       },
     },
@@ -24,10 +26,36 @@ test("can call actions from async actions", () => {
     subscribers: [subscriber],
   });
 
-  getUser("user2");
+  await getUser("user2");
 
-  expect(subscriber.mock.calls).toHaveLength(2);
+  expect(subscriber.mock.calls).toHaveLength(4);
+
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({
+    loading: {
+      global: true,
+      getUser: true,
+    },
+
+    users: ["user1"],
+    foo: "bar",
+  });
+
+  expect(subscriber.mock.calls[2][0].state).toStrictEqual({
+    loading: {
+      global: true,
+      getUser: true,
+    },
+
+    users: ["user1", "user2"],
+    foo: "bar",
+  });
+
+  expect(subscriber.mock.calls[3][0].state).toStrictEqual({
+    loading: {
+      global: false,
+      getUser: false,
+    },
+
     users: ["user1", "user2"],
     foo: "bar",
   });
@@ -38,6 +66,7 @@ test("can call async actions from async actions", async () => {
 
   const { concatTwo } = init({
     state: {
+      loading: { alwaysLoading: true },
       string: "a",
       foo: "bar",
     },
@@ -64,8 +93,16 @@ test("can call async actions from async actions", async () => {
 
   await concatTwo({ first: "b", second: "c" });
 
-  expect(subscriber.mock.calls).toHaveLength(3);
-  expect(subscriber.mock.calls[2][0].state).toStrictEqual({
+  expect(
+    subscriber.mock.calls[subscriber.mock.calls.length - 1][0].state
+  ).toStrictEqual({
+    loading: {
+      global: true,
+      alwaysLoading: true,
+      concat: false,
+      concatTwo: false,
+    },
+
     string: "abc",
     foo: "bar",
   });
