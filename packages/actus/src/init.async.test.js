@@ -168,3 +168,67 @@ test("handles nested async actions", async () => {
     foo: "bar",
   });
 });
+
+test("handles errors", async () => {
+  const subscriber = jest.fn();
+
+  const error = new Error("Mock error");
+
+  const { nested } = init({
+    state: {
+      errors: { oldError: "old error" },
+      users: ["user1"],
+      foo: "bar",
+    },
+
+    actions: {
+      receiveUser: (user, state) => ({
+        ...state,
+        users: [...state.users, user],
+      }),
+
+      nested: {
+        getUser: async () => {
+          await Promise.resolve();
+
+          throw error;
+        },
+      },
+    },
+
+    subscribers: [subscriber],
+  });
+
+  await nested.getUser("user2");
+
+  expect(subscriber.mock.calls).toHaveLength(3);
+
+  expect(subscriber.mock.calls[1][0].state).toStrictEqual({
+    loading: {
+      global: true,
+      nested: { getUser: true },
+    },
+
+    errors: {
+      oldError: "old error",
+    },
+
+    users: ["user1"],
+    foo: "bar",
+  });
+
+  expect(subscriber.mock.calls[2][0].state).toStrictEqual({
+    loading: {
+      global: false,
+      nested: { getUser: false },
+    },
+
+    errors: {
+      oldError: "old error",
+      nested: { getUser: error },
+    },
+
+    users: ["user1"],
+    foo: "bar",
+  });
+});

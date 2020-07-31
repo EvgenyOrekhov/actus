@@ -51,6 +51,27 @@ function getGlobalLoading(loading) {
   );
 }
 
+function unsetLoading(actionPath, state) {
+  const loading = setSlice(
+    {
+      ...state.loading,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      global: false,
+    },
+    actionPath,
+    false
+  );
+
+  return {
+    ...state,
+
+    loading: {
+      ...loading,
+      global: getGlobalLoading(loading),
+    },
+  };
+}
+
 const defaultConfig = {
   actions: {
     setLoading: (actionPath, state) => ({
@@ -67,26 +88,12 @@ const defaultConfig = {
       ),
     }),
 
-    unsetLoading: (actionPath, state) => {
-      const loading = setSlice(
-        {
-          ...state.loading,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          global: false,
-        },
-        actionPath,
-        false
-      );
+    unsetLoading,
 
-      return {
-        ...state,
-
-        loading: {
-          ...loading,
-          global: getGlobalLoading(loading),
-        },
-      };
-    },
+    handleError: ({ error, actionPath }, state) => ({
+      ...unsetLoading(actionPath, state),
+      errors: setSlice(state.errors, actionPath, error),
+    }),
   },
 };
 
@@ -205,11 +212,15 @@ export default function init(config) {
 
                 boundActions.setLoading(actionPath);
 
-                return newSlice.then((result) => {
-                  boundActions.unsetLoading(actionPath);
+                return newSlice
+                  .then((result) => {
+                    boundActions.unsetLoading(actionPath);
 
-                  return result;
-                });
+                    return result;
+                  })
+                  .catch((error) =>
+                    boundActions.handleError({ error, actionPath })
+                  );
               }
 
               const nextState = getNextState(currentSlice, newSlice);
