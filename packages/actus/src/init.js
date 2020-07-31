@@ -154,7 +154,7 @@ export default function init(config) {
               const newSlice = getNewSlice();
 
               if (typeof newSlice?.then === "function") {
-                return;
+                return newSlice;
               }
 
               const nextState = getNextState(currentSlice, newSlice);
