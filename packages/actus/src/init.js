@@ -139,8 +139,8 @@ export default function init(config) {
               const currentSlice = getSlice(currentState, path);
 
               function getNewSlice() {
-                if (action.length === DEFAULT_ACTION_ARITY) {
-                  return action(value, currentSlice);
+                if (action.length >= DEFAULT_ACTION_ARITY) {
+                  return action(value, currentSlice, boundActions);
                 }
 
                 const partiallyAppliedActionOrNewSlice = action(value);
@@ -152,6 +152,11 @@ export default function init(config) {
               }
 
               const newSlice = getNewSlice();
+
+              if (typeof newSlice?.then === "function") {
+                return;
+              }
+
               const nextState = getNextState(currentSlice, newSlice);
 
               // eslint-disable-next-line fp/no-mutation
