@@ -27,7 +27,7 @@
     "commonjs/"
   ],
   "dependencies": {
-    "ramda": "^0.27.0"
+    "ramda": "^0.27.1"
   },
   "engines": {
     "node": ">=12.6.1"
