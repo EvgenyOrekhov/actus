@@ -1,22 +1,7 @@
 {
   "name": "actus-localstorage",
   "version": "0.1.0-alpha.2",
-  "description": "Persisting actus state to localStorage",
-  "keywords": [
-    "actus"
-  ],
-  "repository": "https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-localstorage",
+  "repository": "https://github.com/EvgenyOrekhov/actus",
   "license": "MIT",
-  "author": "Evgeny Orekhov",
-  "sideEffects": false,
-  "type": "module",
-  "main": "index.js",
-  "module": "index.js",
-  "files": [
-    "index.js",
-    "commonjs/"
-  ],
-  "engines": {
-    "node": ">=12.6.1"
-  }
+  "author": "Evgeny Orekhov"
 }

@@ -1,11 +1,11 @@
 /* global localStorage */
 
-export default function localStoragePlugin({
+export default function persist({
   key = "state",
   selector = (state) => state,
   storage = localStorage,
 } = {}) {
-  function getState() {
+  function getStateFromStorage() {
     try {
       return JSON.parse(storage[key]);
     } catch {
@@ -14,10 +14,10 @@ export default function localStoragePlugin({
   }
 
   return {
-    state: getState(),
+    state: getStateFromStorage(),
 
     subscribers: [
-      function saveStateToLocalStorage({ state }) {
+      function saveStateToStorage({ state }) {
         // eslint-disable-next-line fp/no-mutation, no-param-reassign
         storage[key] = JSON.stringify(selector(state));
       },
