@@ -8,8 +8,8 @@ test("initializes", () => {
     state: 0,
 
     actions: {
-      inc: (ignore, state) => state + 1,
-      dec: (ignore, state) => state - 1,
+      inc: ({ state }) => state + 1,
+      dec: ({ state }) => state - 1,
     },
 
     subscribers: [subscriber1, subscriber2],
@@ -46,8 +46,8 @@ test("passes actions to subscribers", async () => {
       state: 0,
 
       actions: {
-        inc: (ignore, state) => state + 1,
-        dec: (ignore, state) => state - 1,
+        inc: ({ state }) => state + 1,
+        dec: ({ state }) => state - 1,
       },
 
       subscribers: [subscriber1, subscriber2],
@@ -65,8 +65,8 @@ test("passes current action name and value to subscribers", () => {
     state: 0,
 
     actions: {
-      add: (value, state) => state + value,
-      subtract: (value, state) => state - value,
+      add: ({ state, payload }) => state + payload,
+      subtract: ({ state, payload }) => state - payload,
     },
 
     subscribers,
@@ -95,7 +95,7 @@ test("cancels notifying subscribers if an action was called by one of them", () 
     state: 0,
 
     actions: {
-      inc: (ignore, state) => state + 1,
+      inc: ({ state }) => state + 1,
     },
 
     subscribers: [subscriber1, subscriber2],

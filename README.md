@@ -6,7 +6,7 @@ Minimalist state container
 
 - **Simple** - it takes 2 minutes to learn
 - **Small** - [see for yourself](https://bundlephobia.com/result?p=actus)
-- **Functional** - immutable data-last actions
+- **Functional** - data are never mutated
 - **Framework-agnostic**
 
 ## Examples
@@ -21,8 +21,8 @@ import ReactDOM from "react-dom";
 init({
   state: 0,
   actions: {
-    inc: (value, state) => state + 1,
-    dec: (value, state) => state - 1,
+    inc: ({ state }) => state + 1,
+    dec: ({ state }) => state - 1,
   },
   subscribers: [
     ({ state, actions }) => {
@@ -46,33 +46,16 @@ init({
 ```js
 import { init } from "actus";
 
-// You don't have to use Ramda, but it plays very nicely with actus
-import { evolve, multiply } from "ramda";
-
-// init() returns actions bound to the current state, if you need them outside
-// of subscribers:
+// init() returns actions bound to the current state, in case if you need them
+// outside of subscribers:
 const actions = init({
   // The initial state:
   state: { number: 0 },
 
-  // Actions accept an optional value and the current state, and must return
+  // Actions accept an optional payload and the current state, and must return
   // a new state:
   actions: {
-    // Binary action that accepts a value and the current state:
-    add: (value, state) => ({ ...state, number: state.number + value }),
-
-    // Manually curried action that accepts a value and the current state
-    // (in plain JS):
-    subtract: (value) => (state) => ({
-      ...state,
-      number: state.number - value,
-    }),
-
-    // Curried action that accepts a value and the current state
-    // (with Ramda functions):
-    multiply: (value) => evolve({ number: multiply(value) }),
-
-    // Nullary action that ignores the current state:
+    add: ({ state, payload }) => ({ ...state, number: state.number + payload }),
     reset: () => ({ number: 0 }),
   },
 
@@ -80,6 +63,9 @@ const actions = init({
   // after any action call:
   subscribers: [({ state, actions, actionName, value }) => {}],
 });
+
+// The first argument is the payload:
+actions.add(1);
 ```
 
 ## Plugins

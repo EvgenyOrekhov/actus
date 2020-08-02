@@ -46,9 +46,9 @@ init([
   {
     state: 0,
     actions: {
-      inc: (value, state) => state + 1,
-      dec: (value, state) => state - 1,
-      tryConvertingToString: (value, state) => String(state),
+      inc: ({ state }) => state + 1,
+      dec: ({ state }) => state - 1,
+      tryConvertingToString: ({ state }) => String(state),
       trySettingToUndefined: () => undefined,
     },
     subscribers: [

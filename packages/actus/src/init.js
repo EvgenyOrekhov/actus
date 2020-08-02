@@ -1,8 +1,6 @@
 import assocPath from "ramda/src/assocPath.js";
 import mergeDeepRight from "ramda/src/mergeDeepRight.js";
 
-const DEFAULT_ACTION_ARITY = 2;
-
 function isEmptyObject(value) {
   return typeof value === "object" && Object.keys(value).length === 0;
 }
@@ -45,10 +43,65 @@ function getActionsWithNextStateGetter(
   );
 }
 
+function getGlobalLoading(loading) {
+  return Object.values(loading).some((value) =>
+    typeof value === "boolean" ? value : getGlobalLoading(value)
+  );
+}
+
+const defaultConfig = {
+  actions: {
+    setLoading: ({ state, payload: actionPath }) => ({
+      ...state,
+
+      loading: setSlice(
+        {
+          ...state.loading,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          global: true,
+        },
+        actionPath,
+        true
+      ),
+
+      ...(getSlice(state.errors, actionPath) === undefined
+        ? {}
+        : { errors: setSlice(state.errors, actionPath, undefined) }),
+    }),
+
+    unsetLoading: ({ state, payload: actionPath }) => {
+      const loading = setSlice(
+        {
+          ...state.loading,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          global: false,
+        },
+        actionPath,
+        false
+      );
+
+      return {
+        ...state,
+
+        loading: {
+          ...loading,
+          global: getGlobalLoading(loading),
+        },
+      };
+    },
+
+    handleError: ({ state, payload }) => ({
+      ...state,
+      errors: setSlice(state.errors, payload.actionPath, payload.error),
+    }),
+  },
+};
+
 function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
+  const configsWithDefaultConfig = [defaultConfig, ...configs];
 
-  return configs.filter(Boolean).reduce(
+  return configsWithDefaultConfig.filter(Boolean).reduce(
     function mergeConfig(accumulator, currentConfig) {
       return {
         state: mergeStates(accumulator.state, currentConfig.state),
@@ -138,20 +191,27 @@ export default function init(config) {
             function boundAction(value) {
               const currentSlice = getSlice(currentState, path);
 
-              function getNewSlice() {
-                if (action.length === DEFAULT_ACTION_ARITY) {
-                  return action(value, currentSlice);
-                }
+              const newSlice = action({
+                state: currentSlice,
+                payload: value,
+                actions: boundActions,
+              });
 
-                const partiallyAppliedActionOrNewSlice = action(value);
+              if (typeof newSlice?.then === "function") {
+                const actionPath =
+                  path.length === 0 ? [actionName] : [...path, actionName];
 
-                return typeof partiallyAppliedActionOrNewSlice === "function"
-                  ? // Turns out we have a curried action here:
-                    partiallyAppliedActionOrNewSlice(currentSlice)
-                  : partiallyAppliedActionOrNewSlice;
+                boundActions.setLoading(actionPath);
+
+                return newSlice
+                  .catch((error) => {
+                    boundActions.handleError({ error, actionPath });
+                  })
+                  .finally(() => {
+                    boundActions.unsetLoading(actionPath);
+                  });
               }
 
-              const newSlice = getNewSlice();
               const nextState = getNextState(currentSlice, newSlice);
 
               // eslint-disable-next-line fp/no-mutation
