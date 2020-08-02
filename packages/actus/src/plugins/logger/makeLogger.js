@@ -6,7 +6,7 @@ export default function makeLogger({ name } = {}) {
   // eslint-disable-next-line fp/no-let, init-declarations
   let previousState;
 
-  return function logAction({ state, actionName, value }) {
+  return function logAction({ state, actionName, payload }) {
     const prettyActionName = Array.isArray(actionName)
       ? actionName.join(".")
       : actionName;
@@ -31,7 +31,7 @@ export default function makeLogger({ name } = {}) {
       "color: #9E9E9E; font-weight: bold;",
       previousState
     );
-    console.log("%cvalue", "color: #03A9F4; font-weight: bold;", value);
+    console.log("%cpayload", "color: #03A9F4; font-weight: bold;", payload);
     console.log("%cnext state", "color: #4CAF50; font-weight: bold;", state);
     console.log(
       "%cdiff",

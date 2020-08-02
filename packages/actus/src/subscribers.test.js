@@ -56,7 +56,7 @@ test("passes actions to subscribers", async () => {
 });
 /* eslint-enable */
 
-test("passes current action name and value to subscribers", () => {
+test("passes current action name and payload to subscribers", () => {
   const subscriber1 = jest.fn();
   const subscriber2 = jest.fn();
   const subscribers = [subscriber1, subscriber2];
@@ -77,9 +77,9 @@ test("passes current action name and value to subscribers", () => {
 
   subscribers.forEach((subscriber) => {
     expect(subscriber.mock.calls[1][0].actionName).toStrictEqual("add");
-    expect(subscriber.mock.calls[1][0].value).toStrictEqual(4);
+    expect(subscriber.mock.calls[1][0].payload).toStrictEqual(4);
     expect(subscriber.mock.calls[2][0].actionName).toStrictEqual("subtract");
-    expect(subscriber.mock.calls[2][0].value).toStrictEqual(8);
+    expect(subscriber.mock.calls[2][0].payload).toStrictEqual(8);
   });
 });
 

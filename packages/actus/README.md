@@ -61,7 +61,7 @@ const actions = actus({
 
   // Subscribers will be called sequentially during initialization and then
   // after any action call:
-  subscribers: [({ state, actions, actionName, value }) => {}],
+  subscribers: [({ state, actions, actionName, payload }) => {}],
 });
 
 // The first argument is the payload:

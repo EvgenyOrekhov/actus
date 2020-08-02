@@ -134,7 +134,7 @@ export default function actus(config) {
   // eslint-disable-next-line fp/no-let, init-declarations, prefer-const
   let boundActions;
 
-  function notifySubscribers({ actionName, value } = {}) {
+  function notifySubscribers({ actionName, payload } = {}) {
     // eslint-disable-next-line fp/no-mutation
     shouldNotifySubscribers = true;
 
@@ -147,7 +147,7 @@ export default function actus(config) {
           state: currentState,
           actions: boundActions,
           actionName,
-          value,
+          payload,
         });
       } catch (error) {
         // eslint-disable-next-line fp/no-mutation
@@ -188,12 +188,12 @@ export default function actus(config) {
 
           return [
             actionName,
-            function boundAction(value) {
+            function boundAction(payload) {
               const currentSlice = getSlice(currentState, path);
 
               const newSlice = action({
                 state: currentSlice,
-                payload: value,
+                payload,
                 actions: boundActions,
               });
 
@@ -221,7 +221,7 @@ export default function actus(config) {
                 actionName:
                   path.length === 0 ? actionName : [...path, actionName],
 
-                value,
+                payload,
               });
             },
           ];

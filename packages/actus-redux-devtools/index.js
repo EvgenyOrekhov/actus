@@ -42,7 +42,7 @@ export default function reduxDevTools({ name = undefined } = {}) {
           }
         }
 
-        return function send({ state, actionName, value, actions }) {
+        return function send({ state, actionName, payload, actions }) {
           // eslint-disable-next-line fp/no-mutation
           currentState = state;
 
@@ -75,12 +75,12 @@ export default function reduxDevTools({ name = undefined } = {}) {
             // eslint-disable-next-line max-statements, complexity
             devTools.subscribe(function handleMessage(message) {
               if (message.type === "ACTION") {
-                const payload =
+                const parsedPayload =
                   typeof message.payload === "string"
                     ? parse(message.payload)
                     : message.payload;
 
-                if (payload.name === undefined) {
+                if (parsedPayload.name === undefined) {
                   devTools.error(
                     `Invalid action: ${message.payload}.
                     Example: { "name": "foo.bar", "args": ["{ \\"baz\\": \\"qux\\" }"] }`
@@ -89,19 +89,20 @@ export default function reduxDevTools({ name = undefined } = {}) {
                   return;
                 }
 
-                const action = getSlice(actions, payload.name.split("."));
+                const action = getSlice(actions, parsedPayload.name.split("."));
 
                 if (typeof action === "function") {
                   action(
-                    Array.isArray(payload.args) && payload.args.length === 0
+                    Array.isArray(parsedPayload.args) &&
+                      parsedPayload.args.length === 0
                       ? undefined
-                      : parse(payload.args[0])
+                      : parse(parsedPayload.args[0])
                   );
 
                   return;
                 }
 
-                devTools.error(`Unknown action: ${payload.name}`);
+                devTools.error(`Unknown action: ${parsedPayload.name}`);
 
                 return;
               }
@@ -142,7 +143,7 @@ export default function reduxDevTools({ name = undefined } = {}) {
             ? actionName.join(".")
             : actionName;
 
-          devTools.send({ type, payload: value }, state);
+          devTools.send({ type, payload }, state);
         };
       })(),
     ],
