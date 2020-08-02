@@ -76,9 +76,9 @@ actions.add(1);
 
 ## Plugins for development
 
-- [logger](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/persist) - logs actions and state changes to your console
+- [logger](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/logger) - logs actions and state changes to your console
 - [actus-redux-devtools](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-redux-devtools) - Use [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension) with actus
-- [freeze](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/persist) - deep freezes your state to prevent mutations
+- [freeze](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/freeze) - deep freezes your state to prevent mutations
 
 ## Frameworks
 
