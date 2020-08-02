@@ -1,6 +1,6 @@
 # logger
 
-![logger](/packages/actus/plugins/logger/screenshot.png)
+![logger](/packages/actus/src/plugins/logger/screenshot.png)
 
 ## Examples
 
