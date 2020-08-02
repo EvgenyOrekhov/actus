@@ -25,8 +25,7 @@
   "jest": {
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "packages/**/*.js",
-      "!**/commonjs/**"
+      "packages/**/*.js"
     ]
   },
   "devDependencies": {
