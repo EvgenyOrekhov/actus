@@ -23,8 +23,8 @@
   "module": "index.js",
   "files": [
     "index.js",
-    "src/init.js",
-    "commonjs/"
+    "src/**/*.js",
+    "!**/*.test.js"
   ],
   "dependencies": {
     "ramda": "^0.27.1"

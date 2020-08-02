@@ -1,26 +1,8 @@
 {
   "name": "actus-default-actions",
   "version": "0.1.0-alpha.2",
-  "description": "Default actions for actus",
-  "keywords": [
-    "actus"
-  ],
-  "repository": "https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-default-actions",
+  "repository": "https://github.com/EvgenyOrekhov/actus",
   "license": "MIT",
   "author": "Evgeny Orekhov",
-  "sideEffects": false,
-  "type": "module",
-  "main": "index.js",
-  "module": "index.js",
-  "files": [
-    "makeDefaultActions.js",
-    "index.js",
-    "commonjs/"
-  ],
-  "dependencies": {
-    "ramda": "^0.27.1"
-  },
-  "engines": {
-    "node": ">=12.6.1"
-  }
+  "files": []
 }
