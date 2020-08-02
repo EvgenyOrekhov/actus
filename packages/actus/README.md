@@ -70,15 +70,15 @@ actions.add(1);
 
 ## Plugins
 
-- [actus-default-actions](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-default-actions) - basic actions for your state properties (`set()`, `reset()`, `toggle()`, etc.)
-- [actus-localstorage](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-localstorage) - persists state to `localStorage`
+- [defaultActions](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/defaultActions) - basic actions for your state properties (`set()`, `reset()`, `toggle()`, etc.)
+- [persist](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/persist) - persists state to a synchronous storage (`localStorage` by default)
 - [actus-state-validator](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-state-validator) - state validator and normalizer powered by [joi](https://github.com/hapijs/joi)
 
 ## Plugins for development
 
-- [actus-logger](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-logger) - logs actions and state changes to your console
+- [logger](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/persist) - logs actions and state changes to your console
 - [actus-redux-devtools](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-redux-devtools) - Use [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension) with actus
-- [actus-freeze](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-freeze) - deep freezes your state to prevent mutations
+- [freeze](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/persist) - deep freezes your state to prevent mutations
 
 ## Frameworks
 
