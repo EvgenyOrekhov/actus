@@ -1,8 +1,8 @@
-import logger from "actus-logger";
+import { logger } from "actus";
 
 import actusify from "./index.js";
 
-jest.mock("actus-logger");
+jest.mock("actus/src/plugins/logger/index.js");
 
 // eslint-disable-next-line fp/no-class, @typescript-eslint/no-extraneous-class
 class EmberObjectMock {

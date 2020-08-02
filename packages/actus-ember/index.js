@@ -1,7 +1,4 @@
-import { actus } from "actus";
-import logger from "actus-logger";
-import freeze from "actus-freeze";
-import defaultActions from "actus-default-actions";
+import { actus, logger, freeze, defaultActions } from "actus";
 import isPlainObject from "is-plain-obj";
 
 export default function actusify(config, { isDevelopment = true } = {}) {
