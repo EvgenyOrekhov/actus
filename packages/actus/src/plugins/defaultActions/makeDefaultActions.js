@@ -1,4 +1,4 @@
-import mergeDeepLeft from "ramda/src/mergeDeepLeft.js";
+import mergeDeepRight from "ramda/src/mergeDeepRight.js";
 
 export default function makeDefaultActions(initialState) {
   const defaultActions = {
@@ -29,7 +29,7 @@ export default function makeDefaultActions(initialState) {
       reset: () => initialState,
       clear: () => ({}),
       merge: ({ state, payload }) => ({ ...state, ...payload }),
-      mergeDeep: ({ state, payload }) => mergeDeepLeft(payload, state),
+      mergeDeep: ({ state, payload }) => mergeDeepRight(state, payload),
 
       remove: ({ state, payload: propertyName }) => {
         const { [propertyName]: ignore, ...rest } = state;
