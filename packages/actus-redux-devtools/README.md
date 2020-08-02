@@ -41,8 +41,8 @@ init([
   {
     state: 0,
     actions: {
-      inc: (value, state) => state + 1,
-      dec: (value, state) => state - 1,
+      inc: ({ state }) => state + 1,
+      dec: ({ state }) => state - 1,
     },
     subscribers: [
       ({ state, actions }) => {
