@@ -1,8 +1,6 @@
 import assocPath from "ramda/src/assocPath.js";
 import mergeDeepRight from "ramda/src/mergeDeepRight.js";
 
-const DEFAULT_ACTION_ARITY = 2;
-
 function isEmptyObject(value) {
   return typeof value === "object" && Object.keys(value).length === 0;
 }
@@ -53,7 +51,7 @@ function getGlobalLoading(loading) {
 
 const defaultConfig = {
   actions: {
-    setLoading: (actionPath, state) => ({
+    setLoading: ({ state, payload: actionPath }) => ({
       ...state,
 
       loading: setSlice(
@@ -71,7 +69,7 @@ const defaultConfig = {
         : { errors: setSlice(state.errors, actionPath, undefined) }),
     }),
 
-    unsetLoading: (actionPath, state) => {
+    unsetLoading: ({ state, payload: actionPath }) => {
       const loading = setSlice(
         {
           ...state.loading,
@@ -92,9 +90,9 @@ const defaultConfig = {
       };
     },
 
-    handleError: ({ error, actionPath }, state) => ({
+    handleError: ({ state, payload }) => ({
       ...state,
-      errors: setSlice(state.errors, actionPath, error),
+      errors: setSlice(state.errors, payload.actionPath, payload.error),
     }),
   },
 };
@@ -193,20 +191,11 @@ export default function init(config) {
             function boundAction(value) {
               const currentSlice = getSlice(currentState, path);
 
-              function getNewSlice() {
-                if (action.length >= DEFAULT_ACTION_ARITY) {
-                  return action(value, currentSlice, boundActions);
-                }
-
-                const partiallyAppliedActionOrNewSlice = action(value);
-
-                return typeof partiallyAppliedActionOrNewSlice === "function"
-                  ? // Turns out we have a curried action here:
-                    partiallyAppliedActionOrNewSlice(currentSlice)
-                  : partiallyAppliedActionOrNewSlice;
-              }
-
-              const newSlice = getNewSlice();
+              const newSlice = action({
+                state: currentSlice,
+                payload: value,
+                actions: boundActions,
+              });
 
               if (typeof newSlice?.then === "function") {
                 const actionPath =

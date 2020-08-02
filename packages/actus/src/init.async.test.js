@@ -12,14 +12,14 @@ test("can call actions from async actions", async () => {
     },
 
     actions: {
-      receiveUser: (user, state) => ({
+      receiveUser: ({ state, payload }) => ({
         ...state,
-        users: [...state.users, user],
+        users: [...state.users, payload],
       }),
 
-      getUser: async (id, ignore, actions) => {
+      getUser: async ({ payload, actions }) => {
         await Promise.resolve();
-        actions.receiveUser(id);
+        actions.receiveUser(payload);
       },
     },
 
@@ -72,19 +72,19 @@ test("can call async actions from async actions", async () => {
     },
 
     actions: {
-      setString: (string, state) => ({
+      setString: ({ state, payload }) => ({
         ...state,
-        string,
+        string: payload,
       }),
 
       // eslint-disable-next-line @typescript-eslint/require-await
-      concat: async (string, state, actions) => {
-        actions.setString(state.string + string);
+      concat: async ({ state, payload, actions }) => {
+        actions.setString(state.string + payload);
       },
 
-      concatTwo: async ({ first, second }, state, actions) => {
-        await actions.concat(first);
-        await actions.concat(second);
+      concatTwo: async ({ payload, actions }) => {
+        await actions.concat(payload.first);
+        await actions.concat(payload.second);
       },
     },
 
@@ -118,15 +118,15 @@ test("handles nested async actions", async () => {
     },
 
     actions: {
-      receiveUser: (user, state) => ({
+      receiveUser: ({ state, payload }) => ({
         ...state,
-        users: [...state.users, user],
+        users: [...state.users, payload],
       }),
 
       nested: {
-        getUser: async (id, ignore, actions) => {
+        getUser: async ({ payload, actions }) => {
           await Promise.resolve();
-          actions.receiveUser(id);
+          actions.receiveUser(payload);
         },
       },
     },
@@ -186,9 +186,9 @@ test("handles errors", async () => {
     },
 
     actions: {
-      receiveUser: (user, state) => ({
+      receiveUser: ({ state, payload }) => ({
         ...state,
-        users: [...state.users, user],
+        users: [...state.users, payload],
       }),
 
       nested: {

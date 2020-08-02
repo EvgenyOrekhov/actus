@@ -23,7 +23,7 @@ test("supports plugins", () => {
 
         nested: {
           count: {
-            dec: (ignore, state) => state - 1,
+            dec: ({ state }) => state - 1,
           },
         },
       },
@@ -38,7 +38,7 @@ test("supports plugins", () => {
       },
 
       actions: {
-        inc: (ignore, state) => ({
+        inc: ({ state }) => ({
           ...state,
 
           nested: {
@@ -49,7 +49,7 @@ test("supports plugins", () => {
 
         nested: {
           count: {
-            triple: (ignore, state) => state * 3,
+            triple: ({ state }) => state * 3,
           },
         },
       },
@@ -95,7 +95,7 @@ test("doesn't throw when something is missing", () => {
       state: { foo: "bar" },
 
       actions: {
-        testAction: (value, state) => state,
+        testAction: ({ state }) => state,
       },
     },
     {},
@@ -110,7 +110,7 @@ test("ignores configs that are falsy values", () => {
       state: { foo: "bar" },
 
       actions: {
-        testAction: (value, state) => state,
+        testAction: ({ state }) => state,
       },
 
       subscribers: [],
@@ -123,7 +123,7 @@ test("ignores configs that are falsy values", () => {
       state: { foo: "bar" },
 
       actions: {
-        testAction: (value, state) => state,
+        testAction: ({ state }) => state,
       },
 
       subscribers: [],

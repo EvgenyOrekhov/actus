@@ -8,12 +8,12 @@ test("supports slice actions", () => {
 
     actions: {
       slice1: {
-        inc: (ignore, state) => state + 1,
+        inc: ({ state }) => state + 1,
       },
 
       slice2: {
-        add: (value, state) => state + value,
-        subtract: (value) => (state) => state - value,
+        add: ({ state, payload }) => state + payload,
+        subtract: ({ state, payload }) => state - payload,
       },
     },
 
@@ -53,12 +53,12 @@ test("supports recursive slice actions", () => {
     actions: {
       slice: {
         subslice1: {
-          inc: (ignore, state) => state + 1,
+          inc: ({ state }) => state + 1,
         },
 
         subslice2: {
-          add: (value, state) => state + value,
-          subtract: (value) => (state) => state - value,
+          add: ({ state, payload }) => state + payload,
+          subtract: ({ state, payload }) => state - payload,
         },
       },
     },
@@ -99,7 +99,7 @@ test("doesn't fail when data slices are missing", () => {
 
     actions: {
       slice: {
-        testUndefined: (ignore, state) => state,
+        testUndefined: ({ state }) => state,
       },
     },
 
@@ -121,7 +121,7 @@ test("doesn't fail with null", () => {
 
     actions: {
       slice: {
-        testUndefined: (ignore, state) => state,
+        testUndefined: ({ state }) => state,
       },
     },
 
@@ -143,7 +143,7 @@ test("passes current slice action name to subscribers", () => {
     actions: {
       slice: {
         subslice: {
-          testAction: (ignore, state) => state,
+          testAction: ({ state }) => state,
         },
       },
     },
