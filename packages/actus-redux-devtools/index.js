@@ -21,7 +21,7 @@ export default function reduxDevTools({ name = undefined } = {}) {
 
   return {
     actions: {
-      setStateFromDevTools: (value) => value,
+      setStateFromDevTools: ({ payload }) => payload,
     },
 
     subscribers: [

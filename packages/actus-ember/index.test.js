@@ -17,7 +17,7 @@ test("actusify()", () => {
     state: 0,
 
     actions: {
-      inc: (ignore, state) => state + 1,
+      inc: ({ state }) => state + 1,
     },
   });
 
@@ -109,7 +109,7 @@ test("supports plugins", () => {
     state: 0,
 
     actions: {
-      inc: (ignore, state) => state + 1,
+      inc: ({ state }) => state + 1,
     },
   });
 
