@@ -1,4 +1,6 @@
-import init from "./src/init.js";
+import actus from "./src/actus.js";
+import defaultActions from "./src/plugins/defaultActions/index.js";
+import persist from "./src/plugins/persist/index.js";
+import logger from "./src/plugins/logger/index.js";
 
-// eslint-disable-next-line import/prefer-default-export
-export { init };
+export { actus, defaultActions, persist, logger };

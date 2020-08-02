@@ -1,10 +1,10 @@
-import init from "./init.js";
+import actus from "./actus.js";
 
 test("returns bound actions", () => {
   const subscriber1 = jest.fn();
   const subscriber2 = jest.fn();
 
-  const { inc, dec } = init({
+  const { inc, dec } = actus({
     state: 0,
 
     actions: {
@@ -28,7 +28,7 @@ test("returns bound actions", () => {
 test("passes payload to actions", () => {
   const subscriber = jest.fn();
 
-  const { add, subtract } = init({
+  const { add, subtract } = actus({
     state: 0,
 
     actions: {
@@ -48,7 +48,7 @@ test("passes payload to actions", () => {
 test("allows to pass undefined to actions", () => {
   const subscriber = jest.fn();
 
-  const { testAction } = init({
+  const { testAction } = actus({
     state: 0,
 
     actions: {

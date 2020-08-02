@@ -1,9 +1,9 @@
-import init from "./init.js";
+import actus from "./actus.js";
 
 test("getNextState", () => {
   const subscriber = jest.fn();
 
-  const { testAction } = init({
+  const { testAction } = actus({
     state: "state",
 
     actions: {
@@ -26,7 +26,7 @@ test("getNextState", () => {
 test("getNextState - multiple plugins", () => {
   const subscriber = jest.fn();
 
-  const { testAction } = init([
+  const { testAction } = actus([
     { state: "state" },
     {
       actions: {
@@ -50,7 +50,7 @@ test("getNextState - multiple plugins", () => {
 test("getNextState should have effect only on current plugin", () => {
   const subscriber = jest.fn();
 
-  const { regularAction } = init([
+  const { regularAction } = actus([
     {
       actions: {
         regularAction: () => "regular action result",

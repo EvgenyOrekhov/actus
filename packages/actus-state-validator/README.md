@@ -16,11 +16,11 @@ npm install actus-state-validator @hapi/joi
 ### Usage
 
 ```js
-import { init } from "actus";
+import { actus } from "actus";
 import stateValidator from "actus-state-validator";
 import Joi from "@hapi/joi";
 
-init([
+actus([
   stateValidator(Joi.object({...}), { /* joi validation options */ }),
   {
     state: {...},
@@ -33,14 +33,14 @@ init([
 ### React Counter App
 
 ```js
-import { init } from "actus";
+import { actus } from "actus";
 import stateValidator from "actus-state-validator";
 import logger from "actus-logger";
 import Joi from "@hapi/joi";
 import React from "react";
 import ReactDOM from "react-dom";
 
-init([
+actus([
   logger(),
   stateValidator(Joi.number().required().integer()),
   {

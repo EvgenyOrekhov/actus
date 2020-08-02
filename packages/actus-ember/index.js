@@ -1,4 +1,4 @@
-import { init } from "actus";
+import { actus } from "actus";
 import logger from "actus-logger";
 import freeze from "actus-freeze";
 import defaultActions from "actus-default-actions";
@@ -26,7 +26,7 @@ export default function actusify(config, { isDevelopment = true } = {}) {
   );
 
   // eslint-disable-next-line fp/no-mutation
-  target.actions = init([
+  target.actions = actus([
     ...(isDevelopment
       ? [logger({ name: target.constructor.name }), freeze()]
       : []),

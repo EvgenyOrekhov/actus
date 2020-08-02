@@ -15,10 +15,10 @@ npm install actus-redux-devtools
 ### Usage
 
 ```js
-import { init } from "actus";
+import { actus } from "actus";
 import reduxDevTools from "actus-redux-devtools";
 
-init([
+actus([
   reduxDevTools({ name: "Optional instance name" }),
   {
     state: {...},
@@ -31,12 +31,12 @@ init([
 ### React Counter App
 
 ```js
-import { init } from "actus";
+import { actus } from "actus";
 import reduxDevTools from "actus-redux-devtools";
 import React from "react";
 import ReactDOM from "react-dom";
 
-init([
+actus([
   reduxDevTools(),
   {
     state: 0,

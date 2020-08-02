@@ -23,10 +23,12 @@
   "module": "index.js",
   "files": [
     "index.js",
-    "src/init.js",
-    "commonjs/"
+    "src/**/*.js",
+    "!**/*.test.js"
   ],
   "dependencies": {
+    "deep-freeze": "0.0.1",
+    "deep-object-diff": "^1.1.0",
     "ramda": "^0.27.1"
   },
   "engines": {

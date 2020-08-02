@@ -1,25 +1,7 @@
 {
   "name": "actus-freeze",
   "version": "0.0.1-alpha.0",
-  "description": "Deep freezes your state to prevent mutations",
-  "keywords": [
-    "actus"
-  ],
-  "repository": "https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-freeze",
+  "repository": "https://github.com/EvgenyOrekhov/actus",
   "license": "MIT",
-  "author": "Evgeny Orekhov",
-  "sideEffects": false,
-  "type": "module",
-  "main": "index.js",
-  "module": "index.js",
-  "files": [
-    "index.js",
-    "commonjs/"
-  ],
-  "dependencies": {
-    "deep-freeze": "0.0.1"
-  },
-  "engines": {
-    "node": ">=12.6.1"
-  }
+  "author": "Evgeny Orekhov"
 }

@@ -124,7 +124,7 @@ function mergeConfigs(config) {
   );
 }
 
-export default function init(config) {
+export default function actus(config) {
   const { state, actions, subscribers } = mergeConfigs(config);
 
   // eslint-disable-next-line fp/no-let

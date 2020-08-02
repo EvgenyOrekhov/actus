@@ -1,26 +1,7 @@
 {
   "name": "actus-logger",
   "version": "0.2.0-alpha.1",
-  "description": "Logger for actus",
-  "keywords": [
-    "actus"
-  ],
-  "repository": "https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-logger",
+  "repository": "https://github.com/EvgenyOrekhov/actus",
   "license": "MIT",
-  "author": "Evgeny Orekhov",
-  "sideEffects": false,
-  "type": "module",
-  "main": "index.js",
-  "module": "index.js",
-  "files": [
-    "makeLogger.js",
-    "index.js",
-    "commonjs/"
-  ],
-  "dependencies": {
-    "deep-object-diff": "^1.1.0"
-  },
-  "engines": {
-    "node": ">=12.6.1"
-  }
+  "author": "Evgeny Orekhov"
 }

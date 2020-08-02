@@ -1,10 +1,10 @@
-import init from "./init.js";
+import actus from "./actus.js";
 
 test("initializes", () => {
   const subscriber1 = jest.fn();
   const subscriber2 = jest.fn();
 
-  init({
+  actus({
     state: 0,
 
     actions: {
@@ -42,7 +42,7 @@ test("passes actions to subscribers", async () => {
       }, 0);
     });
 
-    init({
+    actus({
       state: 0,
 
       actions: {
@@ -61,7 +61,7 @@ test("passes current action name and value to subscribers", () => {
   const subscriber2 = jest.fn();
   const subscribers = [subscriber1, subscriber2];
 
-  const { add, subtract } = init({
+  const { add, subtract } = actus({
     state: 0,
 
     actions: {
@@ -91,7 +91,7 @@ test("cancels notifying subscribers if an action was called by one of them", () 
   });
   const subscriber2 = jest.fn();
 
-  init({
+  actus({
     state: 0,
 
     actions: {
@@ -118,7 +118,7 @@ test("doesn't stop calling subsequent subscribers when one throws", () => {
   const subscriber2 = jest.fn();
 
   try {
-    init({
+    actus({
       state: 0,
       actions: {},
       subscribers: [subscriber1, subscriber2],
@@ -145,7 +145,7 @@ test("reports multiple errors", () => {
   });
 
   try {
-    init({
+    actus({
       state: 0,
       actions: {},
       subscribers: [subscriber1, subscriber2],

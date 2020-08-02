@@ -14,11 +14,11 @@ Minimalist state container
 ### React Counter App
 
 ```js
-import { init } from "actus";
+import { actus } from "actus";
 import React from "react";
 import ReactDOM from "react-dom";
 
-init({
+actus({
   state: 0,
   actions: {
     inc: ({ state }) => state + 1,
@@ -44,11 +44,11 @@ init({
 ## API
 
 ```js
-import { init } from "actus";
+import { actus } from "actus";
 
-// init() returns actions bound to the current state, in case if you need them
+// actus() returns actions bound to the current state, in case if you need them
 // outside of subscribers:
-const actions = init({
+const actions = actus({
   // The initial state:
   state: { number: 0 },
 
