@@ -13,8 +13,7 @@
   "main": "index.js",
   "module": "index.js",
   "files": [
-    "index.js",
-    "commonjs/"
+    "index.js"
   ],
   "engines": {
     "node": ">=12.6.1"

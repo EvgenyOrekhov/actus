@@ -14,8 +14,7 @@
   "main": "index.js",
   "module": "index.js",
   "files": [
-    "index.js",
-    "commonjs/"
+    "index.js"
   ],
   "dependencies": {
     "actus": "^0.4.0-alpha.2",

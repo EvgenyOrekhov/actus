@@ -14,8 +14,7 @@
   "module": "index.js",
   "files": [
     "makeStateValidator.js",
-    "index.js",
-    "commonjs/"
+    "index.js"
   ],
   "dependencies": {
     "@hapi/joi": "^17.1.1",
