@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import init from "./init.js";
+import actus from "./actus.js";
 
 test("can call actions from async actions", async () => {
   const subscriber = jest.fn();
 
-  const { getUser } = init({
+  const { getUser } = actus({
     state: {
       users: ["user1"],
       foo: "bar",
@@ -64,7 +64,7 @@ test("can call actions from async actions", async () => {
 test("can call async actions from async actions", async () => {
   const subscriber = jest.fn();
 
-  const { concatTwo } = init({
+  const { concatTwo } = actus({
     state: {
       loading: { alwaysLoading: true },
       string: "a",
@@ -111,7 +111,7 @@ test("can call async actions from async actions", async () => {
 test("handles nested async actions", async () => {
   const subscriber = jest.fn();
 
-  const { nested } = init({
+  const { nested } = actus({
     state: {
       users: ["user1"],
       foo: "bar",
@@ -174,7 +174,7 @@ test("handles errors", async () => {
 
   const error = new Error("Mock error");
 
-  const { nested } = init({
+  const { nested } = actus({
     state: {
       errors: {
         oldError: "old error",

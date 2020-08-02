@@ -1,11 +1,11 @@
-import init from "./init.js";
+import actus from "./actus.js";
 
 // eslint-disable-next-line max-statements
 test("supports plugins", () => {
   const subscriber1 = jest.fn();
   const subscriber2 = jest.fn();
 
-  const actions = init([
+  const actions = actus([
     {
       state: {
         foo: "bar",
@@ -90,7 +90,7 @@ test("supports plugins", () => {
 test("doesn't throw when something is missing", () => {
   expect.assertions(0);
 
-  init([
+  actus([
     {
       state: { foo: "bar" },
 
@@ -105,7 +105,7 @@ test("doesn't throw when something is missing", () => {
 test("ignores configs that are falsy values", () => {
   expect.assertions(0);
 
-  init([
+  actus([
     {
       state: { foo: "bar" },
 
@@ -118,7 +118,7 @@ test("ignores configs that are falsy values", () => {
     undefined,
   ]);
 
-  init([
+  actus([
     {
       state: { foo: "bar" },
 
@@ -135,7 +135,7 @@ test("ignores configs that are falsy values", () => {
 test("doesn't turn primitive states into objects", () => {
   const subscriber = jest.fn();
 
-  init([
+  actus([
     {
       state: 1,
       subscribers: [subscriber],
@@ -152,7 +152,7 @@ test("doesn't turn primitive states into objects", () => {
 test("doesn't merge empty objects", () => {
   const subscriber = jest.fn();
 
-  init([
+  actus([
     {
       state: 1,
       subscribers: [subscriber],
@@ -169,7 +169,7 @@ test("doesn't merge empty objects", () => {
 test("ignores undefined states", () => {
   const subscriber = jest.fn();
 
-  init([
+  actus([
     {
       state: 0,
       subscribers: [subscriber],
@@ -184,7 +184,7 @@ test("ignores undefined states", () => {
 test("doesn't ignore empty object as state", () => {
   const subscriber = jest.fn();
 
-  init([
+  actus([
     {},
     {
       state: {},

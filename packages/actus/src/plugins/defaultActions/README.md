@@ -13,7 +13,7 @@ import ReactDOM from "react-dom";
 
 const initialState = 0;
 
-init([
+actus([
   defaultActions(initialState),
   {
     state: initialState,

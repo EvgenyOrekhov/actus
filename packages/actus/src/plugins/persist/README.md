@@ -32,7 +32,7 @@ import { actus, persist } from "actus";
 import React from "react";
 import ReactDOM from "react-dom";
 
-init([
+actus([
   {
     state: 0,
     actions: {

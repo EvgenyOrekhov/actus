@@ -1,9 +1,9 @@
-import init from "./init.js";
+import actus from "./actus.js";
 
 test("supports slice actions", () => {
   const subscriber = jest.fn();
 
-  const { slice1, slice2 } = init({
+  const { slice1, slice2 } = actus({
     state: { slice1: 0, slice2: 0 },
 
     actions: {
@@ -42,7 +42,7 @@ test("supports slice actions", () => {
 test("supports recursive slice actions", () => {
   const subscriber = jest.fn();
 
-  const { slice } = init({
+  const { slice } = actus({
     state: {
       slice: {
         subslice1: 0,
@@ -94,7 +94,7 @@ test("supports recursive slice actions", () => {
 test("doesn't fail when data slices are missing", () => {
   const subscriber = jest.fn();
 
-  const { slice } = init({
+  const { slice } = actus({
     state: 0,
 
     actions: {
@@ -115,7 +115,7 @@ test("doesn't fail when data slices are missing", () => {
 test("doesn't fail with null", () => {
   const subscriber = jest.fn();
 
-  const { slice } = init({
+  const { slice } = actus({
     // eslint-disable-next-line unicorn/no-null
     state: null,
 
@@ -137,7 +137,7 @@ test("doesn't fail with null", () => {
 test("passes current slice action name to subscribers", () => {
   const subscriber = jest.fn();
 
-  const { slice } = init({
+  const { slice } = actus({
     state: {},
 
     actions: {
