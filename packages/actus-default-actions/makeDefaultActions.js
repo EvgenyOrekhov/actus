@@ -3,35 +3,35 @@ import mergeDeepLeft from "ramda/src/mergeDeepLeft.js";
 export default function makeDefaultActions(initialState) {
   const defaultActions = {
     number: {
-      set: Number,
+      set: ({ payload }) => Number(payload),
       reset: () => initialState,
-      increment: (ignore, state) => state + 1,
-      decrement: (ignore, state) => state - 1,
+      increment: ({ state }) => state + 1,
+      decrement: ({ state }) => state - 1,
     },
 
     boolean: {
-      set: Boolean,
+      set: ({ payload }) => Boolean(payload),
       reset: () => initialState,
       on: () => true,
       off: () => false,
-      toggle: (ignore, state) => !state,
+      toggle: ({ state }) => !state,
     },
 
     string: {
-      set: String,
+      set: ({ payload }) => String(payload),
       reset: () => initialState,
       clear: () => "",
-      concat: (value, state) => value + state,
+      concat: ({ state, payload }) => state + payload,
     },
 
     object: {
-      set: (value) => value,
+      set: ({ payload }) => payload,
       reset: () => initialState,
       clear: () => ({}),
-      merge: (value, state) => ({ ...state, ...value }),
-      mergeDeep: mergeDeepLeft,
+      merge: ({ state, payload }) => ({ ...state, ...payload }),
+      mergeDeep: ({ state, payload }) => mergeDeepLeft(payload, state),
 
-      remove: (propertyName, state) => {
+      remove: ({ state, payload: propertyName }) => {
         const { [propertyName]: ignore, ...rest } = state;
 
         return rest;
@@ -39,12 +39,12 @@ export default function makeDefaultActions(initialState) {
     },
 
     array: {
-      set: (value) => value,
+      set: ({ payload }) => payload,
       reset: () => initialState,
       clear: () => [],
-      append: (value, state) => [...state, value],
-      prepend: (value, state) => [value, ...state],
-      concat: (value, state) => [...state, ...value],
+      append: ({ state, payload }) => [...state, payload],
+      prepend: ({ state, payload }) => [payload, ...state],
+      concat: ({ state, payload }) => [...state, ...payload],
     },
   };
 
