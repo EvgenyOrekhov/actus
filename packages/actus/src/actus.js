@@ -197,7 +197,7 @@ export default function actus(config) {
                 actions: boundActions,
               });
 
-              if (typeof newSlice?.then === "function") {
+              if (newSlice && typeof newSlice.then === "function") {
                 const actionPath =
                   path.length === 0 ? [actionName] : [...path, actionName];
 
