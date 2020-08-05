@@ -4,11 +4,18 @@ import actusify from "./index.js";
 
 jest.mock("actus/src/plugins/logger/index.js");
 
-// eslint-disable-next-line fp/no-class, @typescript-eslint/no-extraneous-class
+// eslint-disable-next-line fp/no-class
 class EmberObjectMock {
+  state;
+
   constructor(properties) {
     // eslint-disable-next-line fp/no-this, fp/no-mutating-assign
     Object.assign(this, properties);
+  }
+
+  set(property, value) {
+    // eslint-disable-next-line fp/no-this, fp/no-mutation
+    this[property] = value;
   }
 }
 
