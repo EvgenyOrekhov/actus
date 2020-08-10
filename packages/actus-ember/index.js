@@ -1,7 +1,10 @@
 import { actus, logger, freeze, defaultActions } from "actus";
 import isPlainObject from "is-plain-obj";
 
-export default function actusify(config, { isDevelopment = true } = {}) {
+export default function actusify(
+  config,
+  { isDevelopment = true, getNextState = undefined } = {}
+) {
   const plugins = Array.isArray(config) ? config : [config];
   const enabledPlugins = plugins.filter(Boolean);
   const target = enabledPlugins.find((plugin) => !isPlainObject(plugin));
@@ -17,6 +20,8 @@ export default function actusify(config, { isDevelopment = true } = {}) {
               target.set("state", state);
             },
           ],
+
+          getNextState,
         }
       : plugin
   );

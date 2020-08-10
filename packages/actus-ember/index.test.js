@@ -156,3 +156,27 @@ test("ignores disabled (falsy) plugins", () => {
     target,
   ]);
 });
+
+test("getNextState()", () => {
+  const target = new EmberObjectMock({
+    state: 0,
+
+    actions: {
+      inc: ({ state }) => state + 1,
+    },
+  });
+
+  actusify(target, {
+    getNextState: (previousState, actionResult) => ({
+      previousState,
+      actionResult,
+    }),
+  });
+
+  target.actions.inc();
+
+  expect(target.state).toStrictEqual({
+    previousState: 0,
+    actionResult: 1,
+  });
+});
