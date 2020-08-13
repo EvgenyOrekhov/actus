@@ -2,6 +2,11 @@
 
 import makeDefaultActions from "./makeDefaultActions.js";
 
+function* iterator() {
+  yield 23;
+  yield 42;
+}
+
 test("number", () => {
   const { set, increment, decrement } = makeDefaultActions(0);
 
@@ -178,6 +183,79 @@ test("array", () => {
     16,
   ]);
   expect(concat({ state: [4, 8, 15, 16], payload: [23, 42] })).toStrictEqual([
+    4,
+    8,
+    15,
+    16,
+    23,
+    42,
+  ]);
+});
+
+test("array - set() - falsy values", () => {
+  const { set } = makeDefaultActions([4, 8, 15, 16]);
+
+  expect(set({ state: [4, 8, 15, 16], payload: undefined })).toStrictEqual([]);
+
+  // eslint-disable-next-line unicorn/no-null
+  expect(set({ state: [4, 8, 15, 16], payload: null })).toStrictEqual([]);
+
+  expect(set({ state: [4, 8, 15, 16], payload: false })).toStrictEqual([]);
+  expect(set({ state: [4, 8, 15, 16], payload: 0 })).toStrictEqual([]);
+  expect(set({ state: [4, 8, 15, 16], payload: Number.NaN })).toStrictEqual([]);
+});
+
+test("array - set() - array-like", () => {
+  const { set } = makeDefaultActions([4, 8, 15, 16]);
+
+  expect(set({ state: [4, 8, 15, 16], payload: iterator() })).toStrictEqual([
+    23,
+    42,
+  ]);
+});
+
+test("array - concat() - falsy values", () => {
+  const { concat } = makeDefaultActions([4, 8, 15, 16]);
+
+  expect(concat({ state: [4, 8, 15, 16], payload: undefined })).toStrictEqual([
+    4,
+    8,
+    15,
+    16,
+  ]);
+
+  // eslint-disable-next-line unicorn/no-null
+  expect(concat({ state: [4, 8, 15, 16], payload: null })).toStrictEqual([
+    4,
+    8,
+    15,
+    16,
+  ]);
+
+  expect(concat({ state: [4, 8, 15, 16], payload: false })).toStrictEqual([
+    4,
+    8,
+    15,
+    16,
+  ]);
+  expect(concat({ state: [4, 8, 15, 16], payload: 0 })).toStrictEqual([
+    4,
+    8,
+    15,
+    16,
+  ]);
+  expect(concat({ state: [4, 8, 15, 16], payload: Number.NaN })).toStrictEqual([
+    4,
+    8,
+    15,
+    16,
+  ]);
+});
+
+test("array - concat() - array-like", () => {
+  const { concat } = makeDefaultActions([4, 8, 15, 16]);
+
+  expect(concat({ state: [4, 8, 15, 16], payload: iterator() })).toStrictEqual([
     4,
     8,
     15,
