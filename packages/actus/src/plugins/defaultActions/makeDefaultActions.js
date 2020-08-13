@@ -1,5 +1,13 @@
 import mergeDeepRight from "ramda/src/mergeDeepRight.js";
 
+function castToString(value) {
+  return value === undefined || value === null ? "" : String(value);
+}
+
+function castToArray(value) {
+  return value === undefined || value === null ? [] : Array.from(value);
+}
+
 export default function makeDefaultActions(initialState) {
   const defaultActions = {
     number: {
@@ -18,10 +26,10 @@ export default function makeDefaultActions(initialState) {
     },
 
     string: {
-      set: ({ payload }) => String(payload),
+      set: ({ payload }) => castToString(payload),
       reset: () => initialState,
       clear: () => "",
-      concat: ({ state, payload }) => state + payload,
+      concat: ({ state, payload }) => state + castToString(payload),
     },
 
     object: {
@@ -39,12 +47,12 @@ export default function makeDefaultActions(initialState) {
     },
 
     array: {
-      set: ({ payload }) => payload,
+      set: ({ payload }) => castToArray(payload),
       reset: () => initialState,
       clear: () => [],
       append: ({ state, payload }) => [...state, payload],
       prepend: ({ state, payload }) => [payload, ...state],
-      concat: ({ state, payload }) => [...state, ...payload],
+      concat: ({ state, payload }) => [...state, ...castToArray(payload)],
     },
   };
 
