@@ -1,5 +1,9 @@
 import mergeDeepRight from "ramda/src/mergeDeepRight.js";
 
+function castToString(value) {
+  return value === undefined || value === null ? "" : String(value);
+}
+
 export default function makeDefaultActions(initialState) {
   const defaultActions = {
     number: {
@@ -18,10 +22,10 @@ export default function makeDefaultActions(initialState) {
     },
 
     string: {
-      set: ({ payload }) => String(payload),
+      set: ({ payload }) => castToString(payload),
       reset: () => initialState,
       clear: () => "",
-      concat: ({ state, payload }) => state + payload,
+      concat: ({ state, payload }) => state + castToString(payload),
     },
 
     object: {

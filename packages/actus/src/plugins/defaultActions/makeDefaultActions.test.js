@@ -60,6 +60,28 @@ test("string", () => {
   expect(concat({ state: "baz", payload: "bar" })).toStrictEqual("bazbar");
 });
 
+test("string - set() - undefined and null", () => {
+  const { concat } = makeDefaultActions("foo");
+
+  expect(concat({ state: "baz", payload: undefined })).toStrictEqual("baz");
+
+  // eslint-disable-next-line unicorn/no-null
+  expect(concat({ state: "baz", payload: null })).toStrictEqual("baz");
+
+  expect(concat({ state: "baz", payload: false })).toStrictEqual("bazfalse");
+});
+
+test("string - concat() - undefined and null", () => {
+  const { set } = makeDefaultActions("foo");
+
+  expect(set({ state: "baz", payload: undefined })).toStrictEqual("");
+
+  // eslint-disable-next-line unicorn/no-null
+  expect(set({ state: "baz", payload: null })).toStrictEqual("");
+
+  expect(set({ state: "baz", payload: false })).toStrictEqual("false");
+});
+
 test("object", () => {
   const { set, reset, clear, merge, mergeDeep, remove } = makeDefaultActions({
     foo: "bar",
