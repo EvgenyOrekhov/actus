@@ -1,0 +1,9 @@
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    schedule:
+      interval: "weekly"
+    versioning-strategy: "increase"
+    assignees:
+      - "EvgenyOrekhov"
