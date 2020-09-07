@@ -8,3 +8,10 @@ updates:
     versioning-strategy: "increase"
     assignees:
       - "EvgenyOrekhov"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    assignees:
+      - "EvgenyOrekhov"
