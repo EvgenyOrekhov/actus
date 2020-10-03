@@ -2,7 +2,7 @@
 
 import actus from "./actus.js";
 
-test("can call actions from async actions", async () => {
+test("can call actions from async actions with payload", async () => {
   const subscriber = jest.fn();
 
   const { getUser } = actus({
@@ -33,7 +33,10 @@ test("can call actions from async actions", async () => {
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({
     loading: {
       global: true,
-      getUser: true,
+
+      getUser: {
+        user2: true,
+      },
     },
 
     users: ["user1"],
@@ -43,7 +46,10 @@ test("can call actions from async actions", async () => {
   expect(subscriber.mock.calls[2][0].state).toStrictEqual({
     loading: {
       global: true,
-      getUser: true,
+
+      getUser: {
+        user2: true,
+      },
     },
 
     users: ["user1", "user2"],
@@ -61,7 +67,7 @@ test("can call actions from async actions", async () => {
   });
 });
 
-test("can call async actions from async actions", async () => {
+test("can call async actions from async actions with payload", async () => {
   const subscriber = jest.fn();
 
   const { concatTwo } = actus({
@@ -108,7 +114,7 @@ test("can call async actions from async actions", async () => {
   });
 });
 
-test("handles nested async actions", async () => {
+test("handles nested async actions with payload", async () => {
   const subscriber = jest.fn();
 
   const { nested } = actus({
@@ -141,7 +147,12 @@ test("handles nested async actions", async () => {
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({
     loading: {
       global: true,
-      nested: { getUser: true },
+
+      nested: {
+        getUser: {
+          user2: true,
+        },
+      },
     },
 
     users: ["user1"],
@@ -151,7 +162,12 @@ test("handles nested async actions", async () => {
   expect(subscriber.mock.calls[2][0].state).toStrictEqual({
     loading: {
       global: true,
-      nested: { getUser: true },
+
+      nested: {
+        getUser: {
+          user2: true,
+        },
+      },
     },
 
     users: ["user1", "user2"],
@@ -169,20 +185,23 @@ test("handles nested async actions", async () => {
   });
 });
 
-test("handles errors", async () => {
+test("preserves existing loading states", async () => {
   const subscriber = jest.fn();
-
-  const error = new Error("Mock error");
 
   const { nested } = actus({
     state: {
-      errors: {
-        oldError: "old error",
-        nested: { getUser: "old getUser error" },
-      },
-
       users: ["user1"],
       foo: "bar",
+
+      loading: {
+        global: true,
+
+        nested: {
+          getUser: {
+            user1: true,
+          },
+        },
+      },
     },
 
     actions: {
@@ -192,10 +211,9 @@ test("handles errors", async () => {
       }),
 
       nested: {
-        getUser: async () => {
+        getUser: async ({ payload, actions }) => {
           await Promise.resolve();
-
-          throw error;
+          actions.receiveUser(payload);
         },
       },
     },
@@ -210,12 +228,13 @@ test("handles errors", async () => {
   expect(subscriber.mock.calls[1][0].state).toStrictEqual({
     loading: {
       global: true,
-      nested: { getUser: true },
-    },
 
-    errors: {
-      oldError: "old error",
-      nested: { getUser: undefined },
+      nested: {
+        getUser: {
+          user1: true,
+          user2: true,
+        },
+      },
     },
 
     users: ["user1"],
@@ -225,30 +244,32 @@ test("handles errors", async () => {
   expect(subscriber.mock.calls[2][0].state).toStrictEqual({
     loading: {
       global: true,
-      nested: { getUser: true },
+
+      nested: {
+        getUser: {
+          user1: true,
+          user2: true,
+        },
+      },
     },
 
-    errors: {
-      oldError: "old error",
-      nested: { getUser: error },
-    },
-
-    users: ["user1"],
+    users: ["user1", "user2"],
     foo: "bar",
   });
 
   expect(subscriber.mock.calls[3][0].state).toStrictEqual({
     loading: {
-      global: false,
-      nested: { getUser: false },
+      global: true,
+
+      nested: {
+        getUser: {
+          user1: true,
+          user2: false,
+        },
+      },
     },
 
-    errors: {
-      oldError: "old error",
-      nested: { getUser: error },
-    },
-
-    users: ["user1"],
+    users: ["user1", "user2"],
     foo: "bar",
   });
 });
