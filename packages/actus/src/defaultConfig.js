@@ -19,7 +19,10 @@ const defaultConfig = {
       function getNewActionErrors() {
         const newActionErrors = {
           ...getSlice(state.errors, actionPath),
-          [actionPayload]: undefined,
+
+          [typeof actionPayload === "object"
+            ? JSON.stringify(actionPayload)
+            : actionPayload]: undefined,
         };
 
         return hasErrors(newActionErrors) ? newActionErrors : undefined;
@@ -37,7 +40,13 @@ const defaultConfig = {
           actionPath,
           actionPayload === undefined
             ? true
-            : { ...getSlice(state.loading, actionPath), [actionPayload]: true }
+            : {
+                ...getSlice(state.loading, actionPath),
+
+                [typeof actionPayload === "object"
+                  ? JSON.stringify(actionPayload)
+                  : actionPayload]: true,
+              }
         ),
 
         ...(getSlice(state.errors, actionPath) === undefined
@@ -58,7 +67,10 @@ const defaultConfig = {
       function getNewActionLoadingStates() {
         const newActionLoadingState = {
           ...getSlice(state.loading, actionPath),
-          [actionPayload]: false,
+
+          [typeof actionPayload === "object"
+            ? JSON.stringify(actionPayload)
+            : actionPayload]: false,
         };
 
         return getGlobalLoading(newActionLoadingState) === false
@@ -97,7 +109,13 @@ const defaultConfig = {
           actionPath,
           actionPayload === undefined
             ? error
-            : { ...getSlice(state.errors, actionPath), [actionPayload]: error }
+            : {
+                ...getSlice(state.errors, actionPath),
+
+                [typeof actionPayload === "object"
+                  ? JSON.stringify(actionPayload)
+                  : actionPayload]: error,
+              }
         ),
       };
     },
