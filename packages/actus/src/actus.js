@@ -1,4 +1,5 @@
 import mergeDeepRight from "ramda/src/mergeDeepRight.js";
+import isPromise from "is-promise";
 
 import defaultConfig from "./defaultConfig.js";
 import getSlice from "./getSlice.js";
@@ -132,7 +133,7 @@ export default function actus(config) {
                 actions: boundActions,
               });
 
-              if (newSlice && typeof newSlice.then === "function") {
+              if (isPromise(newSlice)) {
                 const actionPath =
                   path.length === 0 ? [actionName] : [...path, actionName];
 
