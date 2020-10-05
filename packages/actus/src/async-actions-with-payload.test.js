@@ -83,7 +83,7 @@ test("can call async actions from async actions with payload", async () => {
         string: payload,
       }),
 
-      // eslint-disable-next-line @typescript-eslint/require-await
+      // eslint-disable-next-line @typescript-eslint/require-await, putout/putout
       concat: async ({ state, payload, actions }) => {
         actions.setString(state.string + payload);
       },
