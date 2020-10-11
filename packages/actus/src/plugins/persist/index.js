@@ -7,7 +7,7 @@ export default function persist({
 } = {}) {
   function getStateFromStorage() {
     try {
-      return JSON.parse(storage[key]);
+      return JSON.parse(storage.getItem(key)) ?? undefined;
     } catch {
       return undefined;
     }
@@ -18,8 +18,7 @@ export default function persist({
 
     subscribers: [
       function saveStateToStorage({ state }) {
-        // eslint-disable-next-line fp/no-mutation, no-param-reassign
-        storage[key] = JSON.stringify(selector(state));
+        storage.setItem(key, JSON.stringify(selector(state)));
       },
     ],
   };
