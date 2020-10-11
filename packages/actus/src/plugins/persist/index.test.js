@@ -1,59 +1,118 @@
 import persist from "./index.js";
 
 test("loads state from storage", () => {
+  expect.assertions(2);
+
   const { state } = persist({
-    storage: { state: JSON.stringify({ foo: "bar" }) },
+    storage: {
+      getItem(key) {
+        expect(key).toStrictEqual("state");
+
+        return JSON.stringify({ foo: "bar" });
+      },
+    },
   });
 
   expect(state).toStrictEqual({ foo: "bar" });
 });
 
 test("loads state from storage with custom key", () => {
+  expect.assertions(2);
+
   const { state } = persist({
     key: "customKey",
-    storage: { customKey: JSON.stringify({ foo: "bar" }) },
+
+    storage: {
+      getItem(key) {
+        expect(key).toStrictEqual("customKey");
+
+        return JSON.stringify({ foo: "bar" });
+      },
+    },
   });
 
   expect(state).toStrictEqual({ foo: "bar" });
 });
 
-test("tolerates missing/invalid state", () => {
-  const { state } = persist({ storage: {} });
+test("tolerates missing state", () => {
+  const { state } = persist({
+    storage: {
+      // eslint-disable-next-line unicorn/no-null
+      getItem: () => null,
+    },
+  });
 
   expect(state).toBeUndefined();
 });
 
+test("tolerates invalid state", () => {
+  const { state } = persist({
+    storage: {
+      getItem: () => "invalid JSON",
+    },
+  });
+
+  expect(state).toBeUndefined();
+});
+
+test("doesn't lose falsy values", () => {
+  const { state } = persist({
+    storage: {
+      getItem: () => 0,
+    },
+  });
+
+  expect(state).toStrictEqual(0);
+});
+
 test("saves state to storage", () => {
-  const storage = {};
+  expect.assertions(2);
+
+  const storage = {
+    setItem(key, value) {
+      expect(key).toStrictEqual("state");
+      expect(JSON.parse(value)).toStrictEqual({ foo: "bar" });
+    },
+  };
+
   const [saveStateToStorage] = persist({ storage }).subscribers;
 
   saveStateToStorage({ state: { foo: "bar" } });
-
-  expect(JSON.parse(storage.state)).toStrictEqual({ foo: "bar" });
 });
 
 test("saves state to storage with custom key", () => {
-  const storage = {};
+  expect.assertions(2);
+
+  const storage = {
+    setItem(key, value) {
+      expect(key).toStrictEqual("customKey");
+      expect(JSON.parse(value)).toStrictEqual({ foo: "bar" });
+    },
+  };
+
   const [saveStateToStorage] = persist({
     key: "customKey",
     storage,
   }).subscribers;
 
   saveStateToStorage({ state: { foo: "bar" } });
-
-  expect(JSON.parse(storage.customKey)).toStrictEqual({ foo: "bar" });
 });
 
 test("saves state to storage with custom selector", () => {
-  const storage = {};
+  expect.assertions(1);
+
+  const storage = {
+    setItem(key, value) {
+      expect(JSON.parse(value)).toStrictEqual({ baz: "qux" });
+    },
+  };
+
   const [saveStateToStorage] = persist({
     selector: ({ baz }) => ({ baz }),
     storage,
   }).subscribers;
 
   saveStateToStorage({ state: { foo: "bar", baz: "qux" } });
-
-  expect(JSON.parse(storage.state)).toStrictEqual({ baz: "qux" });
 });
 
 test("doesn't throw when there are no options", () => {
