@@ -1,5 +1,6 @@
 import mergeDeepRight from "ramda/src/mergeDeepRight.js";
 import isPromise from "is-promise";
+import AggregateError from "aggregate-error";
 
 import defaultConfig from "./defaultConfig.js";
 import getSlice from "./getSlice.js";
@@ -101,14 +102,7 @@ export default function actus(config) {
         throw errors[0];
       }
 
-      const error = new Error(
-        "Multiple subscribers threw errors. See `errors` property for details."
-      );
-
-      // eslint-disable-next-line fp/no-mutation
-      error.errors = errors;
-
-      throw error;
+      throw new AggregateError(errors);
     }
   }
 
