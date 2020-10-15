@@ -7,7 +7,9 @@ export default function persist({
 } = {}) {
   function getStateFromStorage() {
     try {
-      return JSON.parse(storage.getItem(key)) ?? undefined;
+      const state = JSON.parse(storage.getItem(key));
+
+      return state === null ? undefined : state;
     } catch {
       return undefined;
     }
