@@ -131,8 +131,9 @@ test("doesn't stop calling subsequent subscribers when one throws", () => {
   expect(subscriber2.mock.calls).toHaveLength(1);
 });
 
+// eslint-disable-next-line max-statements
 test("reports multiple errors", () => {
-  expect.assertions(3);
+  expect.assertions(4);
 
   const expectedError1 = new Error("Expected error 1");
   const expectedError2 = new Error("Expected error 2");
@@ -151,10 +152,12 @@ test("reports multiple errors", () => {
       subscribers: [subscriber1, subscriber2],
     });
   } catch (error) {
-    expect(error.message).toStrictEqual(
-      "Multiple subscribers threw errors. See `errors` property for details."
-    );
-    expect(error.errors[0]).toStrictEqual(expectedError1);
-    expect(error.errors[1]).toStrictEqual(expectedError2);
+    expect(error.message).toMatch("Expected error 1");
+    expect(error.message).toMatch("Expected error 2");
+
+    const [actualError1, actualError2] = error;
+
+    expect(actualError1).toStrictEqual(expectedError1);
+    expect(actualError2).toStrictEqual(expectedError2);
   }
 });
