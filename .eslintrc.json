@@ -15,12 +15,21 @@
     "unicorn/prevent-abbreviations": [
       "error",
       {
+        "replacements": {
+          "dev": false
+        },
         "whitelist": {
-          "args": true,
-          "reduxDevTools": true,
-          "devTools": true
+          "args": true
         },
         "checkShorthandProperties": true
+      }
+    ],
+
+    "no-underscore-dangle": [
+      "error",
+      {
+        "enforceInMethodNames": true,
+        "allow": ["__REDUX_DEVTOOLS_EXTENSION__"]
       }
     ],
 

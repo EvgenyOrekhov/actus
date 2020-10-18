@@ -7,6 +7,7 @@ import getSlice from "./getSlice.js";
 import setSlice from "./setSlice.js";
 import freeze from "./plugins/freeze/index.js";
 import logger from "./plugins/logger/index.js";
+import reduxDevTools from "./plugins/reduxDevTools/index.js";
 
 function isEmptyObject(value) {
   return typeof value === "object" && Object.keys(value).length === 0;
@@ -43,9 +44,16 @@ function mergeConfigs(config) {
     .filter(Boolean)
     .some(({ name }) => name === "logger");
 
+  const isReduxDevToolsEnabled = configs
+    .filter(Boolean)
+    .some(({ name }) => name === "reduxDevTools");
+
   const configsWithDefaultConfig = [
     defaultConfig,
     process.env.NODE_ENV === "development" && !isLoggerEnabled && logger(),
+    process.env.NODE_ENV === "development" &&
+      !isReduxDevToolsEnabled &&
+      reduxDevTools(),
     process.env.NODE_ENV !== "production" && freeze(),
     ...configs,
   ];
