@@ -8,6 +8,7 @@ import setSlice from "./setSlice.js";
 import freeze from "./plugins/freeze/index.js";
 import logger from "./plugins/logger/index.js";
 import reduxDevTools from "./plugins/reduxDevTools/index.js";
+import defaultActions from "./plugins/defaultActions/index.js";
 
 function isEmptyObject(value) {
   return typeof value === "object" && Object.keys(value).length === 0;
@@ -48,11 +49,21 @@ function mergeConfigs(config) {
     .filter(Boolean)
     .some(({ name }) => name === "reduxDevTools");
 
+  const isDefaultActionsEnabled = configs
+    .filter(Boolean)
+    .some(({ name }) => name === "defaultActions");
+
+  const initialState = configs
+    .filter(Boolean)
+    .map(({ state }) => state)
+    .reduce(mergeStates);
+
   const configsWithDefaultConfig = [
     defaultConfig,
     !isLoggerEnabled && logger(),
     !isReduxDevToolsEnabled && reduxDevTools(),
     freeze(),
+    !isDefaultActionsEnabled && defaultActions(initialState),
     ...configs,
   ];
 
