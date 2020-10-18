@@ -1,8 +1,9 @@
-import { logger } from "actus";
+import { logger, reduxDevTools } from "actus";
 
 import actusify from "./index.js";
 
 jest.mock("actus/src/plugins/logger/index.js");
+jest.mock("actus/src/plugins/reduxDevTools/index.js");
 
 // eslint-disable-next-line fp/no-class
 class EmberObjectMock {
@@ -85,6 +86,23 @@ test("logger is disabled when not in development mode", () => {
   actusify(target, { isDevelopment: false });
 
   expect(logger.mock.calls).toHaveLength(0);
+});
+
+test("reduxDevTools", () => {
+  reduxDevTools.mockClear();
+  reduxDevTools.mockReturnValue({ name: "reduxDevTools" });
+
+  const target = new EmberObjectMock({
+    state: 0,
+    constructor: { name: "constructor name" },
+  });
+
+  actusify(target);
+
+  expect(reduxDevTools.mock.calls).toHaveLength(1);
+  expect(reduxDevTools.mock.calls[0][0]).toStrictEqual({
+    name: "constructor name",
+  });
 });
 
 test("supports plugins", () => {
