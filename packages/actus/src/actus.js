@@ -1,94 +1,11 @@
-import mergeDeepRight from "ramda/src/mergeDeepRight.js";
 import isPromise from "is-promise";
 import AggregateError from "aggregate-error";
+// eslint-disable-next-line import/no-named-as-default -- recommended way to import produce
+import produce from "immer";
 
-import defaultConfig from "./defaultConfig.js";
+import mergeConfigs from "./mergeConfigs.js";
 import getSlice from "./getSlice.js";
 import setSlice from "./setSlice.js";
-import freeze from "./plugins/freeze/index.js";
-import logger from "./plugins/logger/index.js";
-import reduxDevTools from "./plugins/reduxDevTools/index.js";
-import defaultActions from "./plugins/defaultActions/index.js";
-
-function isEmptyObject(value) {
-  return typeof value === "object" && Object.keys(value).length === 0;
-}
-
-function mergeStates(left, right) {
-  if (typeof left === "object" && typeof right === "object") {
-    return mergeDeepRight(left, right);
-  }
-
-  return left !== undefined && (right === undefined || isEmptyObject(right))
-    ? left
-    : right;
-}
-
-function getActionsWithNextStateGetter(
-  actions = {},
-  getNextState = (previousState, actionResult) => actionResult
-) {
-  return Object.fromEntries(
-    Object.entries(actions).map(([actionName, action]) => [
-      actionName,
-      typeof action === "function"
-        ? [action, getNextState]
-        : getActionsWithNextStateGetter(action, getNextState),
-    ])
-  );
-}
-
-function mergeConfigs(config) {
-  const configs = Array.isArray(config) ? config : [config];
-
-  const isLoggerEnabled = configs
-    .filter(Boolean)
-    .some(({ name }) => name === "logger");
-
-  const isReduxDevToolsEnabled = configs
-    .filter(Boolean)
-    .some(({ name }) => name === "reduxDevTools");
-
-  const isDefaultActionsEnabled = configs
-    .filter(Boolean)
-    .some(({ name }) => name === "defaultActions");
-
-  const initialState = configs
-    .filter(Boolean)
-    .map(({ state }) => state)
-    .reduce(mergeStates);
-
-  const configsWithDefaultPlugins = [
-    defaultConfig,
-    !isLoggerEnabled && logger(),
-    !isReduxDevToolsEnabled && reduxDevTools(),
-    !isDefaultActionsEnabled && defaultActions(initialState),
-    freeze(),
-    ...configs,
-  ];
-
-  return configsWithDefaultPlugins.filter(Boolean).reduce(
-    function mergeConfig(accumulator, currentConfig) {
-      return {
-        state: mergeStates(accumulator.state, currentConfig.state),
-
-        actions: mergeDeepRight(
-          accumulator.actions,
-          getActionsWithNextStateGetter(
-            currentConfig.actions,
-            currentConfig.getNextState
-          ) || {}
-        ),
-
-        subscribers: [
-          ...(accumulator.subscribers || []),
-          ...(currentConfig.subscribers || []),
-        ],
-      };
-    },
-    { state: {}, actions: {}, subscribers: [] }
-  );
-}
 
 export default function actus(config) {
   const { state, actions, subscribers } = mergeConfigs(config);
@@ -150,11 +67,13 @@ export default function actus(config) {
             function boundAction(payload) {
               const currentSlice = getSlice(currentState, path);
 
-              const newSlice = action({
-                state: currentSlice,
-                payload,
-                actions: boundActions,
-              });
+              const newSlice = produce(currentSlice, (draft) =>
+                action({
+                  state: draft,
+                  payload,
+                  actions: boundActions,
+                })
+              );
 
               if (isPromise(newSlice)) {
                 const actionPath =
