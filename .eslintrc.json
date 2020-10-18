@@ -33,6 +33,14 @@
       }
     ],
 
+    "fp/no-mutation": [
+      "error",
+      {
+        "commonjs": true,
+        "exceptions": [{ "object": "process", "property": "env" }]
+      }
+    ],
+
     "no-inline-comments": "off",
     "line-comment-position": "off",
     "node/no-unsupported-features/es-syntax": "off",

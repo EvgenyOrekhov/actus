@@ -66,6 +66,11 @@ test("default actions can be overridden", () => {
 
 test("logger", () => {
   logger.mockClear();
+  logger.mockReturnValue({ name: "logger" });
+
+  const originalNodeEnvironment = process.env.NODE_ENV;
+
+  process.env.NODE_ENV = "development";
 
   const target = new EmberObjectMock({
     state: 0,
@@ -74,18 +79,10 @@ test("logger", () => {
 
   actusify(target);
 
+  process.env.NODE_ENV = originalNodeEnvironment;
+
   expect(logger.mock.calls).toHaveLength(1);
   expect(logger.mock.calls[0][0]).toStrictEqual({ name: "constructor name" });
-});
-
-test("logger is disabled when not in development mode", () => {
-  logger.mockClear();
-
-  const target = new EmberObjectMock({ state: 0 });
-
-  actusify(target, { isDevelopment: false });
-
-  expect(logger.mock.calls).toHaveLength(0);
 });
 
 test("reduxDevTools", () => {
