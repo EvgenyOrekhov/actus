@@ -20,6 +20,8 @@ export default function reduxDevTools({ name = undefined } = {}) {
   }
 
   return {
+    name: "reduxDevTools",
+
     actions: {
       setStateFromDevTools: ({ payload }) => payload,
     },

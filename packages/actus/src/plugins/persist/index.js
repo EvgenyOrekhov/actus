@@ -16,6 +16,7 @@ export default function persist({
   }
 
   return {
+    name: "persist",
     state: getStateFromStorage(),
 
     subscribers: [
