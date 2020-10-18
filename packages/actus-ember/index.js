@@ -1,4 +1,4 @@
-import { actus, logger, freeze, defaultActions } from "actus";
+import { actus, logger, defaultActions } from "actus";
 import isPlainObject from "is-plain-obj";
 
 export default function actusify(
@@ -28,9 +28,7 @@ export default function actusify(
 
   // eslint-disable-next-line fp/no-mutation
   target.actions = actus([
-    ...(isDevelopment
-      ? [logger({ name: target.constructor.name }), freeze()]
-      : []),
+    ...(isDevelopment ? [logger({ name: target.constructor.name })] : []),
     defaultActions(target.state),
     ...normalizedPlugins,
   ]);

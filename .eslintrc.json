@@ -28,6 +28,7 @@
     "line-comment-position": "off",
     "node/no-unsupported-features/es-syntax": "off",
     "fp/no-throw": "off",
+    "node/no-process-env": "off",
 
     "jest/require-top-level-describe": "off",
     "jest/prefer-expect-assertions": "off",

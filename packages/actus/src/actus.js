@@ -5,6 +5,7 @@ import AggregateError from "aggregate-error";
 import defaultConfig from "./defaultConfig.js";
 import getSlice from "./getSlice.js";
 import setSlice from "./setSlice.js";
+import freeze from "./plugins/freeze/index.js";
 
 function isEmptyObject(value) {
   return typeof value === "object" && Object.keys(value).length === 0;
@@ -36,7 +37,11 @@ function getActionsWithNextStateGetter(
 
 function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
-  const configsWithDefaultConfig = [defaultConfig, ...configs];
+  const configsWithDefaultConfig = [
+    defaultConfig,
+    process.env.NODE_ENV !== "production" && freeze(),
+    ...configs,
+  ];
 
   return configsWithDefaultConfig.filter(Boolean).reduce(
     function mergeConfig(accumulator, currentConfig) {

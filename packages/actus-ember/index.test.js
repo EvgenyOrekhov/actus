@@ -87,30 +87,6 @@ test("logger is disabled when not in development mode", () => {
   expect(logger.mock.calls).toHaveLength(0);
 });
 
-test("deep freeze state", () => {
-  const target = new EmberObjectMock({ state: { foo: "old" } });
-
-  actusify(target);
-
-  expect(() => {
-    // eslint-disable-next-line fp/no-mutation
-    target.state.foo = "new";
-  }).toThrow("Cannot assign to read only property 'foo' of object '#<Object>'");
-
-  expect(target.state.foo).toStrictEqual("old");
-});
-
-test("do not deep freeze state when not in development", () => {
-  const target = new EmberObjectMock({ state: { foo: "old" } });
-
-  actusify(target, { isDevelopment: false });
-
-  // eslint-disable-next-line fp/no-mutation
-  target.state.foo = "new";
-
-  expect(target.state.foo).toStrictEqual("new");
-});
-
 test("supports plugins", () => {
   const target = new EmberObjectMock({
     state: 0,
