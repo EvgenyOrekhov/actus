@@ -58,16 +58,16 @@ function mergeConfigs(config) {
     .map(({ state }) => state)
     .reduce(mergeStates);
 
-  const configsWithDefaultConfig = [
+  const configsWithDefaultPlugins = [
     defaultConfig,
     !isLoggerEnabled && logger(),
     !isReduxDevToolsEnabled && reduxDevTools(),
-    freeze(),
     !isDefaultActionsEnabled && defaultActions(initialState),
+    freeze(),
     ...configs,
   ];
 
-  return configsWithDefaultConfig.filter(Boolean).reduce(
+  return configsWithDefaultPlugins.filter(Boolean).reduce(
     function mergeConfig(accumulator, currentConfig) {
       return {
         state: mergeStates(accumulator.state, currentConfig.state),
