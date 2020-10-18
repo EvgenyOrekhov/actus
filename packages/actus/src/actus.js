@@ -6,6 +6,7 @@ import defaultConfig from "./defaultConfig.js";
 import getSlice from "./getSlice.js";
 import setSlice from "./setSlice.js";
 import freeze from "./plugins/freeze/index.js";
+import logger from "./plugins/logger/index.js";
 
 function isEmptyObject(value) {
   return typeof value === "object" && Object.keys(value).length === 0;
@@ -37,8 +38,14 @@ function getActionsWithNextStateGetter(
 
 function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
+
+  const isLoggerEnabled = configs
+    .filter(Boolean)
+    .some(({ name }) => name === "logger");
+
   const configsWithDefaultConfig = [
     defaultConfig,
+    process.env.NODE_ENV === "development" && !isLoggerEnabled && logger(),
     process.env.NODE_ENV !== "production" && freeze(),
     ...configs,
   ];
