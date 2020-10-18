@@ -1,6 +1,8 @@
 import mergeDeepRight from "ramda/src/mergeDeepRight.js";
 import isPromise from "is-promise";
 import AggregateError from "aggregate-error";
+// eslint-disable-next-line import/no-named-as-default -- recommended way to import produce
+import produce from "immer";
 
 import defaultConfig from "./defaultConfig.js";
 import getSlice from "./getSlice.js";
@@ -150,11 +152,13 @@ export default function actus(config) {
             function boundAction(payload) {
               const currentSlice = getSlice(currentState, path);
 
-              const newSlice = action({
-                state: currentSlice,
-                payload,
-                actions: boundActions,
-              });
+              const newSlice = produce(currentSlice, (draft) =>
+                action({
+                  state: draft,
+                  payload,
+                  actions: boundActions,
+                })
+              );
 
               if (isPromise(newSlice)) {
                 const actionPath =
