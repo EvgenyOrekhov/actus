@@ -51,9 +51,7 @@ function mergeConfigs(config) {
   const configsWithDefaultConfig = [
     defaultConfig,
     process.env.NODE_ENV === "development" && !isLoggerEnabled && logger(),
-    process.env.NODE_ENV === "development" &&
-      !isReduxDevToolsEnabled &&
-      reduxDevTools(),
+    !isReduxDevToolsEnabled && reduxDevTools(),
     process.env.NODE_ENV !== "production" && freeze(),
     ...configs,
   ];
