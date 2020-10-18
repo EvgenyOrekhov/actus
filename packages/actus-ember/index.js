@@ -1,4 +1,4 @@
-import { actus, logger, reduxDevTools, defaultActions } from "actus";
+import { actus, logger, reduxDevTools } from "actus";
 import isPlainObject from "is-plain-obj";
 
 export default function actusify(config, { getNextState = undefined } = {}) {
@@ -23,11 +23,12 @@ export default function actusify(config, { getNextState = undefined } = {}) {
       : plugin
   );
 
+  const { name } = target.constructor;
+
   // eslint-disable-next-line fp/no-mutation
   target.actions = actus([
-    logger({ name: target.constructor.name }),
-    reduxDevTools({ name: target.constructor.name }),
-    defaultActions(target.state),
+    logger({ name }),
+    reduxDevTools({ name }),
     ...normalizedPlugins,
   ]);
 }
