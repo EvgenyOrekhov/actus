@@ -1,10 +1,7 @@
-import { actus, logger, freeze, defaultActions } from "actus";
+import { actus, logger, reduxDevTools } from "actus";
 import isPlainObject from "is-plain-obj";
 
-export default function actusify(
-  config,
-  { isDevelopment = true, getNextState = undefined } = {}
-) {
+export default function actusify(config, { getNextState = undefined } = {}) {
   const plugins = Array.isArray(config) ? config : [config];
   const enabledPlugins = plugins.filter(Boolean);
   const target = enabledPlugins.find((plugin) => !isPlainObject(plugin));
@@ -26,12 +23,12 @@ export default function actusify(
       : plugin
   );
 
+  const { name } = target.constructor;
+
   // eslint-disable-next-line fp/no-mutation
   target.actions = actus([
-    ...(isDevelopment
-      ? [logger({ name: target.constructor.name }), freeze()]
-      : []),
-    defaultActions(target.state),
+    logger({ name }),
+    reduxDevTools({ name }),
     ...normalizedPlugins,
   ]);
 }

@@ -1,14 +1,6 @@
 /* global window */
 
-function getSlice(object, path) {
-  return path.reduce(
-    (accumulator, property) =>
-      accumulator === undefined || accumulator === null
-        ? undefined
-        : accumulator[property],
-    object
-  );
-}
+import getSlice from "../../getSlice.js";
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export default function reduxDevTools({ name = undefined } = {}) {
@@ -16,7 +8,7 @@ export default function reduxDevTools({ name = undefined } = {}) {
     typeof window === "undefined" ||
     window.__REDUX_DEVTOOLS_EXTENSION__ === undefined
   ) {
-    return {};
+    return { name: "reduxDevTools" };
   }
 
   return {

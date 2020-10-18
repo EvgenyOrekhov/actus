@@ -1,8 +1,9 @@
-import { logger } from "actus";
+import { logger, reduxDevTools } from "actus";
 
 import actusify from "./index.js";
 
 jest.mock("actus/src/plugins/logger/index.js");
+jest.mock("actus/src/plugins/reduxDevTools/index.js");
 
 // eslint-disable-next-line fp/no-class
 class EmberObjectMock {
@@ -65,6 +66,11 @@ test("default actions can be overridden", () => {
 
 test("logger", () => {
   logger.mockClear();
+  logger.mockReturnValue({ name: "logger" });
+
+  const originalNodeEnvironment = process.env.NODE_ENV;
+
+  process.env.NODE_ENV = "development";
 
   const target = new EmberObjectMock({
     state: 0,
@@ -73,42 +79,27 @@ test("logger", () => {
 
   actusify(target);
 
+  process.env.NODE_ENV = originalNodeEnvironment;
+
   expect(logger.mock.calls).toHaveLength(1);
   expect(logger.mock.calls[0][0]).toStrictEqual({ name: "constructor name" });
 });
 
-test("logger is disabled when not in development mode", () => {
-  logger.mockClear();
+test("reduxDevTools", () => {
+  reduxDevTools.mockClear();
+  reduxDevTools.mockReturnValue({ name: "reduxDevTools" });
 
-  const target = new EmberObjectMock({ state: 0 });
-
-  actusify(target, { isDevelopment: false });
-
-  expect(logger.mock.calls).toHaveLength(0);
-});
-
-test("deep freeze state", () => {
-  const target = new EmberObjectMock({ state: { foo: "old" } });
+  const target = new EmberObjectMock({
+    state: 0,
+    constructor: { name: "constructor name" },
+  });
 
   actusify(target);
 
-  expect(() => {
-    // eslint-disable-next-line fp/no-mutation
-    target.state.foo = "new";
-  }).toThrow("Cannot assign to read only property 'foo' of object '#<Object>'");
-
-  expect(target.state.foo).toStrictEqual("old");
-});
-
-test("do not deep freeze state when not in development", () => {
-  const target = new EmberObjectMock({ state: { foo: "old" } });
-
-  actusify(target, { isDevelopment: false });
-
-  // eslint-disable-next-line fp/no-mutation
-  target.state.foo = "new";
-
-  expect(target.state.foo).toStrictEqual("new");
+  expect(reduxDevTools.mock.calls).toHaveLength(1);
+  expect(reduxDevTools.mock.calls[0][0]).toStrictEqual({
+    name: "constructor name",
+  });
 });
 
 test("supports plugins", () => {

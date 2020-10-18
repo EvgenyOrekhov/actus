@@ -15,12 +15,29 @@
     "unicorn/prevent-abbreviations": [
       "error",
       {
+        "replacements": {
+          "dev": false
+        },
         "whitelist": {
-          "args": true,
-          "reduxDevTools": true,
-          "devTools": true
+          "args": true
         },
         "checkShorthandProperties": true
+      }
+    ],
+
+    "no-underscore-dangle": [
+      "error",
+      {
+        "enforceInMethodNames": true,
+        "allow": ["__REDUX_DEVTOOLS_EXTENSION__"]
+      }
+    ],
+
+    "fp/no-mutation": [
+      "error",
+      {
+        "commonjs": true,
+        "exceptions": [{ "object": "process", "property": "env" }]
       }
     ],
 
@@ -28,6 +45,7 @@
     "line-comment-position": "off",
     "node/no-unsupported-features/es-syntax": "off",
     "fp/no-throw": "off",
+    "node/no-process-env": "off",
 
     "jest/require-top-level-describe": "off",
     "jest/prefer-expect-assertions": "off",
