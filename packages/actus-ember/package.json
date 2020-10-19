@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "actus": "^0.10.0-alpha.0",
-    "is-plain-obj": "^2.1.0"
+    "is-plain-obj": "^3.0.0"
   },
   "peerDependencies": {
     "ember-source": ">=3.15.0"
