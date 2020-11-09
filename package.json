@@ -34,7 +34,7 @@
     "@babel/preset-env": "^7.12.1",
     "babel-jest": "^26.6.3",
     "eslint": "^7.13.0",
-    "eslint-config-hardcore": "^13.2.0",
+    "eslint-config-hardcore": "^14.0.0",
     "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-jest-formatting": "^2.0.0",
     "husky": "^4.3.0",

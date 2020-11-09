@@ -43,7 +43,7 @@ export default function actus(config) {
     // eslint-disable-next-line fp/no-mutation
     shouldNotifySubscribers = false;
 
-    if (errors.length !== 0) {
+    if (errors.length > 0) {
       if (errors.length === 1) {
         throw errors[0];
       }
