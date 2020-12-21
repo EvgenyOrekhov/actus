@@ -6,9 +6,9 @@ test("validates state", () => {
   const schema = Joi.string();
   const validateState = makeStateValidator(schema);
 
-  expect(() => validateState({ state: 123 })).toThrow(
-    '"value" must be a string'
-  );
+  expect(() => {
+    validateState({ state: 123 });
+  }).toThrow('"value" must be a string');
 });
 
 test("supports options", () => {
@@ -20,9 +20,9 @@ test("supports options", () => {
     /* eslint-enable */
   });
 
-  expect(() => validateState({ state: { foo: "123" } })).toThrow(
-    '"foo" must be a number'
-  );
+  expect(() => {
+    validateState({ state: { foo: "123" } });
+  }).toThrow('"foo" must be a number');
 
   validateState({ state: { foo: 123, bar: 456 } });
 });
