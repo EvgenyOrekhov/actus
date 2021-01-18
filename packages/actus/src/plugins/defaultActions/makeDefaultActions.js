@@ -73,7 +73,7 @@ export default function makeDefaultActions(initialState) {
         ...Object.fromEntries(
           Object.entries(initialState)
             .map(([key, value]) => [key, makeDefaultActions(value)])
-            .filter(([, value]) => Object.keys(value).length !== 0)
+            .filter(([, value]) => Object.keys(value).length > 0)
         ),
       }
     : defaultActions[type];
