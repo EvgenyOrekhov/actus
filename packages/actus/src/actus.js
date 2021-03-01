@@ -1,4 +1,5 @@
 import isPromise from "is-promise";
+// eslint-disable-next-line @typescript-eslint/no-shadow -- aggregate-error is needed for Node.js <15.0.0
 import AggregateError from "aggregate-error";
 // eslint-disable-next-line import/no-named-as-default -- recommended way to import produce
 import produce from "immer";
