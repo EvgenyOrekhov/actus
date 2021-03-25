@@ -1,6 +1,6 @@
 {
   "name": "actus-ember",
-  "version": "0.11.0-alpha.2",
+  "version": "0.11.1-alpha.0",
   "description": "Ember bindings for actus",
   "keywords": [
     "actus",
@@ -17,7 +17,7 @@
     "index.js"
   ],
   "dependencies": {
-    "actus": "^0.10.0-alpha.1",
+    "actus": "^0.10.0-alpha.2",
     "is-plain-obj": "^3.0.0"
   },
   "peerDependencies": {
