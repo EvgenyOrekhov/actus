@@ -14,7 +14,9 @@ export default function actusify(config, { getNextState = undefined } = {}) {
 
           subscribers: [
             function setState({ state }) {
-              target.set("state", state);
+              if (!target.isDestroyed) {
+                target.set("state", state);
+              }
             },
           ],
 

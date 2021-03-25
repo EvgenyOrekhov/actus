@@ -20,6 +20,23 @@ class EmberObjectMock {
   }
 }
 
+// eslint-disable-next-line fp/no-class
+class DestroyedEmberObjectMock {
+  state;
+
+  isDestroyed = true;
+
+  constructor(properties) {
+    // eslint-disable-next-line fp/no-this, fp/no-mutating-assign
+    Object.assign(this, properties);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  set() {
+    throw new Error("Calling set on destroyed object");
+  }
+}
+
 test("actusify()", () => {
   const target = new EmberObjectMock({
     state: 0,
@@ -170,4 +187,20 @@ test("getNextState()", () => {
     previousState: 0,
     actionResult: 1,
   });
+});
+
+test("does not call set() on destroyed object", () => {
+  expect.assertions(0);
+
+  const target = new DestroyedEmberObjectMock({
+    state: 0,
+
+    actions: {
+      inc: ({ state }) => state + 1,
+    },
+  });
+
+  actusify(target);
+
+  target.actions.inc();
 });
