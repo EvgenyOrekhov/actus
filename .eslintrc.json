@@ -18,7 +18,7 @@
         "replacements": {
           "dev": false
         },
-        "whitelist": {
+        "allowList": {
           "args": true
         },
         "checkShorthandProperties": true

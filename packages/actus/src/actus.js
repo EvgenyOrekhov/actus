@@ -1,3 +1,5 @@
+/* eslint-disable promise/prefer-await-to-then */
+
 import isPromise from "is-promise";
 // eslint-disable-next-line @typescript-eslint/no-shadow -- aggregate-error is needed for Node.js <15.0.0
 import AggregateError from "aggregate-error";
