@@ -7,16 +7,10 @@
     "lint": "run-p --aggregate-output lint:**",
     "lint:js": "eslint .",
     "lint:prettier": "prettier --check .",
-    "prepare": "lerna bootstrap",
+    "prepare": "lerna bootstrap && husky install",
     "release": "lerna publish",
     "test": "jest",
     "preversion": "npm run build"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run ci"
-    }
   },
   "lint-staged": {
     "*.{js,css,json,md,html,yml,yaml}": "prettier --write",
