@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import persist from "./index.js";
 
 test("loads state from storage", () => {

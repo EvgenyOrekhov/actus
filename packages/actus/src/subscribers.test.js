@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import actus from "./actus.js";
 
 test("initializes", () => {
