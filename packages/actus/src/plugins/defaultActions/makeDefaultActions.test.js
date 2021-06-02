@@ -156,15 +156,11 @@ test("object", () => {
 
 test("array", () => {
   const { set, reset, clear, append, prepend, concat } = makeDefaultActions([
-    4,
-    8,
-    15,
-    16,
+    4, 8, 15, 16,
   ]);
 
   expect(set({ state: [4, 8, 15, 16], payload: [23, 42] })).toStrictEqual([
-    23,
-    42,
+    23, 42,
   ]);
   expect(reset()).toStrictEqual([4, 8, 15, 16]);
   expect(clear()).toStrictEqual([]);
@@ -183,12 +179,7 @@ test("array", () => {
     16,
   ]);
   expect(concat({ state: [4, 8, 15, 16], payload: [23, 42] })).toStrictEqual([
-    4,
-    8,
-    15,
-    16,
-    23,
-    42,
+    4, 8, 15, 16, 23, 42,
   ]);
 });
 
@@ -209,8 +200,7 @@ test("array - set() - array-like", () => {
   const { set } = makeDefaultActions([4, 8, 15, 16]);
 
   expect(set({ state: [4, 8, 15, 16], payload: iterator() })).toStrictEqual([
-    23,
-    42,
+    23, 42,
   ]);
 });
 
@@ -218,37 +208,22 @@ test("array - concat() - falsy values", () => {
   const { concat } = makeDefaultActions([4, 8, 15, 16]);
 
   expect(concat({ state: [4, 8, 15, 16], payload: undefined })).toStrictEqual([
-    4,
-    8,
-    15,
-    16,
+    4, 8, 15, 16,
   ]);
 
   // eslint-disable-next-line unicorn/no-null
   expect(concat({ state: [4, 8, 15, 16], payload: null })).toStrictEqual([
-    4,
-    8,
-    15,
-    16,
+    4, 8, 15, 16,
   ]);
 
   expect(concat({ state: [4, 8, 15, 16], payload: false })).toStrictEqual([
-    4,
-    8,
-    15,
-    16,
+    4, 8, 15, 16,
   ]);
   expect(concat({ state: [4, 8, 15, 16], payload: 0 })).toStrictEqual([
-    4,
-    8,
-    15,
-    16,
+    4, 8, 15, 16,
   ]);
   expect(concat({ state: [4, 8, 15, 16], payload: Number.NaN })).toStrictEqual([
-    4,
-    8,
-    15,
-    16,
+    4, 8, 15, 16,
   ]);
 });
 
@@ -256,12 +231,7 @@ test("array - concat() - array-like", () => {
   const { concat } = makeDefaultActions([4, 8, 15, 16]);
 
   expect(concat({ state: [4, 8, 15, 16], payload: iterator() })).toStrictEqual([
-    4,
-    8,
-    15,
-    16,
-    23,
-    42,
+    4, 8, 15, 16, 23, 42,
   ]);
 });
 
