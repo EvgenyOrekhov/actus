@@ -1,6 +1,6 @@
 # actus
 
-Minimalist state container
+Minimalist, boilerplate-free, framework-agnostic state container
 
 [![npm version](https://img.shields.io/npm/v/actus.svg?style=flat-square)](https://www.npmjs.com/package/actus)
 
