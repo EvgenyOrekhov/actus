@@ -31,7 +31,6 @@ class DestroyedEmberObjectMock {
     Object.assign(this, properties);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   set() {
     throw new Error("Calling set on destroyed object");
   }

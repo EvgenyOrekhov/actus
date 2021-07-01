@@ -148,7 +148,6 @@ test("clears parent error object", async () => {
       }),
 
       nested: {
-        // eslint-disable-next-line sonarjs/no-identical-functions
         getUser: async () => {
           await Promise.resolve();
 

@@ -135,7 +135,6 @@ test("doesn't stop calling subsequent subscribers when one throws", () => {
   expect(subscriber2.mock.calls).toHaveLength(1);
 });
 
-// eslint-disable-next-line max-statements
 test("reports multiple errors", () => {
   expect.assertions(4);
 

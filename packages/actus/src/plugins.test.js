@@ -1,6 +1,5 @@
 import actus from "./actus.js";
 
-// eslint-disable-next-line max-statements
 test("supports plugins", () => {
   const subscriber1 = jest.fn();
   const subscriber2 = jest.fn();
