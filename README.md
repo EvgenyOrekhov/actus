@@ -5,8 +5,10 @@ Minimalist, boilerplate-free, framework-agnostic state container
 [![npm version](https://img.shields.io/npm/v/actus.svg?style=flat-square)](https://www.npmjs.com/package/actus)
 
 - **Simple** - it takes 2 minutes to learn
-- **Small** - [see for yourself](https://bundlephobia.com/result?p=actus)
-- **Functional** - data are never mutated
+- **Boilerplate-free**
+  - comes with built-in default actions (`set()`, `reset()`, `toggle()`,
+    `merge()`, etc.)
+  - handles loading and error states for async actions for you
 - **Framework-agnostic**
 
 ## Examples
@@ -20,17 +22,13 @@ import ReactDOM from "react-dom";
 
 actus({
   state: 0,
-  actions: {
-    inc: ({ state }) => state + 1,
-    dec: ({ state }) => state - 1,
-  },
   subscribers: [
     ({ state, actions }) => {
       ReactDOM.render(
         <>
           <h1>{state}</h1>
-          <button onClick={actions.inc}>+</button>
-          <button onClick={actions.dec}>-</button>
+          <button onClick={actions.increment}>+</button>
+          <button onClick={actions.decrement}>-</button>
         </>,
         document.querySelector("#root")
       );
@@ -55,8 +53,9 @@ const actions = actus({
   // Actions accept an optional payload and the current state, and must return
   // a new state:
   actions: {
-    add: ({ state, payload }) => ({ ...state, number: state.number + payload }),
-    reset: () => ({ number: 0 }),
+    number: {
+      add: ({ state, payload }) => state + payload,
+    },
   },
 
   // Subscribers will be called sequentially during initialization and then
@@ -65,20 +64,23 @@ const actions = actus({
 });
 
 // The first argument is the payload:
-actions.add(1);
+actions.number.add(1);
 ```
 
 ## Plugins
 
-- [defaultActions](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/defaultActions) - basic actions for your state properties (`set()`, `reset()`, `toggle()`, etc.)
+The following plugins are enabled automatically (but can be redefined manually
+if needed):
+
+- [defaultActions](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/defaultActions) - basic actions for your state properties (`set()`, `reset()`, `toggle()`, `merge()`, etc.)
+- [logger](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/logger) - logs actions and state changes to your console
+- [freeze](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/freeze) - deep freezes your state to prevent mutations
+- [actus-redux-devtools](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-redux-devtools) - use [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension) with actus
+
+Other plugins that can be enabled manually:
+
 - [persist](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/persist) - persists state to a synchronous storage (`localStorage` by default)
 - [actus-state-validator](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-state-validator) - state validator and normalizer powered by [joi](https://github.com/hapijs/joi)
-
-## Plugins for development
-
-- [logger](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/logger) - logs actions and state changes to your console
-- [actus-redux-devtools](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-redux-devtools) - Use [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension) with actus
-- [freeze](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/freeze) - deep freezes your state to prevent mutations
 
 ## Frameworks
 
