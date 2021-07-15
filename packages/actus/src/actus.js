@@ -3,8 +3,6 @@
 import isPromise from "is-promise";
 // eslint-disable-next-line @typescript-eslint/no-shadow -- aggregate-error is needed for Node.js <15.0.0
 import AggregateError from "aggregate-error";
-// eslint-disable-next-line import/no-named-as-default -- recommended way to import produce
-import produce from "immer";
 
 import mergeConfigs from "./mergeConfigs.js";
 import getSlice from "./getSlice.js";
@@ -51,7 +49,10 @@ export default function actus(config) {
         throw errors[0];
       }
 
-      throw new AggregateError(errors);
+      throw new AggregateError(
+        errors,
+        "Multiple errors were thrown during notifying subscribers."
+      );
     }
   }
 
@@ -63,20 +64,26 @@ export default function actus(config) {
         actionWithNextStateGetter,
       ]) {
         if (Array.isArray(actionWithNextStateGetter)) {
-          const [action, getNextState] = actionWithNextStateGetter;
+          const [action, getNextState, produce] = actionWithNextStateGetter;
 
           return [
             actionName,
             function boundAction(payload) {
               const currentSlice = getSlice(currentState, path);
 
-              const newSlice = produce(currentSlice, (draft) =>
-                action({
-                  state: draft,
-                  payload,
-                  actions: boundActions,
-                })
-              );
+              const newSlice = produce
+                ? produce(currentSlice, (draft) =>
+                    action({
+                      state: draft,
+                      payload,
+                      actions: boundActions,
+                    })
+                  )
+                : action({
+                    state: currentSlice,
+                    payload,
+                    actions: boundActions,
+                  });
 
               if (isPromise(newSlice)) {
                 const actionPath =
