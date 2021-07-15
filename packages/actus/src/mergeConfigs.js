@@ -20,16 +20,21 @@ function mergeStates(left, right) {
     : right;
 }
 
-function getActionsWithNextStateGetter(
+function getActionsWithNextStateGetterAndProduce(
   actions = {},
-  getNextState = (previousState, actionResult) => actionResult
+  getNextState = (previousState, actionResult) => actionResult,
+  produce = undefined
 ) {
   return Object.fromEntries(
     Object.entries(actions).map(([actionName, action]) => [
       actionName,
       typeof action === "function"
-        ? [action, getNextState]
-        : getActionsWithNextStateGetter(action, getNextState),
+        ? [action, getNextState, produce]
+        : getActionsWithNextStateGetterAndProduce(
+            action,
+            getNextState,
+            produce
+          ),
     ])
   );
 }
@@ -70,9 +75,10 @@ export default function mergeConfigs(config) {
 
         actions: mergeDeepRight(
           accumulator.actions,
-          getActionsWithNextStateGetter(
+          getActionsWithNextStateGetterAndProduce(
             currentConfig.actions,
-            currentConfig.getNextState
+            currentConfig.getNextState,
+            currentConfig.produce
           ) || {}
         ),
 

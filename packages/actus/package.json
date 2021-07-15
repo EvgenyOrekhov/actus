@@ -30,9 +30,11 @@
     "aggregate-error": "^3.1.0",
     "deep-freeze": "0.0.1",
     "deep-object-diff": "^1.1.0",
-    "immer": "^9.0.3",
     "is-promise": "^4.0.0",
     "ramda": "^0.27.1"
+  },
+  "devDependencies": {
+    "immer": "^9.0.5"
   },
   "engines": {
     "node": ">=14.0.0"
