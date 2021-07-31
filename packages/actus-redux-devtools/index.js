@@ -28,11 +28,11 @@ export default function reduxDevTools({ name = undefined } = {}) {
 
     subscribers: [
       (function makeReduxDevtoolsSubscriber() {
-        /* eslint-disable fp/no-let, init-declarations */
+        /* eslint-disable fp/no-let, @typescript-eslint/init-declarations */
         let initialState;
         let currentState;
         let devTools;
-        /* eslint-enable fp/no-let, init-declarations */
+        /* eslint-enable fp/no-let, @typescript-eslint/init-declarations */
 
         function parse(value) {
           try {

@@ -13,9 +13,9 @@ export default function actus(config) {
 
   // eslint-disable-next-line fp/no-let
   let currentState = state;
-  // eslint-disable-next-line fp/no-let, init-declarations
+  // eslint-disable-next-line fp/no-let, @typescript-eslint/init-declarations
   let shouldNotifySubscribers;
-  // eslint-disable-next-line fp/no-let, init-declarations, prefer-const
+  // eslint-disable-next-line fp/no-let, @typescript-eslint/init-declarations, prefer-const
   let boundActions;
 
   function notifySubscribers({ actionName, payload } = {}) {
@@ -118,6 +118,8 @@ export default function actus(config) {
 
                 payload,
               });
+
+              return undefined;
             },
           ];
         }

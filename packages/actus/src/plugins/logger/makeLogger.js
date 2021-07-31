@@ -3,7 +3,7 @@
 import { diff } from "deep-object-diff";
 
 export default function makeLogger({ name } = {}) {
-  // eslint-disable-next-line fp/no-let, init-declarations
+  // eslint-disable-next-line fp/no-let, @typescript-eslint/init-declarations
   let previousState;
 
   return function logAction({ state, actionName, payload }) {
