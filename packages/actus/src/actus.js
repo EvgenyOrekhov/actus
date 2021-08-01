@@ -1,7 +1,7 @@
 /* eslint-disable promise/prefer-await-to-then */
 
 import isPromise from "is-promise";
-// eslint-disable-next-line @typescript-eslint/no-shadow -- aggregate-error is needed for Node.js <15.0.0
+// eslint-disable-next-line no-shadow -- aggregate-error is needed for Node.js <15.0.0
 import AggregateError from "aggregate-error";
 
 import mergeConfigs from "./mergeConfigs.js";
@@ -13,9 +13,9 @@ export default function actus(config) {
 
   // eslint-disable-next-line fp/no-let
   let currentState = state;
-  // eslint-disable-next-line fp/no-let, @typescript-eslint/init-declarations
+  // eslint-disable-next-line fp/no-let, init-declarations
   let shouldNotifySubscribers;
-  // eslint-disable-next-line fp/no-let, @typescript-eslint/init-declarations, prefer-const
+  // eslint-disable-next-line fp/no-let, init-declarations, prefer-const
   let boundActions;
 
   function notifySubscribers({ actionName, payload } = {}) {
