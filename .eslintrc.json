@@ -1,11 +1,5 @@
 {
-  "extends": [
-    "hardcore",
-    "hardcore/fp",
-    "hardcore/node",
-    "plugin:jest/all",
-    "plugin:jest-formatting/strict"
-  ],
+  "extends": ["hardcore", "hardcore/fp", "hardcore/node", "hardcore/jest"],
 
   "parserOptions": {
     "sourceType": "module"
@@ -44,7 +38,6 @@
     "no-inline-comments": "off",
     "line-comment-position": "off",
     "node/no-unsupported-features/es-syntax": "off",
-    "fp/no-throw": "off",
     "node/no-process-env": "off",
 
     "jest/require-top-level-describe": "off",
@@ -58,20 +51,6 @@
       "files": ["*.js"],
       "extends": ["hardcore/ts-for-js"],
       "parserOptions": { "project": "./tsconfig.json" }
-    },
-
-    {
-      "files": ["*.test.*"],
-
-      "env": {
-        "jest": true,
-        "node": true
-      },
-
-      "rules": {
-        "@typescript-eslint/no-magic-numbers": "off",
-        "max-classes-per-file": "off"
-      }
     },
 
     {
