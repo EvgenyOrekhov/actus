@@ -11,6 +11,12 @@ function hasErrors(errors) {
   return !Object.values(errors).every((value) => value === undefined);
 }
 
+function getKeyName(actionPayload) {
+  return typeof actionPayload === "object"
+    ? JSON.stringify(actionPayload)
+    : actionPayload;
+}
+
 const defaultConfig = {
   actions: {
     setLoading: ({ state, payload }) => {
@@ -19,10 +25,7 @@ const defaultConfig = {
       function getNewActionErrors() {
         const newActionErrors = {
           ...getSlice(state.errors, actionPath),
-
-          [typeof actionPayload === "object"
-            ? JSON.stringify(actionPayload)
-            : actionPayload]: undefined,
+          [getKeyName(actionPayload)]: undefined,
         };
 
         return hasErrors(newActionErrors) ? newActionErrors : undefined;
@@ -42,10 +45,7 @@ const defaultConfig = {
             ? true
             : {
                 ...getSlice(state.loading, actionPath),
-
-                [typeof actionPayload === "object"
-                  ? JSON.stringify(actionPayload)
-                  : actionPayload]: true,
+                [getKeyName(actionPayload)]: true,
               }
         ),
 
@@ -67,10 +67,7 @@ const defaultConfig = {
       function getNewActionLoadingStates() {
         const newActionLoadingState = {
           ...getSlice(state.loading, actionPath),
-
-          [typeof actionPayload === "object"
-            ? JSON.stringify(actionPayload)
-            : actionPayload]: false,
+          [getKeyName(actionPayload)]: false,
         };
 
         return getGlobalLoading(newActionLoadingState) === false
@@ -111,10 +108,7 @@ const defaultConfig = {
             ? error
             : {
                 ...getSlice(state.errors, actionPath),
-
-                [typeof actionPayload === "object"
-                  ? JSON.stringify(actionPayload)
-                  : actionPayload]: error,
+                [getKeyName(actionPayload)]: error,
               }
         ),
       };
