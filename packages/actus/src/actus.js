@@ -61,10 +61,11 @@ export default function actus(config) {
     return Object.fromEntries(
       Object.entries(unboundActions).map(function bindAction([
         actionName,
-        actionWithNextStateGetter,
+        actionWithNextStateGetterAndProduce,
       ]) {
-        if (Array.isArray(actionWithNextStateGetter)) {
-          const [action, getNextState, produce] = actionWithNextStateGetter;
+        if (Array.isArray(actionWithNextStateGetterAndProduce)) {
+          const [action, getNextState, produce] =
+            actionWithNextStateGetterAndProduce;
 
           return [
             actionName,
@@ -126,7 +127,10 @@ export default function actus(config) {
 
         return [
           actionName,
-          bindActions(actionWithNextStateGetter, [...path, actionName]),
+          bindActions(actionWithNextStateGetterAndProduce, [
+            ...path,
+            actionName,
+          ]),
         ];
       })
     );
