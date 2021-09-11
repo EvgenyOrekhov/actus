@@ -41,18 +41,11 @@ function getActionsWithNextStateGetterAndProduce(
 
 export default function mergeConfigs(config) {
   const configs = Array.isArray(config) ? config : [config];
+  const enabledPlugins = configs.filter(Boolean);
 
-  const isLoggerEnabled = configs
-    .filter(Boolean)
-    .some(({ name }) => name === "logger");
-
-  const isReduxDevToolsEnabled = configs
-    .filter(Boolean)
-    .some(({ name }) => name === "reduxDevTools");
-
-  const isDefaultActionsEnabled = configs
-    .filter(Boolean)
-    .some(({ name }) => name === "defaultActions");
+  function isPluginEnabled(name) {
+    return enabledPlugins.some((plugin) => plugin.name === name);
+  }
 
   const initialState = configs
     .filter(Boolean)
@@ -61,9 +54,9 @@ export default function mergeConfigs(config) {
 
   const configsWithDefaultPlugins = [
     defaultConfig,
-    !isLoggerEnabled && logger(),
-    !isReduxDevToolsEnabled && reduxDevTools(),
-    !isDefaultActionsEnabled && defaultActions(initialState),
+    !isPluginEnabled("logger") && logger(),
+    !isPluginEnabled("reduxDevTools") && reduxDevTools(),
+    !isPluginEnabled("defaultActions") && defaultActions(initialState),
     freeze(),
     ...configs,
   ];
