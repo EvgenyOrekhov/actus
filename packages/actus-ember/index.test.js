@@ -49,7 +49,7 @@ test("actusify()", () => {
 
   target.actions.inc();
 
-  expect(target.state).toStrictEqual(1);
+  expect(target.state).toBe(1);
 });
 
 test("default actions", () => {
@@ -61,7 +61,7 @@ test("default actions", () => {
 
   target.actions.increment();
 
-  expect(target.state).toStrictEqual(1);
+  expect(target.state).toBe(1);
 });
 
 test("default actions can be overridden", () => {
@@ -77,7 +77,7 @@ test("default actions can be overridden", () => {
 
   target.actions.increment();
 
-  expect(target.state).toStrictEqual(123);
+  expect(target.state).toBe(123);
 });
 
 test("logger", () => {
@@ -145,9 +145,9 @@ test("supports plugins", () => {
   target.actions.inc();
 
   expect(subscriber1.mock.calls).toHaveLength(2);
-  expect(subscriber1.mock.calls[1][0].state).toStrictEqual(3);
+  expect(subscriber1.mock.calls[1][0].state).toBe(3);
   expect(subscriber2.mock.calls).toHaveLength(2);
-  expect(subscriber2.mock.calls[1][0].state).toStrictEqual(3);
+  expect(subscriber2.mock.calls[1][0].state).toBe(3);
 });
 
 test("ignores disabled (falsy) plugins", () => {

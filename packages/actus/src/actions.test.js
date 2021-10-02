@@ -20,9 +20,9 @@ test("returns bound actions", () => {
   dec();
 
   expect(subscriber1.mock.calls).toHaveLength(4);
-  expect(subscriber1.mock.calls[3][0].state).toStrictEqual(1);
+  expect(subscriber1.mock.calls[3][0].state).toBe(1);
   expect(subscriber2.mock.calls).toHaveLength(4);
-  expect(subscriber2.mock.calls[3][0].state).toStrictEqual(1);
+  expect(subscriber2.mock.calls[3][0].state).toBe(1);
 });
 
 test("passes payload to actions", () => {

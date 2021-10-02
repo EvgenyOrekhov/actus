@@ -145,7 +145,7 @@ test("doesn't turn primitive states into objects", () => {
   ]);
 
   expect(subscriber.mock.calls).toHaveLength(1);
-  expect(subscriber.mock.calls[0][0].state).toStrictEqual(0);
+  expect(subscriber.mock.calls[0][0].state).toBe(0);
 });
 
 test("doesn't merge empty objects", () => {
@@ -162,7 +162,7 @@ test("doesn't merge empty objects", () => {
   ]);
 
   expect(subscriber.mock.calls).toHaveLength(1);
-  expect(subscriber.mock.calls[0][0].state).toStrictEqual(1);
+  expect(subscriber.mock.calls[0][0].state).toBe(1);
 });
 
 test("ignores undefined states", () => {
@@ -177,7 +177,7 @@ test("ignores undefined states", () => {
   ]);
 
   expect(subscriber.mock.calls).toHaveLength(1);
-  expect(subscriber.mock.calls[0][0].state).toStrictEqual(0);
+  expect(subscriber.mock.calls[0][0].state).toBe(0);
 });
 
 test("doesn't ignore empty object as state", () => {

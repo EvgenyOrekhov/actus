@@ -71,7 +71,5 @@ test("getNextState should have effect only on current plugin", () => {
 
   regularAction();
 
-  expect(subscriber.mock.calls[1][0].state).toStrictEqual(
-    "regular action result"
-  );
+  expect(subscriber.mock.calls[1][0].state).toBe("regular action result");
 });

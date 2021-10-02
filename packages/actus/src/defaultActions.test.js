@@ -17,7 +17,7 @@ test("default actions", () => {
 
   increment();
 
-  expect(state).toStrictEqual(1);
+  expect(state).toBe(1);
 });
 
 test("default actions can be overridden", () => {
@@ -39,7 +39,7 @@ test("default actions can be overridden", () => {
 
   increment();
 
-  expect(state).toStrictEqual(123);
+  expect(state).toBe(123);
 });
 
 test("does not enable default actions if already enabled", () => {

@@ -10,7 +10,7 @@ test("loads state from storage", () => {
   const { state } = persist({
     storage: {
       getItem(key) {
-        expect(key).toStrictEqual("state");
+        expect(key).toBe("state");
 
         return JSON.stringify({ foo: "bar" });
       },
@@ -28,7 +28,7 @@ test("loads state from storage with custom key", () => {
 
     storage: {
       getItem(key) {
-        expect(key).toStrictEqual("customKey");
+        expect(key).toBe("customKey");
 
         return JSON.stringify({ foo: "bar" });
       },
@@ -66,7 +66,7 @@ test("doesn't lose falsy values", () => {
     },
   });
 
-  expect(state).toStrictEqual(0);
+  expect(state).toBe(0);
 });
 
 test("saves state to storage", () => {
@@ -74,7 +74,7 @@ test("saves state to storage", () => {
 
   const storage = {
     setItem(key, value) {
-      expect(key).toStrictEqual("state");
+      expect(key).toBe("state");
       expect(JSON.parse(value)).toStrictEqual({ foo: "bar" });
     },
   };
@@ -89,7 +89,7 @@ test("saves state to storage with custom key", () => {
 
   const storage = {
     setItem(key, value) {
-      expect(key).toStrictEqual("customKey");
+      expect(key).toBe("customKey");
       expect(JSON.parse(value)).toStrictEqual({ foo: "bar" });
     },
   };

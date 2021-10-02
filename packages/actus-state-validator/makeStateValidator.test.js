@@ -34,7 +34,7 @@ test("normalizes state - convert", () => {
 
   validateState({ state: "123", actions: { setStateFromStateValidator } });
 
-  expect(setStateFromStateValidator.mock.calls[0][0]).toStrictEqual(123);
+  expect(setStateFromStateValidator.mock.calls[0][0]).toBe(123);
 });
 
 test("normalizes state - defaults", () => {
@@ -44,7 +44,7 @@ test("normalizes state - defaults", () => {
 
   validateState({ state: undefined, actions: { setStateFromStateValidator } });
 
-  expect(setStateFromStateValidator.mock.calls[0][0]).toStrictEqual(123);
+  expect(setStateFromStateValidator.mock.calls[0][0]).toBe(123);
 });
 
 test("doesn't call setStateFromStateValidator() if state is already normalized", () => {

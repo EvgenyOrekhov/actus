@@ -20,9 +20,9 @@ test("initializes", () => {
   });
 
   expect(subscriber1.mock.calls).toHaveLength(1);
-  expect(subscriber1.mock.calls[0][0].state).toStrictEqual(0);
+  expect(subscriber1.mock.calls[0][0].state).toBe(0);
   expect(subscriber2.mock.calls).toHaveLength(1);
-  expect(subscriber2.mock.calls[0][0].state).toStrictEqual(0);
+  expect(subscriber2.mock.calls[0][0].state).toBe(0);
 });
 
 /* eslint-disable @typescript-eslint/no-implied-eval */
@@ -38,9 +38,9 @@ test("passes actions to subscribers", async () => {
       setTimeout(actions.dec, 0);
       setTimeout(() => {
         expect(subscriber1.mock.calls).toHaveLength(5);
-        expect(subscriber1.mock.calls[4][0].state).toStrictEqual(2);
+        expect(subscriber1.mock.calls[4][0].state).toBe(2);
         expect(subscriber2.mock.calls).toHaveLength(5);
-        expect(subscriber2.mock.calls[4][0].state).toStrictEqual(2);
+        expect(subscriber2.mock.calls[4][0].state).toBe(2);
 
         resolve();
       }, 0);
@@ -80,10 +80,10 @@ test("passes current action name and payload to subscribers", () => {
   subtract(8);
 
   subscribers.forEach((subscriber) => {
-    expect(subscriber.mock.calls[1][0].actionName).toStrictEqual("add");
-    expect(subscriber.mock.calls[1][0].payload).toStrictEqual(4);
-    expect(subscriber.mock.calls[2][0].actionName).toStrictEqual("subtract");
-    expect(subscriber.mock.calls[2][0].payload).toStrictEqual(8);
+    expect(subscriber.mock.calls[1][0].actionName).toBe("add");
+    expect(subscriber.mock.calls[1][0].payload).toBe(4);
+    expect(subscriber.mock.calls[2][0].actionName).toBe("subtract");
+    expect(subscriber.mock.calls[2][0].payload).toBe(8);
   });
 });
 
@@ -106,9 +106,9 @@ test("cancels notifying subscribers if an action was called by one of them", () 
   });
 
   expect(subscriber1.mock.calls).toHaveLength(2);
-  expect(subscriber1.mock.calls[1][0].state).toStrictEqual(1);
+  expect(subscriber1.mock.calls[1][0].state).toBe(1);
   expect(subscriber2.mock.calls).toHaveLength(1);
-  expect(subscriber2.mock.calls[0][0].state).toStrictEqual(1);
+  expect(subscriber2.mock.calls[0][0].state).toBe(1);
 });
 
 test("doesn't stop calling subsequent subscribers when one throws", () => {

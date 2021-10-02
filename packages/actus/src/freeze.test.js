@@ -11,7 +11,7 @@ test("deep freeze state", () => {
     state.foo.bar = "new";
   }).toThrow("Cannot assign to read only property 'bar' of object '#<Object>'");
 
-  expect(state.foo.bar).toStrictEqual("old");
+  expect(state.foo.bar).toBe("old");
 });
 
 test("do not deep freeze state when not in development", () => {
@@ -27,5 +27,5 @@ test("do not deep freeze state when not in development", () => {
 
   state.foo.bar = "new";
 
-  expect(state.foo.bar).toStrictEqual("new");
+  expect(state.foo.bar).toBe("new");
 });
