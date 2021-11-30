@@ -23,21 +23,19 @@
     ]
   },
   "devDependencies": {
-    "@babel/cli": "^7.15.7",
-    "@babel/core": "^7.15.5",
-    "@babel/preset-env": "^7.15.6",
-    "babel-jest": "^27.2.4",
-    "eslint": "^7.32.0",
-    "eslint-config-hardcore": "^22.0.0",
-    "eslint-plugin-jest": "^24.5.0",
-    "eslint-plugin-jest-formatting": "^3.0.0",
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "babel-jest": "^27.4.2",
+    "eslint": "^8.3.0",
+    "eslint-config-hardcore": "^23.4.0",
     "husky": "^7.0.4",
-    "jest": "^27.3.1",
+    "jest": "^27.4.2",
     "lerna": "^4.0.0",
-    "lint-staged": "^11.1.2",
+    "lint-staged": "^12.1.2",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.4.1",
-    "prettier-plugin-packagejson": "^2.2.13"
+    "prettier": "^2.5.0",
+    "prettier-plugin-packagejson": "^2.2.15"
   },
   "engines": {
     "node": ">=14.0.0"
