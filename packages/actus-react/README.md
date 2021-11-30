@@ -31,6 +31,12 @@ export const { actions, useSelector } = createStore({
   state: {
     number: 0,
   },
+
+  actions: {
+    number: {
+      random: () => Math.random(),
+    },
+  },
 });
 ```
 
@@ -46,10 +52,18 @@ export default function App() {
 
   return (
     <>
-      <h1>{number}</h1>
+      <input
+        type="number"
+        value={number}
+        onChange={(event) => actions.number.set(event.target.value)}
+      />
       <button onClick={actions.number.increment}>+</button>
       <button onClick={actions.number.decrement}>-</button>
+      <button onClick={actions.number.random}>random</button>
+      <button onClick={actions.number.reset}>reset</button>
     </>
   );
 }
 ```
+
+[Try it on CodeSandbox](https://codesandbox.io/s/actus-react-counter-app-example-3ixtu)
