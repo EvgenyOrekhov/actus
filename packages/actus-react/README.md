@@ -9,6 +9,7 @@ React bindings for actus
 - [defaultActions](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/defaultActions)
 - [logger](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/logger)
 - [freeze](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/freeze)
+- [reduxDevTools](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus/src/plugins/reduxDevTools)
 
 ## Install
 
