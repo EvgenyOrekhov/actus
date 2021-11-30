@@ -35,6 +35,40 @@
       }
     ],
 
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/test/**",
+          "**/tests/**",
+          "**/spec/**",
+          "**/__tests__/**",
+          "**/__mocks__/**",
+          "**/*.test.*",
+          "**/*.spec.*",
+          "**/*.e2e.*",
+          "**/*.e2e-spec.*",
+          "**/jest.config.{js,ts}",
+          "**/jest.setup.{js,ts}",
+          "**/setupTests.{js,ts}",
+          "**/vue.config.{js,ts}",
+          "**/webpack.config.{js,ts}",
+          "**/webpack.config.*.{js,ts}",
+          "**/rollup.config.{js,ts}",
+          "**/rollup.config.*.{js,ts}",
+          "**/gulpfile.{js,ts}",
+          "**/gulpfile.*.{js,ts}",
+          "**/Gruntfile{,.js,.ts}",
+          "**/protractor.conf.{js,ts}",
+          "**/protractor.conf.*.{js,ts}",
+          "**/karma.conf.{js,ts}"
+        ],
+        "optionalDependencies": false,
+        "peerDependencies": true,
+        "bundledDependencies": false
+      }
+    ],
+
     "no-inline-comments": "off",
     "line-comment-position": "off",
     "node/no-unsupported-features/es-syntax": "off",
@@ -63,6 +97,28 @@
             "enforceInMethodNames": true,
             "allow": ["__REDUX_DEVTOOLS_EXTENSION__"]
           }
+        ]
+      }
+    },
+
+    {
+      "files": ["packages/actus-react/**/*.js"],
+
+      "rules": {
+        "fp/no-mutation": [
+          "error",
+          {
+            "commonjs": true,
+            "exceptions": [
+              { "object": "process", "property": "env" },
+              { "property": "current" }
+            ]
+          }
+        ],
+
+        "no-param-reassign": [
+          "error",
+          { "props": true, "ignorePropertyModificationsForRegex": ["Ref"] }
         ]
       }
     }

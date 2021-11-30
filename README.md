@@ -85,6 +85,7 @@ Other plugins that can be enabled manually:
 ## Frameworks
 
 - [actus-ember](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-ember)
+- [actus-react](https://github.com/EvgenyOrekhov/actus/tree/master/packages/actus-react)
 
 ## Acknowledgements
 
