@@ -35,7 +35,7 @@ export const { actions, useSelector } = createStore({
 
   actions: {
     number: {
-      random: () => Math.random(),
+      random: ({ state, payload }) => Math.random(),
     },
   },
 });
