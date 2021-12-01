@@ -68,3 +68,9 @@ export default function App() {
 ```
 
 [Try it on CodeSandbox](https://codesandbox.io/s/actus-react-counter-app-example-3ixtu)
+
+## Acknowledgements
+
+Sources of inspiration:
+
+- https://github.com/pmndrs/zustand
