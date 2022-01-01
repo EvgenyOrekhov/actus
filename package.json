@@ -28,7 +28,7 @@
     "@babel/preset-env": "^7.16.4",
     "babel-jest": "^27.4.2",
     "eslint": "^8.3.0",
-    "eslint-config-hardcore": "^23.4.0",
+    "eslint-config-hardcore": "^23.5.0",
     "husky": "^7.0.4",
     "jest": "^27.4.5",
     "lerna": "^4.0.0",
