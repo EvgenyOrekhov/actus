@@ -34,7 +34,7 @@
     "lerna": "^4.0.0",
     "lint-staged": "^12.1.2",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.5.0",
+    "prettier": "^2.5.1",
     "prettier-plugin-packagejson": "^2.2.15"
   },
   "engines": {
